@@ -2,12 +2,34 @@
     <div>
         <nav class="navbar navbar-expand-sm bg-banner">
             <div class="container-fluid">
-                <a href="" class="navbar-brand">
+                <a href="" class="col-3 navbar-brand">
                     <router-link :to="{ name: 'trangchu' }" class="nav-link">
                         <img src="@/assets/images/logo.png" alt="" class="logo-img mr-2">
                         <span class="logo-text">PHÒNG KHÁM DA LIỄU</span>
                     </router-link>
                 </a>
+                <div class="col-6 slogan">
+                    <div class="stage">
+                        <div class="wrapper">
+                            <div class="slash"></div>
+                            <div class="sides">
+                                <div class="side"></div>
+                                <div class="side"></div>
+                                <div class="side"></div>
+                                <div class="side"></div>
+                            </div>
+                            <div class="text">
+                                <div class="text--backing">Tận&nbsp;tâm&nbsp;-&nbsp;Uy&nbsp;tín&nbsp;-&nbsp;Chất&nbsp;lượng</div>
+                                <div class="text--left">
+                                    <div class="inner">Tận&nbsp;tâm&nbsp;-&nbsp;Uy&nbsp;tín&nbsp;-&nbsp;Chất&nbsp;lượng</div>
+                                </div>
+                                <div class="text--right">
+                                    <div class="inner">Tận&nbsp;tâm&nbsp;-&nbsp;Uy&nbsp;tín&nbsp;-&nbsp;Chất&nbsp;lượng</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -60,7 +82,7 @@
                     </router-link>
                 </div>
 
-                <div class="nav-item" style="margin-right: 16px; color: white; "  v-if="isLoggedIn">
+                <div class="nav-item" style="margin-right: 16px; color: white; " v-if="isLoggedIn">
                     <router-link :to="{ name: 'order' }" class="nav-link" style="color: #ffffff;">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Giỏ hàng
@@ -116,11 +138,11 @@ export default {
         logout() {
             const confirmed = window.confirm("Bạn có chắc muốn đăng xuất tài khoản?");
             if (confirmed) {
-            window.localStorage.removeItem('user');
-            this.isLoggedIn = false;
+                window.localStorage.removeItem('user');
+                this.isLoggedIn = false;
 
 
-            this.$router.push({ name: "trangchu" });
+                this.$router.push({ name: "trangchu" });
             }
         },
         loginUser() {
@@ -153,75 +175,3 @@ const closeModalRegister = () => {
     isShowModalRegister.value = false;
 };
 </script>
-
-
-<style scoped>
-.bg-banner{
-    background: linear-gradient(100deg, rgba(250,250,250,1) 0%, rgb(250 250 250) 25%, rgba(53,160,255,1) 46%, rgba(0,212,255,1) 100%);
-}
-.logo-img {
-    width: 80px;
-}
-
-.logo-text {
-    font-size: 18px;
-    text-align: center;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-.navi {
-    background-color: #2f5bfd;
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-radius: 1px;
-}
-.nav-item {
-    cursor: pointer;
-    margin: 0 10px;
-    position: relative;
-}
-
-.nav-item::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 2px;
-    background-color: white;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s;
-}
-
-.nav-item:hover::after {
-    transform: scaleX(1);
-}
-
-.login {
-    text-decoration: none;
-    color: black;
-}
-
-.register {
-    text-decoration: none;
-    color: black;
-}
-
-/* .login:hover {
-    text-decoration: none;
-    color: rgb(4, 215, 0);
-
-}
-
-.register:hover {
-    text-decoration: none;
-    color: rgb(4, 215, 0);
-
-} */
-
-.dropdown-menu {
-    margin-left: -100px;
-}</style>
