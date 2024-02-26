@@ -1,0 +1,23 @@
+/* ----------------------Button SrolltoTop---------------------- */
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 23px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #FF9800;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#myBtn:hover {
+    background-color: #cbe0fc;
+}
+
+#myBtn img {
+    width: 50px;
+    height: 50;
+}
