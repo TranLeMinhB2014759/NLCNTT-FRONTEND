@@ -1,0 +1,151 @@
+.container-fluid{
+        --bs-gutter-x: 0 !important ;
+}
+.intro {
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+.col-sm-6 {
+    margin-top: 16px;
+}
+
+.img-banner {
+    background-image: url(@/assets/images/img-introduce.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 55vh;
+    width: 100%;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    text-align: center;
+    color: aliceblue;
+    border-radius: 10px;
+}
+
+.img-banner2 {
+    background-image: url(@/assets/images/img-introduce2.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 55vh;
+    width: 100%;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    text-align: center;
+    color: aliceblue;
+    border-radius: 10px;
+}
+
+.centered-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.centered-text {
+    text-align: center;
+    color: #333;
+}
+
+
+/* Quyền lợi */
+
+.carousel-item h3 {
+    color: #386fd6;
+    text-align: center;
+}
+
+.carousel-item ul {
+    list-style: none;
+
+}
+
+.carousel-item ul>h3 {
+    padding-bottom: 30px;
+
+}
+
+
+.carousel-caption {
+    color: black;
+}
+
+.tc {
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    min-height: 200px;
+}
+
+.container-sp {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.imgsp {
+    width: 180px;
+    height: 180px;
+    border-radius: 5px;
+}
+
+.product-title {
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+
+.col-sm-6>h2,
+.col-sm-6 .check,
+.col-sm-6 .ban,
+.col-sm-6 .exc {
+    padding: 20px;
+}
+
+.check,
+.ban,
+.exc {
+    margin: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #666666;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #57b846;
+}
+
+.col-sm-3:hover {
+    transform: scale(1.05);
+    /* Increase the size by 5% */
+    transition: transform 0.3s ease;
+    /* Add a smooth transition effect */
+}
+
+.imgsp:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add a subtle box shadow on hover */
+    transition: box-shadow 0.3s ease;
+    /* Add a smooth transition effect */
+}
+
+.tcs:hover {
+    background-color: #f0f0f0;
+    /* Change the background color on hover */
+    transition: background-color 0.3s ease;
+    /* Add a smooth transition effect */
+}
