@@ -17,6 +17,7 @@ export default {
     <div class="app">
         <AppHeader />
         <router-view />
+        <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa-solid fa-arrow-up fa-2xl"></i></button>
         <AppFooter />
     </div>
 </template>

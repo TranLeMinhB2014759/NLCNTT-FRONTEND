@@ -74,17 +74,17 @@ export default {
       </router-link>
     </button>
     <div class="row">
-      <div class="container col-4">
+      <div class="container col-12 col-sm-4">
         <InputSearch v-model="searchText" />
       </div>
-      <div class="col-8"></div>
+      <div class="col-sm-8"></div>
     </div>
     <div class="row">
-      <div class="mt-3 col-4 products">
+      <div class="mt-3 col-12 col-sm-4 products">
         <StaffListAdmin v-if="filteredStaffsCount > 0" :staffs="filteredStaffs" v-model:activeIndex="activeIndex" />
         <p v-else>Không tìm thấy tài khoản phù hợp.</p>
       </div>
-      <div class="mt-3 col-8">
+      <div class="mt-3 col-12 col-sm-8">
         <div v-if="activeStaff">
           <h4>
             Thông tin tài khoản
