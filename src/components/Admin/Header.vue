@@ -10,7 +10,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Navbar brand -->
                     <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                        <img class="img-rounded" alt="Cinque Terre" src="@/assets/img/logo.png" border-radius="50%"
+                        <img class="img-rounded" alt="Cinque Terre" src="@/assets/images/logo.png" border-radius="50%"
                             loading="lazy" />
                     </a>
                     <!-- Left links -->
@@ -23,7 +23,7 @@
                 <div class="d-flex align-items-center">
                         <a class=" d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar"
                             role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                            <img src="@/assets/img/user.jpg" class="rounded-circle" height="55" width="60"
+                            <img src="@/assets/images/user.jpg" class="rounded-circle" height="55" width="60"
                                 alt="Black and White Portrait of a Man" loading="lazy" />
                         </a>
                         
@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 .headera {
-    background-color: rgb(12, 113, 61);
+    background: linear-gradient(100deg, rgba(250, 250, 250, 1) 0%, rgb(250 250 250) 6%, rgba(53, 160, 255, 1) 46%, rgba(0, 212, 255, 1) 100%);
 }
 
 .img-rounded {

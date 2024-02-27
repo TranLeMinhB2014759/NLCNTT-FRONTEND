@@ -19,15 +19,14 @@ export default {
             <div class="col-sm-3">
                 <AMenu />
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-9 main-panel">
                 <router-view></router-view>
             </div>
         </div>
     </div>
 </template>
 <style>
-.page {
-    max-width: 400px;
-    margin: auto;
+.main-panel{
+    min-height: 88vh;
 }
 </style>
