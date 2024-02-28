@@ -65,17 +65,17 @@ const routes = [
       {
         path: "staff",
         name: "admin-staff",
-        component: () => import("@/views/Admin/Manage_Staff/Staff.vue"),
+        component: () => import("@/components/Manage_Staff/Staff.vue"),
       },
       {
         path: "add-staff",
         name: "add-staff",
-        component: () => import("@/views/Admin/Manage_Staff/add_staff.vue"),
+        component: () => import("@/components/Manage_Staff/add_staff.vue"),
       },
       {
         path: "edit-staff/:id",
         name: "edit-staff",
-        component: () => import("@/views/Admin/Manage_Staff/edit_staff.vue"),
+        component: () => import("@/components/Manage_Staff/edit_staff.vue"),
         props: true, 
       },
       {
