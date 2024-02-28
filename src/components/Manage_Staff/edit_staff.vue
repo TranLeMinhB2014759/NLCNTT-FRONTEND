@@ -7,11 +7,14 @@
 <script>
 import edit from "@/components/Manage_Staff/EditForm.vue";
 import StaffService from "@/services/staff.service";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
     components: {
         edit,
     },
+
     data() {
         return {
             staff: null,
@@ -34,8 +37,9 @@ export default {
                 try {
                     await StaffService.update(this.staff ? this.staff._id : null, data);
                     this.message = "Cập nhật sản phẩm thành công";
-                    alert(this.message);
-                    this.$router.push({ name: 'admin-staff' });
+                    // alert(this.message);
+                    toast.success(this.message);
+                    // this.$router.push({ name: 'admin-staff' });
                 } catch (error) {
                     console.error(error);
                 }

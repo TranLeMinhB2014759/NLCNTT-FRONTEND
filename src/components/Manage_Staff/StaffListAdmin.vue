@@ -1,5 +1,7 @@
 <script>
 import StaffService from "@/services/staff.service.js";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
   props: {
@@ -7,11 +9,11 @@ export default {
     activeIndex: { type: Number, default: -1 },
     staff: { type: Object, required: true },
   },
-  // data() {
-  //   return {
-  //     localStaffs: this.staffs.slice(),
-  //   };
-  // },
+  data() {
+    return {
+      localStaffs: this.staffs.slice(),
+    };
+  },
   emits: ["update:activeIndex", "delete:staff"],
   methods: {
     updateActiveIndex(index) {
@@ -21,14 +23,17 @@ export default {
       const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
       if (confirmed) {
         await StaffService.delete(id);
-        
+
         // Cập nhật danh sách nhân viên mà không làm mới trang
-        // const deletedIndex = this.localStaffs.findIndex(staff => staff._id === id);
-        // if (deletedIndex !== -1) {
-        //   this.localStaffs.splice(deletedIndex, 1);
-        // }
+        const deletedIndex = this.localStaffs.findIndex(staff => staff._id === id);
+        if (deletedIndex !== -1) {
+          this.localStaffs.splice(deletedIndex, 1);
+        }
         this.$emit("delete:staff", this.localStaffs);
-        location.reload();
+        toast.success("Delete Succesfully!");
+        // setTimeout(() => {
+        //   location.reload();
+        // }, 1500);
       }
     },
   }
@@ -37,7 +42,7 @@ export default {
 
 <template>
   <ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-start" v-for="(staff, index) in staffs"
+    <li class="list-group-item d-flex justify-content-between align-items-start" v-for="(staff, index) in localStaffs"
       :key="index" :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
       {{ staff.name }}
       <button type="button" class="ml-2 btn btn-danger" @click="deleteStaff(staff._id)">
