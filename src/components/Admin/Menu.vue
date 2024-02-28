@@ -22,17 +22,17 @@
                 <tr>
                     <td class="text-center">
                         <i class="fa-solid fa-capsules"></i>&nbsp
-                        <router-link :to="{ name: 'admin-product' }" style="text-decoration: none; class " class="textp">
-                            Quản lí kho
+                        <router-link :to="{ name: 'admin-medicine' }" style="text-decoration: none; class " class="textp">
+                            Quản lí thuốc
                         </router-link>
                     </td>
                 </tr>
                 <tr>
                     <td class="text-center">
                         <i class="fa-solid fa-cash-register"></i>&nbsp
-                        <router-link :to="{ name: 'admin-order' }" style="text-decoration: none; class " class="textp">
+                        <!-- <router-link :to="{ name: 'admin-order' }" style="text-decoration: none; class " class="textp">
                             Thống kê đơn hàng
-                        </router-link>
+                        </router-link> -->
                     </td>
                 </tr>
             </tbody>
