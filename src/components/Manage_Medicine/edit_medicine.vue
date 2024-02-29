@@ -32,11 +32,11 @@ export default {
             }
         },
         async editMedicine(data) {
-            const confirmed = window.confirm("Bạn có chắc cập nhật tài khoản này này?");
+            const confirmed = window.confirm("Bạn có chắc cập nhật thuốc này này?");
             if (confirmed) {
                 try {
                     await MedicineService.update(this.medicine ? this.medicine._id : null, data);
-                    this.message = "Cập nhật sản phẩm thành công";
+                    this.message = "Cập nhật thuốc thành công";
                     // alert(this.message);
                     toast.success(this.message);
                     // this.$router.push({ name: 'admin-medicine' });

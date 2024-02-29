@@ -1,6 +1,19 @@
 <template>
   <div class="container" style="padding: 20px 70px;">
-    <h1 class="d-flex justify-content-center">Thêm Thuốc Mới</h1>
+    <div class="row">
+      <div class="col-11">
+        <h1 class="d-flex justify-content-center">Thêm Thuốc Mới</h1>
+      </div>
+      <div class="col-1">
+        <router-link :to="{ name: 'admin-medicine' }">
+          <button class="button-close">
+            <span class="X"></span>
+            <span class="Y"></span>
+          </button>
+        </router-link>
+      </div>
+    </div>
+    
     <Form @submit="submitMedicine" :validation-schema="medicineFormSchema">
       <div class="mb-3 mt-3">
         <label for="tenThuoc">Tên thuốc:</label>
@@ -30,22 +43,27 @@
         <ErrorMessage name="MoTa" class="error-feedback" style="color: rgb(238, 15, 15);" />
       </div>
 
-
-
       <div class="mb-3 mt-3">
         <label for="GhiChu">Ghi Chú:</label>
         <Field name="GhiChu" type="text" class="form-control" v-model="medicineLocal.GhiChu" />
         <ErrorMessage name="GhiChu" class="error-feedback" style="color: rgb(238, 15, 15);" />
       </div>
 
-      <div class="mb-3 mt-3">
-        <label for="imgURL">Ảnh:</label>
-        <Field name="imgURL" type="text" class="form-control" v-model="medicineLocal.imgURL" required />
-        <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
+      <div class="row">
+        <div class="col-3">
+          <img class="img-thumbnail" v-if="medicineLocal.imgURL" :src="medicineLocal.imgURL" alt="Medicine Image"  width="200" height="200"/>
+        </div>
+        <div class="col-9">
+          <div class="mb-3 mt-3">
+            <label for="imgURL">Ảnh:</label>
+            <Field name="imgURL" type="text" class="form-control" v-model="medicineLocal.imgURL" required />
+            <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3 mt-3">
-        <button type="submit" class="btn btn-primary">
+      <div class="mb-3 mt-3 d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary button-submit">
           <div class="svg-wrapper-1">
             <div class="svg-wrapper">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" class="icon">
@@ -59,10 +77,6 @@
         </button>
       </div>
     </Form>
-
-    <router-link :to="{ name: 'admin-medicine' }">
-      <button class="exit-button">Thoát</button>
-    </router-link>
   </div>
 </template>
   
@@ -95,7 +109,10 @@ export default {
         .max(255, "Quá số kí tự được phép."),
       GhiChu: yup
         .string(),
-      imgURL: yup.string().required("Vui lòng chọn một ảnh."),
+      imgURL: yup
+      .string()
+      .required("Vui lòng chọn một ảnh.")
+      .matches(/(\.jpg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, png hoặc webp."),
     });
     return {
       medicineLocal: {
@@ -120,26 +137,18 @@ export default {
 </script>
   
 <style scoped>
+/* Improved styling */
 h1 {
   font-size: 24px;
   color: #333;
 }
 
-.exit-button {
-  background-color: #ff0000;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  margin-right: 20px;
-  cursor: pointer;
-  float: right;
-  position: relative;
-  top: -70px;
+img {
+  border: 1px solid;
 }
 
 /* ------------------- Button ----------------------- */
-button {
+.button-submit {
   font-family: inherit;
   font-size: 20px;
   background: #212121;
@@ -155,39 +164,80 @@ button {
   font-weight: 1000;
 }
 
-button span {
+.button-submit span {
   display: block;
   margin-left: 0.3em;
   transition: all 0.3s ease-in-out;
 }
 
-button svg {
+.button-submit svg {
   display: block;
   transform-origin: center center;
   transition: transform 0.3s ease-in-out;
 }
 
-button:hover {
+.button-submit:hover {
   background: #000;
 }
 
-button:hover .svg-wrapper {
+.button-submit:hover .svg-wrapper {
   transform: scale(1.25);
   transition: 0.5s linear;
 }
 
-button:hover svg {
-  transform: translateX(1.2em) scale(1.1);
+.button-submit:hover svg {
+  transform: translateX(1.1em) scale(1.1);
   fill: #fff;
 }
 
-button:hover span {
+.button-submit:hover span {
   opacity: 0;
   transition: 0.5s linear;
 }
 
-button:active {
+.button-submit:active {
   transform: scale(0.95);
 }
+
+/* ------------------- Button Close----------------------- */
+.button-close {
+  position: relative;
+  width: 4em;
+  height: 4em;
+  border: none;
+  background: rgba(180, 83, 107, 0.11);
+  border-radius: 5px;
+  transition: background 0.5s;
+}
+
+.X {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.5px;
+  background-color: rgb(255, 255, 255);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.Y {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.5px;
+  background-color: #fff;
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.button-close:hover {
+  background-color: rgb(211, 21, 21);
+}
+
+.button-close:active {
+  background-color: rgb(130, 0, 0);
+}
 </style>
-  
+    
