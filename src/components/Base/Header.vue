@@ -36,15 +36,15 @@
                 <div class="collapse navbar-collapse flex-row-reverse" id="collapsibleNavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item" v-if="!isLoggedIn" @click="loginUser()">
-                            <router-link :to="{ name: 'login' }" class="login">
+                            <!-- <router-link :to="{ name: 'login' }" class="login"> -->
                                 Đăng Nhập
-                            </router-link>
+                            <!-- </router-link> -->
 
                         </li>
                         <li class="nav-item" v-if="!isLoggedIn" @click="signupUser()">
-                            <router-link :to="{ name: 'signup' }" class="register">
+                            <!-- <router-link :to="{ name: 'signup' }" class="register"> -->
                                 Đăng Ký
-                            </router-link>
+                            <!-- </router-link> -->
                         </li>
                         <div class="dropdown" v-else>
                             <a class="dropdown-toggle" type="button" data-bs-toggle="dropdown">

@@ -30,16 +30,16 @@ const routes = [
         props: true,
       },
 
-      {
-        path: "/login",
-        name: "login",
-        component: () => import("@/views/Auth/Login.vue"),
-      },
-      {
-        path: "/signup",
-        name: "signup",
-        component: () => import("@/views/Auth/SignUp.vue"),
-      },
+      // {
+      //   path: "/login",
+      //   name: "login",
+      //   component: () => import("@/views/Auth/Login.vue"),
+      // },
+      // {
+      //   path: "/signup",
+      //   name: "signup",
+      //   component: () => import("@/views/Auth/SignUp.vue"),
+      // },
       {
         path: "/cart",
         name: "cart", //name: "cart/:id",
@@ -52,10 +52,49 @@ const routes = [
       },
     ],
   },
+
+
+  // ---------------------- ADMIN ------------------------------
+  {
+    path: "/loginAdmin",
+    name: "login-admin",
+    component: () => import("@/components/AuthAdmin/AdminLogin.vue"),
+    beforeEnter(to, from, next) {
+
+      const staffJs = window.localStorage.getItem('staff');
+      const staff = JSON.parse(staffJs);
+
+      if (staff && staff.role === "admin") {
+        next({ name: "welcome" });
+      }
+      if (staff && staff.role === "doctor") {
+        next({ name: "doctor" });
+      }
+      if (staff && staff.role === "cashier") {
+        next({ name: "cashier" });
+      }
+      if (staff && staff.role === "receptionist") {
+        next({ name: "receptionist" });
+      }
+      else {
+        next();
+      }
+    },
+  },
   {
     path: "/admin",
     name: "admin",
     component: () => import("@/layouts/Admin.vue"),
+    beforeEnter: (to, from, next) => {
+      const staffJs = window.localStorage.getItem('staff');
+      const staff = JSON.parse(staffJs);
+
+      if (!staff) {
+        next({ name: "login-admin" });
+      } else {
+        next();
+      }
+    },
     children: [
       {
         path: "",
@@ -76,7 +115,7 @@ const routes = [
         path: "edit-staff/:id",
         name: "edit-staff",
         component: () => import("@/components/Manage_Staff/edit_staff.vue"),
-        props: true, 
+        props: true,
       },
       {
         path: "medicine",
@@ -92,7 +131,7 @@ const routes = [
         path: "edit-medicine/:id",
         name: "edit-medicine",
         component: () => import("@/components/Manage_Medicine/edit_medicine.vue"),
-        props: true, 
+        props: true,
       },
       // {
       //   path: "order",
@@ -101,12 +140,15 @@ const routes = [
       // },
     ],
   },
+
+
+  // ----------------------------- NOT FOUND -----------------------------
   {
     path: "/:pathMatch(.*)*",
     name: "notfound",
     component: () => import("@/views/NotFound.vue"),
   },
- 
+
 ];
 
 const router = createRouter({

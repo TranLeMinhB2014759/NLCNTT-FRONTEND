@@ -1,6 +1,3 @@
-<style>
-@import "@/assets/css/formLogin.css";
-</style>
 <template>
   <div class="limiter">
     <div class="container-login">
@@ -46,11 +43,11 @@
           </div>
 
           <div class="text-center login-signup">
-            <a class="txt" @click="goToAddUsers()">
-              <router-link :to="{ name: 'signup' }">
+            <a class="txt" @click="goToAddStaffs()">
+              <!-- <router-link :to="{ name: 'signup' }"> -->
                 Create your Account
               <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-            </router-link>
+            <!-- </router-link> -->
             </a>
           </div>
         </Form>
@@ -87,7 +84,6 @@ export default {
                 .string()
                 .required("Mật khẩu phải có giá trị.")
                 .min(5, "Mật khẩu phải ít nhất 5 ký tự.")
-                .max(10, "Mật khẩu có nhiều nhất 10 ký tự."),
         });
 
         return {
@@ -105,10 +101,14 @@ export default {
         submitLogin() {
             this.$emit("submit:login", this.loginLocal);
         },
-        goToAddUsers() {
+        goToAddStaffs() {
             this.$router.push({ name: 'signup' });
         },
     },
 
 };
 </script>
+
+<style>
+@import "@/assets/css/formLogin.css";
+</style>

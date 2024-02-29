@@ -58,9 +58,9 @@ export default {
         logout() {
             const confirmed = window.confirm("Bạn có chắc muốn đăng xuất khỏi hệ thống?");
             if (confirmed) {
-                window.localStorage.removeItem('user');
+                window.localStorage.removeItem('staff');
                 this.isLoggedIn = false;
-                this.$router.push({ name: "login" });
+                this.$router.push({ name: "login-admin" });
             }
         },
     }
