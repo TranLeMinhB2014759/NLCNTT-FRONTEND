@@ -18,17 +18,17 @@ const routes = [
         component: () => import("@/views/NotFound.vue"),
       },
 
-      {
-        path: "/products",
-        name: "products",
-        component: () => import("@/views/Products.vue"),
-      },
-      {
-        path: "/product/:id",
-        name: "product",
-        component: () => import("@/views/Product.vue"),
-        props: true,
-      },
+      // {
+      //   path: "/products",
+      //   name: "products",
+      //   component: () => import("@/views/Products.vue"),
+      // },
+      // {
+      //   path: "/product/:id",
+      //   name: "product",
+      //   component: () => import("@/views/Product.vue"),
+      //   props: true,
+      // },
 
       // {
       //   path: "/login",
@@ -40,16 +40,16 @@ const routes = [
       //   name: "signup",
       //   component: () => import("@/views/Auth/SignUp.vue"),
       // },
-      {
-        path: "/cart",
-        name: "cart", //name: "cart/:id",
-        component: () => import("@/views/Cart.vue"),
-      },
-      {
-        path: "/order",
-        name: "order",
-        component: () => import("@/views/Order.vue"),
-      },
+      // {
+      //   path: "/cart",
+      //   name: "cart", //name: "cart/:id",
+      //   component: () => import("@/views/Cart.vue"),
+      // },
+      // {
+      //   path: "/order",
+      //   name: "order",
+      //   component: () => import("@/views/Order.vue"),
+      // },
     ],
   },
 

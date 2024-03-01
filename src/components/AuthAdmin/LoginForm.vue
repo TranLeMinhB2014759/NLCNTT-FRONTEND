@@ -20,13 +20,13 @@
                       <label class="form-label">Email</label>
                       <Field class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email"
                         v-model="loginLocal.email" autocomplete="off" />
-                      <ErrorMessage name="email" class="error-feedback" />
+                      <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);"/>
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Password</label>
                       <Field class="form-control form-control-lg" type="password" name="password"
                         placeholder="Enter your password" v-model="loginLocal.password" autocomplete="off" />
-                      <ErrorMessage name="password" class="error-feedback" />
+                      <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);"/>
                     </div>
                     <!-- <div>
 											<div class="form-check align-items-center">
@@ -45,7 +45,7 @@
             </div>
             <div class="text-center mb-3">
               <!-- <router-link :to="{ name: 'signup' }"> -->
-              Don't have an account? <a href="pages-sign-up.html">Sign up</a>
+              Don't have an account? <a href="#">Sign up</a>
               <!-- </router-link> -->
             </div>
           </div>
@@ -98,9 +98,6 @@ export default {
   methods: {
     submitLogin() {
       this.$emit("submit:login", this.loginLocal);
-    },
-    goToAddStaffs() {
-      this.$router.push({ name: 'signup' });
     },
   },
 
