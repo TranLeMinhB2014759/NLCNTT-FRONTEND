@@ -1,8 +1,6 @@
 <template>
-    <div>
         <div class="welcome">
         </div>
-    </div>
 </template>
   
 <script>

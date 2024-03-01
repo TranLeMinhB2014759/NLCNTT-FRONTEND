@@ -1,59 +1,58 @@
 <template>
-  <div class="limiter">
-    <div class="container-login">
-      <div class="wrap-login slide">
-        <div class="login-pic" data-tilt>
-          <img src="@/assets/images/img-login.jpg" alt="IMG">
-        </div>
+  <main class="d-flex w-100">
+    <div class="container d-flex flex-column">
+      <div class="row vh-100">
+        <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
+          <div class="d-table-cell align-middle">
 
-        <Form  class="login-form validate-form"  @submit="submitLogin" :validation-schema="loginFormSchema">
-          <strong class="login-form-title">
-            Member Login
-          </strong>
+            <div class="text-center mt-4">
+              <h1 class="h2">Welcome back!</h1>
+              <p class="lead">
+                Sign in to your account to continue
+              </p>
+            </div>
 
-          <div class="wrap-input">
-            <Field type="email" id="email" class="input" name="email" placeholder="Enter your email" v-model="loginLocal.email" />
-            <span class="focus-input"></span>
-            <span class="symbol-input">
-              <i class="fa-solid fa-user" aria-hidden="true"></i>
-            </span>
-          </div>
-          <div class="error-message">
-            <ErrorMessage name="email" class="error-feedback" />
-          </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="m-sm-3">
+                  <Form @submit="submitLogin" :validation-schema="loginFormSchema">
+                    <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <Field class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email"
+                        v-model="loginLocal.email" autocomplete="off" />
+                      <ErrorMessage name="email" class="error-feedback" />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Password</label>
+                      <Field class="form-control form-control-lg" type="password" name="password"
+                        placeholder="Enter your password" v-model="loginLocal.password" autocomplete="off" />
+                      <ErrorMessage name="password" class="error-feedback" />
+                    </div>
+                    <!-- <div>
+											<div class="form-check align-items-center">
+												<input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
+												<label class="form-check-label text-small" for="customControlInline">Remember me</label>
+											</div>
+										</div> -->
+                    <div class="d-grid gap-2 mt-3">
 
-          <div class="wrap-input">
-            <Field :type="showPassword ? 'text' : 'password'" id="password" class="input" name="password"  placeholder="Enter your password" v-model="loginLocal.password" />
-            <i class="far fa-eye" @click="showPassword = !showPassword"
-                                    style="cursor: pointer; position: absolute; right: 130px; top: 270px ">
-                                </i>
-            <span class="focus-input"></span>
-            <span class="symbol-input">
-              <i class="fa fa-lock" aria-hidden="true"></i>
-            </span>
-          </div>
-          <div class="error-message">
-            <ErrorMessage name="password" class="error-feedback" />
-          </div>
+                      <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
 
-          <div class="container-login-form-btn">
-            <button class="login-form-btn" type="submit">
-              Login
-            </button>
-          </div>
-
-          <div class="text-center login-signup">
-            <a class="txt" @click="goToAddStaffs()">
+                    </div>
+                  </Form>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mb-3">
               <!-- <router-link :to="{ name: 'signup' }"> -->
-                Create your Account
-              <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-            <!-- </router-link> -->
-            </a>
+              Don't have an account? <a href="pages-sign-up.html">Sign up</a>
+              <!-- </router-link> -->
+            </div>
           </div>
-        </Form>
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 <script>
 import { ErrorMessage, Field, Form } from "vee-validate";
@@ -61,54 +60,49 @@ import { ErrorMessage, Field, Form } from "vee-validate";
 import * as yup from "yup";
 
 export default {
-    components: {
-        Field,
-        Form,
-        ErrorMessage,
+  components: {
+    Field,
+    Form,
+    ErrorMessage,
+  },
+
+
+  emits: ["submit:login"],
+
+
+  data() {
+    const loginFormSchema = yup.object().shape({
+
+      email: yup
+        .string()
+        .required("Email phải có giá trị.")
+        .email("E-mail không đúng.")
+        .max(50, "E-mail tối đa 50 ký tự."),
+
+      password: yup
+        .string()
+        .required("Mật khẩu phải có giá trị.")
+        .min(5, "Mật khẩu phải ít nhất 5 ký tự.")
+    });
+
+    return {
+      loginLocal: {
+        email: "",
+        password: "",
+      },
+      loginFormSchema,
+    };
+
+  },
+
+  methods: {
+    submitLogin() {
+      this.$emit("submit:login", this.loginLocal);
     },
-
-
-    emits: ["submit:login"],
-
-
-    data() {
-        const loginFormSchema = yup.object().shape({
-
-            email: yup
-                .string()
-                .required("Email phải có giá trị.")
-                .email("E-mail không đúng.")
-                .max(50, "E-mail tối đa 50 ký tự."),
-
-            password: yup
-                .string()
-                .required("Mật khẩu phải có giá trị.")
-                .min(5, "Mật khẩu phải ít nhất 5 ký tự.")
-        });
-
-        return {
-            loginLocal: {
-                email: "",
-                password: "",
-            },
-            loginFormSchema,
-            showPassword: false,
-        };
-
+    goToAddStaffs() {
+      this.$router.push({ name: 'signup' });
     },
-
-    methods: {
-        submitLogin() {
-            this.$emit("submit:login", this.loginLocal);
-        },
-        goToAddStaffs() {
-            this.$router.push({ name: 'signup' });
-        },
-    },
+  },
 
 };
 </script>
-
-<style>
-@import "@/assets/css/formLogin.css";
-</style>

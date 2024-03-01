@@ -1,10 +1,10 @@
 <template>
   <div class="container" style="padding: 20px 70px;">
     <div class="row">
-      <div class="col-11">
+      <div class="col-10">
         <h1 class="d-flex justify-content-center">Chỉnh Sửa Tài Khoản</h1>
       </div>
-      <div class="col-1">
+      <div class="col-2">
         <router-link :to="{ name: 'admin-staff' }">
           <button class="button-close">
             <span class="X"></span>
@@ -69,11 +69,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-3">
+        <div class="col-sm-3 col-12">
           <img class="rounded-circle" v-if="staffLocal.imgURL" :src="staffLocal.imgURL" alt="Staff Image" width="200"
             height="200" />
         </div>
-        <div class="col-9">
+        <div class="col-sm-9 col-12">
           <div class="mb-3 mt-3">
             <label for="imgURL">Ảnh:</label>
             <Field name="imgURL" type="text" class="form-control" v-model="staffLocal.imgURL" required />
