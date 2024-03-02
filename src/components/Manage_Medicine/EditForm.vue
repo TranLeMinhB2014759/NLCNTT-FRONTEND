@@ -59,6 +59,23 @@
       </div>
 
       <div class="mb-3 mt-3">
+        <label for="HDSD">Cách sử dụng:</label>
+        <Field as="select" name="HDSD" class="form-control" v-model="medicineLocal.HDSD" required>
+          <optgroup label="Uống">
+            <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">Ngày uống 1 lần, mỗi lần 1 viên | sáng</option>
+            <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">Ngày uống 1 lần, mỗi lần 1 viên | chiều</option>
+            <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều</option>
+          </optgroup>
+          <optgroup label="Thoa">
+            <option value="Ngày thoa 1 lần | sáng">Ngày thoa 1 lần | sáng</option>
+            <option value="Ngày thoa 1 lần | chiều">Ngày thoa 1 lần | chiều</option>
+            <option value="Ngày thoa 2 lần | sáng, chiều">Ngày thoa 2 lần | sáng, chiều</option>
+            </optgroup>
+        </Field>
+        <ErrorMessage name="HDSD" class="error-feedback" style="color: rgb(238, 15, 15);" />
+      </div>
+
+      <div class="mb-3 mt-3">
         <label for="GhiChu">Ghi Chú:</label>
         <Field name="GhiChu" type="text" class="form-control" v-model="medicineLocal.GhiChu" />
         <ErrorMessage name="GhiChu" class="error-feedback" style="color: rgb(238, 15, 15);" />
@@ -136,6 +153,9 @@ export default {
         .required("Mô tả không được để trống.")
         .min(5, "Nhập ít nhất 5 ký tự.")
         .max(255, "Quá số kí tự được phép."),
+      HDSD: yup
+        .string()
+        .required("Hãy chỉ định cách sử dụng."),
       GhiChu: yup
         .string(),
       nhaCungCap: yup
@@ -156,14 +176,12 @@ export default {
   methods: {
     submitMedicine() {
       this.$emit("submit:medicine", this.medicineLocal);
-      // Handle form submission here
     },
   },
 };
 </script>
     
 <style scoped>
-/* Improved styling */
 h1 {
   font-size: 24px;
   color: #333;

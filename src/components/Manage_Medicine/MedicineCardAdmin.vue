@@ -21,12 +21,16 @@ export default {
                 {{ medicine.Gia }}&#8363; / {{ medicine.Donvi }}
             </div>
             <div class="p-1">
+                <strong>Số lượng:</strong>
+                {{ medicine.SoLuong }}
+            </div>
+            <div class="p-1">
                 <strong>Mô tả:</strong>
                 {{ medicine.MoTa }}
             </div>
             <div class="p-1">
-                <strong>Số lượng:</strong>
-                {{ medicine.SoLuong }}
+                <strong>Cách dùng:</strong>
+                {{ medicine.HDSD }}
             </div>
             <div class="p-1">
                 <strong>Ghi chú:</strong>

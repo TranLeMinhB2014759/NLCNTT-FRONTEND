@@ -13,7 +13,7 @@
         </router-link>
       </div>
     </div>
-    
+
     <Form @submit="submitMedicine" :validation-schema="medicineFormSchema">
       <div class="mb-3 mt-3">
         <label for="tenThuoc">Tên thuốc:</label>
@@ -25,9 +25,9 @@
           <div class="mb-3 mt-3">
             <label for="Gia">Giá:</label>
             <div class="input-group">
-            <Field name="Gia" type="number" class="form-control" v-model="medicineLocal.Gia" required />
-            <span class="input-group-text">VND</span>
-          </div>
+              <Field name="Gia" type="number" class="form-control" v-model="medicineLocal.Gia" required />
+              <span class="input-group-text">VND</span>
+            </div>
             <ErrorMessage name="Gia" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
@@ -56,6 +56,24 @@
         <label for="MoTa">Mô tả:</label>
         <Field name="MoTa" type="text" class="form-control" v-model="medicineLocal.MoTa" required />
         <ErrorMessage name="MoTa" class="error-feedback" style="color: rgb(238, 15, 15);" />
+      </div>
+
+      <div class="mb-3 mt-3">
+        <label for="HDSD">Cách sử dụng:</label>
+        <Field as="select" name="HDSD" class="form-control" v-model="medicineLocal.HDSD" required>
+          <optgroup label="Uống">
+            <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">Ngày uống 1 lần, mỗi lần 1 viên | sáng</option>
+            <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">Ngày uống 1 lần, mỗi lần 1 viên | chiều</option>
+            <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều
+            </option>
+          </optgroup>
+          <optgroup label="Thoa">
+            <option value="Ngày thoa 1 lần | sáng">Ngày thoa 1 lần | sáng</option>
+            <option value="Ngày thoa 1 lần | chiều">Ngày thoa 1 lần | chiều</option>
+            <option value="Ngày thoa 2 lần | sáng, chiều">Ngày thoa 2 lần | sáng, chiều</option>
+          </optgroup>
+        </Field>
+        <ErrorMessage name="HDSD" class="error-feedback" style="color: rgb(238, 15, 15);" />
       </div>
 
       <div class="mb-3 mt-3">
@@ -101,7 +119,7 @@
     </Form>
   </div>
 </template>
-  
+
 <script>
 import { ErrorMessage, Field, Form } from "vee-validate";
 import * as yup from "yup";
@@ -132,11 +150,14 @@ export default {
         .required("Mô tả không được để trống.")
         .min(5, "Nhập ít nhất 5 ký tự.")
         .max(255, "Quá số kí tự được phép."),
+      HDSD: yup
+        .string()
+        .required("Hãy chỉ định cách sử dụng."),
       GhiChu: yup
         .string(),
       nhaCungCap: yup
         .string()
-        .required("Mô tả không được để trống.")
+        .required("Hãy điền tên nhà cung cấp.")
         .min(5, "Nhập ít nhất 5 ký tự.")
         .max(255, "Quá số kí tự được phép."),
       imgURL: yup
@@ -148,9 +169,10 @@ export default {
       medicineLocal: {
         tenThuoc: "",
         Gia: "",
-        SoLuong: "",
         Donvi: "",
+        SoLuong: "",
         MoTa: "",
+        HDSD: "",
         GhiChu: "",
         nhaCungCap: "",
         imgURL: "",
@@ -162,14 +184,12 @@ export default {
   methods: {
     submitMedicine() {
       this.$emit("submit:medicine", this.medicineLocal);
-      // Handle form submission here
     },
   },
 };
 </script>
-  
+
 <style scoped>
-/* Improved styling */
 h1 {
   font-size: 24px;
   color: #333;
@@ -272,4 +292,3 @@ img {
   background-color: gray;
 }
 </style>
-    
