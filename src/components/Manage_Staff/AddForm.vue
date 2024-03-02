@@ -101,6 +101,9 @@
 <script>
 import { ErrorMessage, Field, Form } from "vee-validate";
 import * as yup from "yup";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
 export default {
   components: {
     Form,

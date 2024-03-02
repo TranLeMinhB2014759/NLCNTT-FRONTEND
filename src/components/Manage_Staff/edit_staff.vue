@@ -23,11 +23,10 @@ export default {
     },
     methods: {
         async getStaff() {
-            const id = this.$route.params.id; // Lấy id từ route
+            const id = this.$route.params.id;
             try {
                 this.staff = await StaffService.get(id);
             } catch (error) {
-                // Xử lý lỗi, ví dụ: chuyển hướng đến trang 404
                 this.$router.push({ name: "notfound" });
             }
         },
