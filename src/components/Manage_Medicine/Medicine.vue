@@ -24,8 +24,8 @@ export default {
   computed: {
     medicineStrings() {
       return this.medicines.map((medicine) => {
-        const { name, password, email, role, imgURL } = medicine;
-        return [name, password, email, role, imgURL].join("");
+        const { tenThuoc, Gia, Donvi, Mota, GhiChu, SoLuong, nhaCungCap, imgURL } = medicine;
+        return [tenThuoc, Gia, Donvi, Mota, GhiChu, SoLuong, nhaCungCap, imgURL].join("");
       });
     },
     filteredMedicines() {
@@ -87,7 +87,7 @@ export default {
       <div class="mt-3 col-12 col-sm-8">
         <div v-if="activeMedicine">
           <h4>
-            Thông tin tài khoản
+            Thông tin thuốc
             <MedicineCardAdmin :medicine="activeMedicine" />
             <router-link :to="{
               name: 'edit-medicine',

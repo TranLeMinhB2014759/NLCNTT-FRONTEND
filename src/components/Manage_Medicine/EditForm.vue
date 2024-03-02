@@ -13,7 +13,7 @@
         </router-link>
       </div>
     </div>
-    
+
     <Form @submit="submitMedicine" :validation-schema="medicineFormSchema">
       <div class="mb-3 mt-3">
         <label for="tenThuoc">Tên thuốc:</label>
@@ -21,14 +21,29 @@
         <ErrorMessage name="tenThuoc" class="error-feedback" style="color: rgb(238, 15, 15);" />
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col-md-5 col-8">
           <div class="mb-3 mt-3">
             <label for="Gia">Giá:</label>
-            <Field name="Gia" type="number" class="form-control" v-model="medicineLocal.Gia" required />
+            <div class="input-group">
+              <Field name="Gia" type="number" class="form-control" v-model="medicineLocal.Gia" required />
+              <span class="input-group-text">VND</span>
+            </div>
             <ErrorMessage name="Gia" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
-        <div class="col">
+        <div class="col-md-3 col-4">
+          <div class="mb-3 mt-3">
+            <label for="Donvi">Đơn vị tính:</label>
+            <Field as="select" name="Donvi" class="form-control" v-model="medicineLocal.Donvi" required>
+              <option value="Tuýp">Tuýp</option>
+              <option value="Hộp">Hộp</option>
+              <option value="Viên">Viên</option>
+              <option value="Chai">Chai</option>
+            </Field>
+            <ErrorMessage name="Donvi" class="error-feedback" style="color: rgb(238, 15, 15);" />
+          </div>
+        </div>
+        <div class="col-md-4 col-12">
           <div class="mb-3 mt-3">
             <label for="SoLuong">Số lượng:</label>
             <Field name="SoLuong" type="number" class="form-control" v-model="medicineLocal.SoLuong" required />
@@ -49,9 +64,16 @@
         <ErrorMessage name="GhiChu" class="error-feedback" style="color: rgb(238, 15, 15);" />
       </div>
 
+      <div class="mb-3 mt-3">
+        <label for="nhaCungCap">Nhà Cung Cấp:</label>
+        <Field name="nhaCungCap" type="text" class="form-control" v-model="medicineLocal.nhaCungCap" />
+        <ErrorMessage name="nhaCungCap" class="error-feedback" style="color: rgb(238, 15, 15);" />
+      </div>
+
       <div class="row">
         <div class="col-md-3 col-12">
-          <img class="img-thumbnail" v-if="medicineLocal.imgURL" :src="medicineLocal.imgURL" alt="Medicine Image"  width="200" height="200"/>
+          <img class="img-thumbnail" v-if="medicineLocal.imgURL" :src="medicineLocal.imgURL" alt="Medicine Image"
+            width="200" height="200" />
         </div>
         <div class="col-md-9 col-12">
           <div class="mb-3 mt-3">
@@ -106,6 +128,9 @@ export default {
       SoLuong: yup
         .string()
         .required("Hãy nhập vào số lượng."),
+      Donvi: yup
+        .string()
+        .required("Hãy chọn một đơn vị tính."),
       MoTa: yup
         .string()
         .required("Mô tả không được để trống.")
@@ -113,10 +138,15 @@ export default {
         .max(255, "Quá số kí tự được phép."),
       GhiChu: yup
         .string(),
+      nhaCungCap: yup
+        .string()
+        .required("Mô tả không được để trống.")
+        .min(5, "Nhập ít nhất 5 ký tự.")
+        .max(255, "Quá số kí tự được phép."),
       imgURL: yup
-      .string()
-      .required("Vui lòng chọn một ảnh.")
-      .matches(/(\.jpg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, png hoặc webp."),
+        .string()
+        .required("Vui lòng chọn một ảnh.")
+        .matches(/(\.jpg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, png hoặc webp."),
     });
     return {
       medicineLocal: this.medicine,
@@ -201,7 +231,7 @@ img {
   width: 2.8em;
   height: 2.8em;
   border: none;
-  background: rgba(180, 83, 107, 0.11);
+  background: red;
   border-radius: 50%;
   transition: background 0.5s;
 }
@@ -229,11 +259,11 @@ img {
 }
 
 .button-close:hover {
-  background-color: rgb(211, 21, 21);
+  background-color: gray;
 }
 
 .button-close:active {
-  background-color: rgb(130, 0, 0);
+  background-color: gray;
 }
 </style>
     

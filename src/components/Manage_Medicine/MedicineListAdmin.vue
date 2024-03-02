@@ -9,11 +9,11 @@ export default {
     activeIndex: { type: Number, default: -1 },
     medicine: { type: Object, required: true },
   },
-  data() {
-    return {
-      localMedicines: this.medicines.slice(),
-    };
-  },
+  // data() {
+  //   return {
+  //     localMedicines: this.medicines.slice(),
+  //   };
+  // },
   emits: ["update:activeIndex", "delete:medicine"],
   methods: {
     updateActiveIndex(index) {
@@ -25,14 +25,14 @@ export default {
         await MedicineService.delete(id);
 
         // Cập nhật danh sách nhân viên mà không làm mới trang
-        const deletedIndex = this.localMedicines.findIndex(medicine => medicine._id === id);
-        if (deletedIndex !== -1) {
-          this.localMedicines.splice(deletedIndex, 1);
-        }
+        // const deletedIndex = this.localMedicines.findIndex(medicine => medicine._id === id);
+        // if (deletedIndex !== -1) {
+        //   this.localMedicines.splice(deletedIndex, 1);
+        // }
         this.$emit("delete:medicine", this.localMedicines);
         toast.success("Delete Succesfully!");
         // setTimeout(() => {
-        //   location.reload();
+          location.reload();
         // }, 1500);
       }
     },
@@ -42,7 +42,7 @@ export default {
 
 <template>
   <ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-start" v-for="(medicine, index) in localMedicines"
+    <li class="list-group-item d-flex justify-content-between align-items-start" v-for="(medicine, index) in medicines"
       :key="index" :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
       {{ medicine.tenThuoc }}
       <button type="button" class="ml-2 btn btn-danger" @click="deleteMedicine(medicine._id)">

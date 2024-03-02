@@ -18,7 +18,7 @@ export default {
             </div>
             <div class="p-1">
                 <strong>Giá:</strong>
-                {{ medicine.Gia }}
+                {{ medicine.Gia }}&#8363; / {{ medicine.Donvi }}
             </div>
             <div class="p-1">
                 <strong>Mô tả:</strong>
@@ -31,6 +31,10 @@ export default {
             <div class="p-1">
                 <strong>Ghi chú:</strong>
                 {{ medicine.GhiChu }}
+            </div>
+            <div class="p-1">
+                <strong>Nhà cung cấp:</strong>
+                {{ medicine.nhaCungCap }}
             </div>
         </div>
     </div>

@@ -228,7 +228,7 @@ img {
   width: 2.8em;
   height: 2.8em;
   border: none;
-  background: rgba(180, 83, 107, 0.11);
+  background: red;
   border-radius: 50%;
   transition: background 0.5s;
 }
@@ -256,11 +256,11 @@ img {
 }
 
 .button-close:hover {
-  background-color: rgb(211, 21, 21);
+  background-color: gray;
 }
 
 .button-close:active {
-  background-color: rgb(130, 0, 0);
+  background-color: gray;
 }
 </style>
     
