@@ -18,17 +18,17 @@ const routes = [
         component: () => import("@/views/NotFound.vue"),
       },
 
-      // {
-      //   path: "/products",
-      //   name: "products",
-      //   component: () => import("@/views/Products.vue"),
-      // },
-      // {
-      //   path: "/product/:id",
-      //   name: "product",
-      //   component: () => import("@/views/Product.vue"),
-      //   props: true,
-      // },
+      {
+        path: "/products",
+        name: "products",
+        component: () => import("@/views/Products.vue"),
+      },
+      {
+        path: "/product/:id",
+        name: "product",
+        component: () => import("@/views/Product.vue"),
+        props: true,
+      },
 
       // {
       //   path: "/login",
@@ -132,6 +132,11 @@ const routes = [
         name: "edit-medicine",
         component: () => import("@/components/Manage_Medicine/edit_medicine.vue"),
         props: true,
+      },
+      {
+        path: "patient",
+        name: "admin-patient",
+        component: () => import("@/components/Medical_Record/Patient.vue"),
       },
       // {
       //   path: "order",

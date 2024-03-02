@@ -25,13 +25,20 @@ export default {
                     this.activeTab = 1;
                     break;
                 case 'admin-staff':
+                case 'add-staff':
+                case 'edit-staff':
                     this.activeTab = 2;
                     break;
                 case 'admin-medicine':
+                case 'add-medicine':
+                case 'edit-medicine':
                     this.activeTab = 3;
                     break;
+                case 'admin-patient':
+                    this.activeTab = 4;
+                    break;
                 default:
-                    this.activeTab = 1; // Default to tab 1 if the route doesn't match
+                    this.activeTab = 1;
             }
         },
         logout() {
@@ -84,11 +91,11 @@ export default {
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
+                        <router-link :to="{ name: 'admin-patient' }" class="sidebar-link">
                             <i class="align-middle"></i> <span class="align-middle">Medical
                                 Record</span>
-                        </a>
+                        </router-link>
                     </li>
 
                     <li class="sidebar-item">

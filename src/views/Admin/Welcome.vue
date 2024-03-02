@@ -12,8 +12,8 @@ export default {
 <style scoped>
 .welcome {
     margin: 10px;
-    background-image: url('https://bizflyportal.mediacdn.vn/thumb_wm/1000,100/bizflyportal/images/qua16474015531021.jpg');
-    height: 84vh;
+    background-image: url('https://vtiacademy.edu.vn/upload/images/z4506213156065-80b8258e006dd4635065d8e7c7d1480a.jpg');
+    height: 78vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
