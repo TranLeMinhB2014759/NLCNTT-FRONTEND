@@ -24,8 +24,8 @@ export default {
   computed: {
     staffStrings() {
       return this.staffs.map((staff) => {
-        const { name, password, address, phoneNumber, email, role, imgURL } = staff;
-        return [name, password, address, phoneNumber, email, role, imgURL].join("");
+        const { name, password, address, phoneNumber, email, role } = staff;
+        return [name, password, address, phoneNumber, email, role ].join("");
       });
     },
     filteredStaffs() {

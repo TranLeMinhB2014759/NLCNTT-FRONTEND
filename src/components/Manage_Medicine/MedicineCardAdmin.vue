@@ -8,10 +8,10 @@ export default {
 
 <template>
     <div class="row" style="padding: 10px;">
-        <div class="p-1 col-3 img-card">
+        <div class="p-1 col-12 col-3 col-md-3 img-card">
             <img :src="medicine.imgURL" alt="">
         </div>
-        <div class="col-9">
+        <div class="col-12 col-md-9">
             <div class="p-1">
                 <strong>Tên thuốc: </strong>
                 {{ medicine.tenThuoc }}

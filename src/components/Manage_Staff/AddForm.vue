@@ -16,14 +16,14 @@
     
     <Form @submit="submitStaff" :validation-schema="staffFormSchema">
       <div class="row">
-        <div class="col">
+        <div class="col-12 col-md-6">
           <div class="mb-3 mt-3">
             <label for="name">Tên tài khoản:</label>
             <Field name="name" type="text" class="form-control" v-model="staffLocal.name" required />
             <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
-        <div class="col">
+        <div class="col-12 col-md-6">
           <div class="mb-3 mt-3">
             <label for="role">Vai trò:</label>
             <Field as="select" name="role" class="form-control" v-model="staffLocal.role" required>
@@ -37,14 +37,14 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col-12 col-md-6">
           <div class="mb-3 mt-3">
             <label for="email">Email:</label>
             <Field name="email" type="email" class="form-control" v-model="staffLocal.email" required />
             <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
-        <div class="col">
+        <div class="col-12 col-md-6">
           <div class="mb-3 mt-3">
             <label for="password">Mật khẩu:</label>
             <Field name="password" type="password" class="form-control" v-model="staffLocal.password" required />
@@ -53,14 +53,14 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col-12 col-md-6">
           <div class="mb-3 mt-3">
             <label for="phoneNumber">Số điện thoại:</label>
             <Field name="phoneNumber" type="text" class="form-control" v-model="staffLocal.phoneNumber" required />
             <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
-        <div class="col">
+        <div class="col-12 col-md-6">
           <div class="mb-3 mt-3">
             <label for="address">Địa chỉ:</label>
             <Field name="address" type="text" class="form-control" v-model="staffLocal.address" required />
@@ -69,10 +69,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-3 col-12">
+        <div class="col-12 col-md-3">
           <img class="rounded-circle" v-if="staffLocal.imgURL" :src="staffLocal.imgURL" alt="Staff Image"  width="200" height="200"/>
         </div>
-        <div class="col-md-9 col-12">
+        <div class="col-12 col-md-9">
           <div class="mb-3 mt-3">
             <label for="imgURL">Ảnh:</label>
             <Field name="imgURL" type="text" class="form-control" v-model="staffLocal.imgURL" required />

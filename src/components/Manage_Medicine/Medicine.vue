@@ -24,8 +24,8 @@ export default {
   computed: {
     medicineStrings() {
       return this.medicines.map((medicine) => {
-        const { tenThuoc, Gia, Donvi, Mota, GhiChu, SoLuong, nhaCungCap, imgURL } = medicine;
-        return [tenThuoc, Gia, Donvi, Mota, GhiChu, SoLuong, nhaCungCap, imgURL].join("");
+        const { tenThuoc, Gia, Donvi, Mota, GhiChu, SoLuong, nhaCungCap } = medicine;
+        return [tenThuoc, Gia, Donvi, Mota, GhiChu, SoLuong, nhaCungCap].join("");
       });
     },
     filteredMedicines() {

@@ -5,7 +5,7 @@
         <h1 class="d-flex justify-content-center">Chỉnh Sửa Tài Khoản</h1>
       </div>
       <div class="col-2">
-        <router-link :to="{ name: 'admin-staff' }">
+        <router-link :to="{ name: 'admin-patient' }">
           <button class="button-close">
             <span class="X"></span>
             <span class="Y"></span>
@@ -14,70 +14,47 @@
       </div>
     </div>
 
-    <Form @submit="submitStaff" :validation-schema="staffFormSchema">
+    <Form @submit="submitPatient" :validation-schema="patientFormSchema">
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
           <div class="mb-3 mt-3">
-            <label for="name">Tên tài khoản:</label>
-            <Field name="name" type="text" class="form-control" v-model="staffLocal.name" required />
+            <label for="name">Họ và tên</label>
+            <Field name="name" type="text" class="form-control" v-model="patientLocal.name" required />
             <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
           <div class="mb-3 mt-3">
-            <label for="role">Vai trò:</label>
-            <Field as="select" name="role" class="form-control" v-model="staffLocal.role" required>
-              <option value="admin">Admin</option>
-              <option value="doctor">Doctor</option>
-              <option value="cashier">Cashier</option>
-              <option value="receptionist">Receptionist</option>
+            <label for="gender">Giới tính:</label>
+            <Field as="select" name="gender" class="form-control" v-model="patientLocal.gender" required>
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Khác">Khác</option>
             </Field>
-            <ErrorMessage name="role" class="error-feedback" style="color: rgb(238, 15, 15);" />
+            <ErrorMessage name="gender" class="error-feedback" style="color: rgb(238, 15, 15);" />
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="mb-3 mt-3">
+            <label for="year">Năm sinh:</label>
+            <Field name="year" type="number" class="form-control" v-model="patientLocal.year" required />
+            <ErrorMessage name="year" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="mb-3 mt-3">
-            <label for="email">Email:</label>
-            <Field name="email" type="email" class="form-control" v-model="staffLocal.email" required />
-            <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="mb-3 mt-3">
-            <label for="password">Mật khẩu:</label>
-            <Field name="password" type="password" class="form-control" v-model="staffLocal.password" required />
-            <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-5">
           <div class="mb-3 mt-3">
             <label for="phoneNumber">Số điện thoại:</label>
-            <Field name="phoneNumber" type="text" class="form-control" v-model="staffLocal.phoneNumber" required />
+            <Field name="phoneNumber" type="text" class="form-control" v-model="patientLocal.phoneNumber" required />
             <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-7">
           <div class="mb-3 mt-3">
             <label for="address">Địa chỉ:</label>
-            <Field name="address" type="text" class="form-control" v-model="staffLocal.address" required />
+            <Field name="address" type="text" class="form-control" v-model="patientLocal.address" required />
             <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-3">
-          <img class="rounded-circle" v-if="staffLocal.imgURL" :src="staffLocal.imgURL" alt="Staff Image" width="200"
-            height="200" />
-        </div>
-        <div class="col-12 col-md-9">
-          <div class="mb-3 mt-3">
-            <label for="imgURL">Ảnh:</label>
-            <Field name="imgURL" type="text" class="form-control" v-model="staffLocal.imgURL" required />
-            <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
         </div>
       </div>
@@ -99,7 +76,7 @@
     </Form>
   </div>
 </template>
-    
+
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
@@ -109,56 +86,49 @@ export default {
     Field,
     ErrorMessage,
   },
-  emits: ["submit:staff"],
+  emits: ["submit:patient"],
   props: {
-    staff: { type: Object, required: true },
+    patient: { type: Object, required: true },
   },
   data() {
-    const staffFormSchema = yup.object().shape({
+    const patientFormSchema = yup.object().shape({
       name: yup
         .string()
         .required("Tên không được để trống.")
-        .min(2, "Tên phải có ít nhất 10 ký tự.")
+        .min(10, "Tên phải có ít nhất 10 ký tự.")
         .max(50, "Tên có nhiều nhất 50 ký tự."),
-      email: yup
+      year: yup
         .string()
-        .required("Email không được để trống.")
-        .email("E-mail không đúng."),
+        .required("Hãy nhập vào năm sinh")
+        .test("valid-year", "Năm sinh không hợp lệ", (value) => {
+          return value > 1800 && value < new Date().getFullYear();
+        }),
+      gender: yup
+        .string()
+        .required("Hãy chọn giới tính"),
+      phoneNumber: yup
+        .string()
+        .required("Số điện thoại không được để trống.")
+        .min(8, "Số điện thoại có ít nhất 8 số")
+        .max(11, "Số điện thoại không hợp lệ"),
       address: yup
         .string()
         .required("Địa chỉ không được để trống."),
-      phoneNumber: yup
-        .string()
-        .required("Số điện thoại không được để trống."),
-      password: yup
-        .string()
-        .required("Mật khẩu phải có giá trị.")
-        .min(5, "Mật khẩu phải ít nhất 5 ký tự.")
-        .max(10, "Mật khẩu có nhiều nhất 10 ký tự."),
-
-      role: yup
-        .string()
-        .required("Hãy phân quyền cho tài khoản."),
-
-      imgURL: yup
-        .string()
-        .required("Vui lòng chọn một ảnh.")
-        .matches(/(\.jpg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, png hoặc webp."),
     });
     return {
-      staffLocal: this.staff,
-      staffFormSchema,
+      patientLocal: this.patient,
+      patientFormSchema,
     };
   },
   methods: {
-    submitStaff() {
-      this.$emit("submit:staff", this.staffLocal);
+    submitPatient() {
+      this.$emit("submit:patient", this.patientLocal);
       // Handle form submission here
     },
   },
 };
 </script>
-    
+
 <style scoped>
 /* Improved styling */
 h1 {
@@ -263,4 +233,3 @@ img {
   background-color: gray;
 }
 </style>
-    

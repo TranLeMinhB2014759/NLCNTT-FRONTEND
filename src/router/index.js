@@ -138,6 +138,17 @@ const routes = [
         name: "admin-patient",
         component: () => import("@/components/Medical_Record/Patient.vue"),
       },
+      {
+        path: "add-patient",
+        name: "add-patient",
+        component: () => import("@/components/Medical_Record/add_patient.vue"),
+      },
+      {
+        path: "edit-patient/:id",
+        name: "edit-patient",
+        component: () => import("@/components/Medical_Record/edit_patient.vue"),
+        props: true,
+      },
       // {
       //   path: "order",
       //   name: "admin-order",
