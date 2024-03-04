@@ -35,6 +35,9 @@ export default {
                     this.activeTab = 3;
                     break;
                 case 'admin-patient':
+                case 'add-medicine':
+                case 'edit-medicine':
+                case 'medical-record':
                     this.activeTab = 4;
                     break;
                 default:

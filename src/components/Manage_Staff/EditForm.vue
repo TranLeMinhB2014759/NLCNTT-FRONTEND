@@ -1,105 +1,112 @@
 <template>
-  <div class="container" style="padding: 20px 70px;">
-    <div class="row">
-      <div class="col-10">
-        <h1 class="d-flex justify-content-center">Chỉnh Sửa Tài Khoản</h1>
-      </div>
-      <div class="col-2">
-        <router-link :to="{ name: 'admin-staff' }">
-          <button class="button-close">
-            <span class="X"></span>
-            <span class="Y"></span>
-          </button>
-        </router-link>
-      </div>
-    </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="container" style="padding: 20px 70px;">
+        <div class="row">
+          <div class="col-10">
+            <h1 class="d-flex justify-content-center">Chỉnh Sửa Tài Khoản</h1>
+          </div>
+          <div class="col-2">
+            <router-link :to="{ name: 'admin-staff' }">
+              <button class="button-close">
+                <span class="X"></span>
+                <span class="Y"></span>
+              </button>
+            </router-link>
+          </div>
+        </div>
 
-    <Form @submit="submitStaff" :validation-schema="staffFormSchema">
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="mb-3 mt-3">
-            <label for="name">Tên tài khoản:</label>
-            <Field name="name" type="text" class="form-control" v-model="staffLocal.name" required />
-            <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="mb-3 mt-3">
-            <label for="role">Vai trò:</label>
-            <Field as="select" name="role" class="form-control" v-model="staffLocal.role" required>
-              <option value="admin">Admin</option>
-              <option value="doctor">Doctor</option>
-              <option value="cashier">Cashier</option>
-              <option value="receptionist">Receptionist</option>
-            </Field>
-            <ErrorMessage name="role" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="mb-3 mt-3">
-            <label for="email">Email:</label>
-            <Field name="email" type="email" class="form-control" v-model="staffLocal.email" required />
-            <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="mb-3 mt-3">
-            <label for="password">Mật khẩu:</label>
-            <Field name="password" type="password" class="form-control" v-model="staffLocal.password" required />
-            <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="mb-3 mt-3">
-            <label for="phoneNumber">Số điện thoại:</label>
-            <Field name="phoneNumber" type="text" class="form-control" v-model="staffLocal.phoneNumber" required />
-            <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="mb-3 mt-3">
-            <label for="address">Địa chỉ:</label>
-            <Field name="address" type="text" class="form-control" v-model="staffLocal.address" required />
-            <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-3">
-          <img class="rounded-circle" v-if="staffLocal.imgURL" :src="staffLocal.imgURL" alt="Staff Image" width="200"
-            height="200" />
-        </div>
-        <div class="col-12 col-md-9">
-          <div class="mb-3 mt-3">
-            <label for="imgURL">Ảnh:</label>
-            <Field name="imgURL" type="text" class="form-control" v-model="staffLocal.imgURL" required />
-            <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-3 mt-3 d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary button-submit">
-          <div class="svg-wrapper-1">
-            <div class="svg-wrapper">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" class="icon">
-                <path
-                  d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z">
-                </path>
-              </svg>
+        <Form @submit="submitStaff" :validation-schema="staffFormSchema">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="mb-3 mt-3">
+                <label for="name">Tên tài khoản:</label>
+                <Field name="name" type="text" class="form-control" v-model="staffLocal.name" required />
+                <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="mb-3 mt-3">
+                <label for="role">Vai trò:</label>
+                <Field as="select" name="role" class="form-control" v-model="staffLocal.role" required>
+                  <option value="admin">Admin</option>
+                  <option value="doctor">Doctor</option>
+                  <option value="cashier">Cashier</option>
+                  <option value="receptionist">Receptionist</option>
+                </Field>
+                <ErrorMessage name="role" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
             </div>
           </div>
-          <span>Update</span>
-        </button>
+
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="mb-3 mt-3">
+                <label for="email">Email:</label>
+                <Field name="email" type="email" class="form-control" v-model="staffLocal.email" required />
+                <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="mb-3 mt-3">
+                <label for="password">Mật khẩu:</label>
+                <Field name="password" type="password" class="form-control" v-model="staffLocal.password" required />
+                <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="mb-3 mt-3">
+                <label for="phoneNumber">Số điện thoại:</label>
+                <Field name="phoneNumber" type="text" class="form-control" v-model="staffLocal.phoneNumber" required />
+                <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="mb-3 mt-3">
+                <label for="address">Địa chỉ:</label>
+                <Field name="address" type="text" class="form-control" v-model="staffLocal.address" required />
+                <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <img class="rounded-circle" v-if="staffLocal.imgURL" :src="staffLocal.imgURL" alt="Staff Image"
+                width="200" height="200" />
+            </div>
+            <div class="col-12 col-md-9">
+              <div class="mb-3 mt-3">
+                <label for="imgURL">Ảnh:</label>
+                <Field name="imgURL" type="text" class="form-control" v-model="staffLocal.imgURL" required />
+                <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 mt-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary button-submit">
+              <div class="svg-wrapper-1">
+                <div class="svg-wrapper">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" class="icon">
+                    <path
+                      d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z">
+                    </path>
+                  </svg>
+                </div>
+              </div>
+              <span>Update</span>
+            </button>
+          </div>
+        </Form>
       </div>
-    </Form>
+    </div>
   </div>
 </template>
-    
+
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
@@ -158,7 +165,7 @@ export default {
   },
 };
 </script>
-    
+
 <style scoped>
 /* Improved styling */
 h1 {
@@ -263,4 +270,3 @@ img {
   background-color: gray;
 }
 </style>
-    
