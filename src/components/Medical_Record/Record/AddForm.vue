@@ -20,14 +20,14 @@
           <div class="row">
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="name"><strong>Họ và tên: </strong>{{patientLocal.name}}</label>
-                <Field name="name" type="text" class="form-control" v-model="patientLocal.name" required hidden/>
+                <label for="name"><strong>Họ và tên: </strong>{{ patientLocal.name }}</label>
+                <Field name="name" type="text" class="form-control" v-model="patientLocal.name" required hidden />
                 <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="gender"><strong>Giới tính: </strong>{{patientLocal.gender}}</label>
+                <label for="gender"><strong>Giới tính: </strong>{{ patientLocal.gender }}</label>
                 <Field as="select" name="gender" class="form-control" v-model="patientLocal.gender" required hidden>
                   <option value="Nam">Nam</option>
                   <option value="Nữ">Nữ</option>
@@ -38,36 +38,48 @@
             </div>
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="year"><strong>Năm sinh: </strong>{{patientLocal.year}}</label>
-                <Field name="year" type="number" class="form-control" v-model="patientLocal.year" required hidden/>
+                <label for="year"><strong>Năm sinh: </strong>{{ patientLocal.year }}</label>
+                <Field name="year" type="number" class="form-control" v-model="patientLocal.year" required hidden />
                 <ErrorMessage name="year" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-12 col-md-5">
               <div class="mb-3 mt-3">
-                <label for="phoneNumber"><strong>Số điện thoại: </strong>{{patientLocal.phoneNumber}}</label>
-                <Field name="phoneNumber" type="text" class="form-control" v-model="patientLocal.phoneNumber"
-                  required  hidden/>
+                <label for="phoneNumber"><strong>Số điện thoại: </strong>{{ patientLocal.phoneNumber }}</label>
+                <Field name="phoneNumber" type="text" class="form-control" v-model="patientLocal.phoneNumber" required
+                  hidden />
                 <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-7">
               <div class="mb-3 mt-3">
-                <label for="address"><strong>Địa chỉ: </strong>{{patientLocal.address}}</label>
-                <Field name="address" type="text" class="form-control" v-model="patientLocal.address" required hidden/>
+                <label for="address"><strong>Địa chỉ: </strong>{{ patientLocal.address }}</label>
+                <Field name="address" type="text" class="form-control" v-model="patientLocal.address" required hidden />
                 <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-7">
-              <div class="mb-3 mt-3">
-                <Field name="ngayKham" type="text" class="form-control" v-model="patientLocal.ngayKham" required hidden/>
-                <ErrorMessage name="ngayKham" class="error-feedback" style="color: rgb(238, 15, 15);" />
-              </div>
+          <Field name="ngayKham" type="text" class="form-control" v-model="patientLocal.ngayKham" required hidden />
+          <ErrorMessage name="ngayKham" class="error-feedback" style="color: rgb(238, 15, 15);" />
+
+          <Field name="bacsi" type="text" class="form-control" v-model="patientLocal.bacsi" required hidden />
+          <ErrorMessage name="bacsi" class="error-feedback" style="color: rgb(238, 15, 15);" />
+
+
+          <div class="mb-3 mt-3">
+            <label for="address"><strong>Triệu chứng: </strong></label>
+            <Field name="symptom" type="text" class="form-control" v-model="patientLocal.symptom" required />
+            <ErrorMessage name="symptom" class="error-feedback" style="color: rgb(238, 15, 15);" />
+          </div>
+
+          <div class="mb-3 mt-3">
+            <label for="address"><strong>Chẩn đoán: </strong></label>
+            <Field name="diagnosis" type="text" class="form-control" v-model="patientLocal.diagnosis" required />
+            <ErrorMessage name="diagnosis" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
           <div class="mb-3 mt-3 d-flex justify-content-center">
@@ -136,17 +148,26 @@ export default {
         phoneNumber: this.patient.phoneNumber,
         address: this.patient.address,
         ngayKham: this.getCurrentDate(),
+        bacsi: this.getBacsi(),
+        symptom: "",
+        diagnosis: "",
       },
       patientFormSchema,
     };
   },
   methods: {
+    getBacsi() {
+      const staffData = JSON.parse(window.localStorage.getItem('staff'));
+      this.staff = staffData || {};
+      return `${this.staff.name}`;
+    },
+
     getCurrentDate() {
       const currentDate = new Date();
       const day = String(currentDate.getDate()).padStart(2, '0');
       const month = String(currentDate.getMonth() + 1).padStart(2, '0');
       const year = currentDate.getFullYear();
-      return `${year}-${month}-${day}`;
+      return `${day}-${month}-${year}`;
     },
 
     submitPatient() {

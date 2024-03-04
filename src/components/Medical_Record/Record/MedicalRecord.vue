@@ -68,9 +68,10 @@
                     :medicalrecords="filteredMedicalrecords">
                     <thead>
                         <tr>
+                            <th>Bác sĩ chuẩn đoán</th>
                             <th>Ngày khám</th>
                             <th>Triệu chứng</th>
-                            <th>Chuẩn đoán</th>
+                            <th>Chẩn đoán</th>
                             <th>Toa thuốc</th>
                             <th>Xóa</th>
                         </tr>
@@ -78,6 +79,7 @@
                     <tbody v-for="(medicalrecord, index) in filteredMedicalrecords" :key="index"
                         :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
                         <tr>
+                            <td>{{ medicalrecord.bacsi }}</td>
                             <td>{{ medicalrecord.ngayKham }}</td>
                             <td>{{ medicalrecord.symptom }}</td>
                             <td>{{ medicalrecord.diagnosis }}</td>
@@ -127,8 +129,8 @@ export default {
     computed: {
         medicalrecordStrings() {
             return this.medicalrecords.map((medicalrecord) => {
-                const { symptom, diagnosis, ngayKham } = medicalrecord;
-                return [symptom, diagnosis, ngayKham].join("");
+                const { bacsi, symptom, diagnosis, ngayKham } = medicalrecord;
+                return [bacsi, symptom, diagnosis, ngayKham].join("");
             });
         },
         filteredMedicalrecords() {
