@@ -43,28 +43,103 @@
         </div>
     </div>
 
-    <h1 class="h3 mt-3"><strong>Hồ Sơ Bệnh Án</strong></h1>
+    <h1 class="h3 mt-5"><strong>Hồ Sơ Bệnh Án</strong></h1>
     <div class="card">
         <div class="card-body">
-            
+            <router-link :to="{ name: 'add-medicalrecord', params: { id: patient._id } }">
+                <button title="Add" class="cssbuttons-io-button">
+                    <svg height="25" width="25" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
+                    </svg>
+                    <span>Add</span>
+                </button>
+            </router-link>
+            <div class="row">
+                <div class="container col-12 col-sm-4">
+                    <InputSearch v-model="searchText" />
+                </div>
+                <div class="col-sm-8">
+
+                </div>
+            </div>
+            <div class="container mt-3">
+                <table class="table table-bordered table-hover text-center" v-if="filteredMedicalrecordsCount > 0"
+                    :medicalrecords="filteredMedicalrecords">
+                    <thead>
+                        <tr>
+                            <th>Ngày khám</th>
+                            <th>Triệu chứng</th>
+                            <th>Chuẩn đoán</th>
+                            <th>Toa thuốc</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="(medicalrecord, index) in filteredMedicalrecords" :key="index"
+                        :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
+                        <tr>
+                            <td>{{ medicalrecord.ngayKham }}</td>
+                            <td>{{ medicalrecord.symptom }}</td>
+                            <td>{{ medicalrecord.diagnosis }}</td>
+                            <td>
+                                <button type="button" class="ml-2 btn btn-info">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                            </td>
+
+                            <td>
+                                <button type="button" class="ml-2 btn btn-danger"
+                                    @click="deleteMedicalrecord(medicalrecord._id)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p v-else>Không tìm thấy hồ sơ phù hợp.</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import PatientService from "@/services/patient.service";
+import MedicalrecordService from "@/services/medicalrecord.service";
+import InputSearch from "@/components/InputSearch.vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
 export default {
+    components: {
+        InputSearch,
+    },
     data() {
         return {
-            patient: null,
+            patient: [],
+            medicalrecords: [],
             message: "",
+            activeIndex: -1,
+            searchText: "",
         };
     },
 
     computed: {
+        medicalrecordStrings() {
+            return this.medicalrecords.map((medicalrecord) => {
+                const { symptom, diagnosis, ngayKham } = medicalrecord;
+                return [symptom, diagnosis, ngayKham].join("");
+            });
+        },
+        filteredMedicalrecords() {
+            if (!this.searchText) return this.medicalrecords;
+            return this.medicalrecords.filter((_medicalrecord, index) =>
+                this.medicalrecordStrings[index].includes(this.searchText)
+            );
+        },
+        filteredMedicalrecordsCount() {
+            return this.filteredMedicalrecords.length;
+        },
         patientAges() {
             return this.patients.map((patient) => this.calculateAge(patient.year));
         },
@@ -80,14 +155,41 @@ export default {
                 this.$router.push({ name: "notfound" });
             }
         },
+
         calculateAge(yearOfBirth) {
             const currentYear = new Date().getFullYear();
             return currentYear - yearOfBirth;
         },
+
+        async retrieveMedicalrecords() {
+            const phoneNumber = this.patient.phoneNumber;
+            this.medicalrecords = await MedicalrecordService.getRecord(phoneNumber);
+        },
+
+        updateActiveIndex(index) {
+            this.activeIndex = index;
+        },
+
+        refreshList() {
+            this.retrieveMedicalrecords();
+            this.activeIndex = -1;
+        },
+        
+        async deleteMedicalrecord(id) {
+            const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
+            if (confirmed) {
+                await MedicalrecordService.delete(id);
+                this.medicalrecords = [];
+                this.refreshList();
+                toast.success("Delete Succesfully!");
+            }
+        },
     },
 
-    created() {
-        this.getPatient();
+    async created() {
+        await this.getPatient();
+        await this.retrieveMedicalrecords();
+        this.refreshList();
     },
 };
 </script>
@@ -169,5 +271,37 @@ export default {
 .button-back:focus .button-box {
     transition: 0.4s;
     transform: translateX(-56px);
+}
+
+/* ------------------------ BUTTON ADD ------------------------------ */
+.cssbuttons-io-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2em;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    padding: .5em 1.5em;
+    color: white;
+    background: linear-gradient(0deg, rgb(0, 150, 60), rgb(100, 250, 150));
+    border: none;
+    outline: none;
+    border-bottom: 3px solid rgb(0, 130, 40);
+    box-shadow: 0 .5em .5em -.4em rgb(0, 0, 0, .5);
+    letter-spacing: 0.08em;
+    border-radius: 20em;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.cssbuttons-io-button:hover {
+    filter: brightness(1.2);
+    color: rgb(0, 0, 0, .5);
+}
+
+.cssbuttons-io-button:active {
+    transition: 0s;
+    transform: rotate(-10deg);
 }
 </style>

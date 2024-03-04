@@ -26,7 +26,7 @@ export default {
       if (confirmed) {
         try {
           await PatientService.create(data);
-          toast.success("Thêm tài khoản mới thành công")
+          toast.success("Thêm bệnh nhân mới thành công")
           this.$router.push({ name: 'admin-patient' });
         } catch (error) {
           console.log(error);

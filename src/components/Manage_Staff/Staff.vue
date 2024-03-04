@@ -104,7 +104,6 @@ export default {
     },
   },
   created() {
-    // Automatically call refreshList() when the component is created
     this.refreshList();
   },
 };

@@ -1,14 +1,18 @@
 <template>
-        <div class="welcome">
+    <div class="card">
+        <div class="card-body">
+            <div class="welcome">
+            </div>
         </div>
+    </div>
 </template>
-  
+
 <script>
 export default {
 
 }
 </script>
-  
+
 <style scoped>
 .welcome {
     margin: 10px;
@@ -19,4 +23,3 @@ export default {
     background-repeat: no-repeat;
 }
 </style>
-  

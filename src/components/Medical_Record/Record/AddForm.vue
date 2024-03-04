@@ -4,10 +4,10 @@
       <div class="container" style="padding: 20px 70px;">
         <div class="row">
           <div class="col-10">
-            <h1 class="d-flex justify-content-center">Chỉnh Sửa Thông Tin</h1>
+            <h1 class="d-flex justify-content-center">Thêm toa thuốc</h1>
           </div>
           <div class="col-2">
-            <router-link :to="{ name: 'admin-patient' }">
+            <router-link :to="{ name: 'medicalrecord', params: { id: patient._id } }">
               <button class="button-close">
                 <span class="X"></span>
                 <span class="Y"></span>
@@ -20,15 +20,15 @@
           <div class="row">
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="name">Họ và tên</label>
-                <Field name="name" type="text" class="form-control" v-model="patientLocal.name" required />
+                <label for="name"><strong>Họ và tên: </strong>{{patientLocal.name}}</label>
+                <Field name="name" type="text" class="form-control" v-model="patientLocal.name" required hidden/>
                 <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="gender">Giới tính:</label>
-                <Field as="select" name="gender" class="form-control" v-model="patientLocal.gender" required>
+                <label for="gender"><strong>Giới tính: </strong>{{patientLocal.gender}}</label>
+                <Field as="select" name="gender" class="form-control" v-model="patientLocal.gender" required hidden>
                   <option value="Nam">Nam</option>
                   <option value="Nữ">Nữ</option>
                   <option value="Khác">Khác</option>
@@ -38,8 +38,8 @@
             </div>
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="year">Năm sinh:</label>
-                <Field name="year" type="number" class="form-control" v-model="patientLocal.year" required />
+                <label for="year"><strong>Năm sinh: </strong>{{patientLocal.year}}</label>
+                <Field name="year" type="number" class="form-control" v-model="patientLocal.year" required hidden/>
                 <ErrorMessage name="year" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -48,19 +48,26 @@
           <div class="row">
             <div class="col-12 col-md-5">
               <div class="mb-3 mt-3">
-                <label for="phoneNumber">Số điện thoại:</label>
+                <label for="phoneNumber"><strong>Số điện thoại: </strong>{{patientLocal.phoneNumber}}</label>
                 <Field name="phoneNumber" type="text" class="form-control" v-model="patientLocal.phoneNumber"
-                  required />
+                  required  hidden/>
                 <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-7">
               <div class="mb-3 mt-3">
-                <label for="address">Địa chỉ:</label>
-                <Field name="address" type="text" class="form-control" v-model="patientLocal.address" required />
+                <label for="address"><strong>Địa chỉ: </strong>{{patientLocal.address}}</label>
+                <Field name="address" type="text" class="form-control" v-model="patientLocal.address" required hidden/>
                 <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
+          </div>
+
+          <div class="col-12 col-md-7">
+              <div class="mb-3 mt-3">
+                <Field name="ngayKham" type="text" class="form-control" v-model="patientLocal.ngayKham" required hidden/>
+                <ErrorMessage name="ngayKham" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
           </div>
 
           <div class="mb-3 mt-3 d-flex justify-content-center">
@@ -74,7 +81,7 @@
                   </svg>
                 </div>
               </div>
-              <span>Update</span>
+              <span>Save</span>
             </button>
           </div>
         </Form>
@@ -122,21 +129,34 @@ export default {
         .required("Địa chỉ không được để trống."),
     });
     return {
-      patientLocal: this.patient,
+      patientLocal: {
+        name: this.patient.name,
+        year: this.patient.year,
+        gender: this.patient.gender,
+        phoneNumber: this.patient.phoneNumber,
+        address: this.patient.address,
+        ngayKham: this.getCurrentDate(),
+      },
       patientFormSchema,
     };
   },
   methods: {
+    getCurrentDate() {
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const year = currentDate.getFullYear();
+      return `${year}-${month}-${day}`;
+    },
+
     submitPatient() {
       this.$emit("submit:patient", this.patientLocal);
-      // Handle form submission here
     },
   },
 };
 </script>
 
 <style scoped>
-/* Improved styling */
 h1 {
   font-size: 24px;
   color: #333;
@@ -185,7 +205,7 @@ img {
 }
 
 .button-submit:hover svg {
-  transform: translateX(1.6em) scale(1.1);
+  transform: translateX(1.1em) scale(1.1);
   fill: #fff;
 }
 

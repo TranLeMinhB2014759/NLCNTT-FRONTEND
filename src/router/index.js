@@ -150,9 +150,14 @@ const routes = [
         props: true,
       },
       {
-        path: "medical-record/:id",
-        name: "medical-record",
+        path: "medicalrecord/:id",
+        name: "medicalrecord",
         component: () => import("@/components/Medical_Record/Record/MedicalRecord.vue"),
+      },
+      {
+        path: "add-medicalrecord/:id",
+        name: "add-medicalrecord",
+        component: () => import("@/components/Medical_Record/Record/add_medicalrecord.vue"),
       },
       // {
       //   path: "order",

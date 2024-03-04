@@ -15,12 +15,17 @@ export default {
         edit,
     },
 
+    props: {
+        medicalrecord: { type: Object, require: true },
+    },
+
     data() {
         return {
             patient: null,
             message: "",
         };
     },
+    
     methods: {
         async getPatient() {
             const id = this.$route.params.id;
@@ -31,11 +36,11 @@ export default {
             }
         },
         async editPatient(data) {
-            const confirmed = window.confirm("Bạn có chắc cập nhật tài khoản này này?");
+            const confirmed = window.confirm("Bạn có chắc cập nhật tài khoản này?");
             if (confirmed) {
                 try {
                     await PatientService.update(this.patient ? this.patient._id : null, data);
-                    this.message = "Cập nhật sản phẩm thành công";
+                    this.message = "Cập nhật thông tin thành công";
                     toast.success(this.message);
                 } catch (error) {
                     console.error(error);

@@ -31,7 +31,7 @@ export default {
             }
         },
         async editStaff(data) {
-            const confirmed = window.confirm("Bạn có chắc cập nhật tài khoản này này?");
+            const confirmed = window.confirm("Bạn có chắc cập nhật tài khoản này?");
             if (confirmed) {
                 try {
                     await StaffService.update(this.staff ? this.staff._id : null, data);

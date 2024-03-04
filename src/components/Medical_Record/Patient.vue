@@ -38,7 +38,7 @@
                 <td>{{ patient.phoneNumber }}</td>
                 <td>{{ patient.address }}</td>
                 <td>
-                  <router-link :to="{ name: 'medical-record', params: { id: patient._id } }">
+                  <router-link :to="{ name: 'medicalrecord', params: { id: patient._id } }">
                     <button type="button" class="ml-2 btn btn-info">
                       <i class="fa-solid fa-eye"></i>
                     </button>
