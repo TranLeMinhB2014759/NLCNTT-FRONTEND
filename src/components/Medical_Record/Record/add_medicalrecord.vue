@@ -1,11 +1,11 @@
 <template>
   <div>
-      <edit :patient="patient" @submit:patient="editPatient" />
+      <add :patient="patient" @submit:medicalrecord="addMedicalrecord" />
   </div>
 </template>
 
 <script>
-import edit from "@/components/Medical_Record/Record/AddForm.vue";
+import add from "@/components/Medical_Record/Record/AddForm.vue";
 import PatientService from "@/services/patient.service";
 import MedicalrecordService from "@/services/medicalrecord.service";
 import { toast } from 'vue3-toastify';
@@ -13,7 +13,7 @@ import 'vue3-toastify/dist/index.css';
 
 export default {
   components: {
-      edit,
+      add,
   },
 
   props: {
@@ -36,8 +36,8 @@ export default {
               this.$router.push({ name: "notfound" });
           }
       },
-      async editPatient(data) {
-          const confirmed = window.confirm("Bạn có chắc muốn lập toa thuốc này không này?");
+      async addMedicalrecord(data) {
+          const confirmed = window.confirm("Đơn thuốc khi đã lập là không thể sửa. Bạn có chắc chắn muốn lặp đơn thuốc này?");
           if (confirmed) {
               try {
                   await MedicalrecordService.create(data);

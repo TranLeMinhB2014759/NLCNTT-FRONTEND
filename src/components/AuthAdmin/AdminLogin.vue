@@ -37,7 +37,7 @@ export default {
                     }
                 }
             } catch (error) {
-                this.message = "Đăng nhập thất bại, email hoặc mật khẩu  chưa chính xác";
+                this.message = "Đăng nhập thất bại, email hoặc mật khẩu chưa chính xác";
                 toast.error(this.message);
             }
         },

@@ -84,12 +84,52 @@
                             <td>{{ medicalrecord.symptom }}</td>
                             <td>{{ medicalrecord.diagnosis }}</td>
                             <td>
-                                <button type="button" class="ml-2 btn btn-info">
+                                <button type="button" class="ml-2 btn btn-info" data-bs-toggle="modal"
+                                :data-bs-target="'#modalMediaRecord_' + index">
                                     <i class="fa-solid fa-eye"></i>
                                 </button>
+                                <div class="modal fade" :id="'modalMediaRecord_' + index">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Toa thuốc</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
 
+                                            <div class="modal-body">
+                                                <table class="table table-bordered">
+                                                    <thead class="table-success">
+                                                        <tr>
+                                                            <th>STT</th>
+                                                            <th>Tên thuốc</th>
+                                                            <th>Giá</th>
+                                                            <th>SL</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody v-for="(medicalrecord, idx) in medicalrecord.prescription":key="idx">
+                                                        <tr>
+                                                            <td rowspan="2">{{ idx + 1 }}</td>
+                                                            <td class="text-start">{{ medicalrecord.tenThuoc }}</td>
+                                                            <td>{{ medicalrecord.Gia }} / {{ medicalrecord.Donvi }} </td>
+                                                            <td>{{ medicalrecord.SoLuong }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4" class="text-start">
+                                                                {{ medicalrecord.HDSD }}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
-
                             <td>
                                 <button type="button" class="ml-2 btn btn-danger"
                                     @click="deleteMedicalrecord(medicalrecord._id)">
@@ -176,7 +216,7 @@ export default {
             this.retrieveMedicalrecords();
             this.activeIndex = -1;
         },
-        
+
         async deleteMedicalrecord(id) {
             const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
             if (confirmed) {
@@ -199,6 +239,11 @@ export default {
 <style scoped>
 .back {
     display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 /* ----------------------- BUTTON BACK --------------------------- */

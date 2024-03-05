@@ -3,10 +3,12 @@
     <div class="card-body">
       <div class="container" style="padding: 20px 70px;">
         <div class="row">
+          <!-- Phần tiêu đề -->
           <div class="col-10">
             <h1 class="d-flex justify-content-center">Thêm toa thuốc</h1>
           </div>
           <div class="col-2">
+            <!-- Nút đóng -->
             <router-link :to="{ name: 'medicalrecord', params: { id: patient._id } }">
               <button class="button-close">
                 <span class="X"></span>
@@ -16,19 +18,22 @@
           </div>
         </div>
 
-        <Form @submit="submitPatient" :validation-schema="patientFormSchema">
+        <!-- Form thêm toa thuốc -->
+        <Form @submit="submitMedicalrecord" :validation-schema="medicalrecordFormSchema">
+          <!-- Thông tin bệnh nhân -->
           <div class="row">
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="name"><strong>Họ và tên: </strong>{{ patientLocal.name }}</label>
-                <Field name="name" type="text" class="form-control" v-model="patientLocal.name" required hidden />
+                <label for="name"><strong>Họ và tên: </strong>{{ medicalrecordLocal.name }}</label>
+                <Field name="name" type="text" class="form-control" v-model="medicalrecordLocal.name" required hidden />
                 <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="gender"><strong>Giới tính: </strong>{{ patientLocal.gender }}</label>
-                <Field as="select" name="gender" class="form-control" v-model="patientLocal.gender" required hidden>
+                <label for="gender"><strong>Giới tính: </strong>{{ medicalrecordLocal.gender }}</label>
+                <Field as="select" name="gender" class="form-control" v-model="medicalrecordLocal.gender" required
+                  hidden>
                   <option value="Nam">Nam</option>
                   <option value="Nữ">Nữ</option>
                   <option value="Khác">Khác</option>
@@ -38,50 +43,114 @@
             </div>
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
-                <label for="year"><strong>Năm sinh: </strong>{{ patientLocal.year }}</label>
-                <Field name="year" type="number" class="form-control" v-model="patientLocal.year" required hidden />
+                <label for="year"><strong>Năm sinh: </strong>{{ medicalrecordLocal.year }}</label>
+                <Field name="year" type="number" class="form-control" v-model="medicalrecordLocal.year" required
+                  hidden />
                 <ErrorMessage name="year" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
           </div>
 
+          <!-- Thông tin liên hệ -->
           <div class="row">
             <div class="col-12 col-md-5">
               <div class="mb-3 mt-3">
-                <label for="phoneNumber"><strong>Số điện thoại: </strong>{{ patientLocal.phoneNumber }}</label>
-                <Field name="phoneNumber" type="text" class="form-control" v-model="patientLocal.phoneNumber" required
-                  hidden />
+                <label for="phoneNumber"><strong>Số điện thoại: </strong>{{ medicalrecordLocal.phoneNumber }}</label>
+                <Field name="phoneNumber" type="text" class="form-control" v-model="medicalrecordLocal.phoneNumber"
+                  required hidden />
                 <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-7">
               <div class="mb-3 mt-3">
-                <label for="address"><strong>Địa chỉ: </strong>{{ patientLocal.address }}</label>
-                <Field name="address" type="text" class="form-control" v-model="patientLocal.address" required hidden />
+                <label for="address"><strong>Địa chỉ: </strong>{{ medicalrecordLocal.address }}</label>
+                <Field name="address" type="text" class="form-control" v-model="medicalrecordLocal.address" required
+                  hidden />
                 <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
           </div>
 
-          <Field name="ngayKham" type="text" class="form-control" v-model="patientLocal.ngayKham" required hidden />
-          <ErrorMessage name="ngayKham" class="error-feedback" style="color: rgb(238, 15, 15);" />
-
-          <Field name="bacsi" type="text" class="form-control" v-model="patientLocal.bacsi" required hidden />
-          <ErrorMessage name="bacsi" class="error-feedback" style="color: rgb(238, 15, 15);" />
-
-
+          <!-- Symptom và Diagnosis -->
           <div class="mb-3 mt-3">
-            <label for="address"><strong>Triệu chứng: </strong></label>
-            <Field name="symptom" type="text" class="form-control" v-model="patientLocal.symptom" required />
+            <label for="symptom"><strong>Triệu chứng: </strong></label>
+            <Field name="symptom" type="text" class="form-control" v-model="medicalrecordLocal.symptom" required />
             <ErrorMessage name="symptom" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
-
           <div class="mb-3 mt-3">
-            <label for="address"><strong>Chẩn đoán: </strong></label>
-            <Field name="diagnosis" type="text" class="form-control" v-model="patientLocal.diagnosis" required />
+            <label for="diagnosis"><strong>Chẩn đoán: </strong></label>
+            <Field name="diagnosis" type="text" class="form-control" v-model="medicalrecordLocal.diagnosis" required />
             <ErrorMessage name="diagnosis" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
+          <!-- Danh sách thuốc đã chọn -->
+          <div class="mb-3 mt-3">
+            <strong>Đơn thuốc: </strong>
+            <div class="container-selected-medicine">
+              <div v-for="(medicine, index) in selectedMedicines" :key="index" class="row selected-medicine">
+                <strong>{{ index + 1 }}. {{ medicine.tenThuoc }}</strong>
+                <div class="col-6 col-md-3">
+                  <label for="SoLuong">Số Lượng:</label>
+                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" required>
+                </div>
+                <div class="col-6 col-md-2">
+                  <label for="Donvi">Đơn vị tính:</label>
+                  <input class="form-control" v-model="medicine.Donvi" disabled>
+                  <input v-model="medicine.Donvi" hidden>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="HDSD">HDSD:</label>
+                  <select class="form-control" v-model="medicine.HDSD" required>
+                    <option disabled selected value="">---------------- Hãy chỉ định cách dùng ----------------</option>
+                    <optgroup label="Uống">
+                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">1 lần | Sáng</option>
+                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">1 lần | Trưa</option>
+                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">1 lần | Chiều</option>
+                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, trưa">2 lần |  Sáng, Trưa</option>
+                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">2 lần |  Sáng, Chiều</option>
+                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | trưa, chiều">2 lần |  Trưa, Chiều</option>
+                      <option value="Ngày uống 3 lần, mỗi lần 1 viên | sáng, trưa, chiều">3 lần |  Sáng, Trưa, Chiều</option>
+                    </optgroup>
+                    <optgroup label="Thoa">
+                      <option value="Ngày thoa 1 lần | sáng">1 lần | Sáng</option>
+                      <option value="Ngày thoa 1 lần | trưa">1 lần | Trưa</option>
+                      <option value="Ngày thoa 1 lần | chiều">1 lần | Chiều</option>
+                      <option value="Ngày thoa 2 lần | sáng, trưa">2 lần | Sáng, Trưa</option>
+                      <option value="Ngày thoa 2 lần | sáng, chiều">2 lần | Sáng, Chiều</option>
+                      <option value="Ngày thoa 2 lần | trưa, chiều">2 lần | Trưa, Chiều</option>
+                      <option value="Ngày thoa 3 lần | sáng, trưa, chiều">3 lần | Sáng, Trưa, Chiều</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <div class="col-12 col-md-1">
+                  <label for="HDSD"><strong>Xóa:</strong></label>
+                  <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i class="fa-solid fa-minus"></i></button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Chọn thuốc -->
+          <div class="mb-3 mt-3">
+            <div class="row">
+              <div class="col-11">
+                <label for="prescription"><strong>Chọn thuốc: </strong></label>
+                <Field name="prescription" as="select" class="form-control" v-model="selectedMedicine" required>
+                  <option v-for="medicine in medicines" :key="medicine._id" :value="medicine._id"
+                    :disabled="isMedicineSelected(medicine)">
+                    {{ medicine.tenThuoc }}
+                  </option>
+                </Field>
+              </div>
+              <div class="col-1">
+                <label><strong>Thêm: </strong></label>
+                <button type="button" @click="addMedicine" :disabled="!selectedMedicine"
+                  class="btn btn-primary form-control"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+          <!-- Nút lưu -->
           <div class="mb-3 mt-3 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary button-submit">
               <div class="svg-wrapper-1">
@@ -104,44 +173,26 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import * as yup from "yup";
+
 export default {
   components: {
     Form,
     Field,
     ErrorMessage,
   },
-  emits: ["submit:patient"],
+  emits: ["submit:medicalrecord"],
   props: {
     patient: { type: Object, required: true },
   },
   data() {
-    const patientFormSchema = yup.object().shape({
-      name: yup
-        .string()
-        .required("Tên không được để trống.")
-        .min(10, "Tên phải có ít nhất 10 ký tự.")
-        .max(50, "Tên có nhiều nhất 50 ký tự."),
-      year: yup
-        .string()
-        .required("Hãy nhập vào năm sinh")
-        .test("valid-year", "Năm sinh không hợp lệ", (value) => {
-          return value > 1800 && value < new Date().getFullYear();
-        }),
-      gender: yup
-        .string()
-        .required("Hãy chọn giới tính"),
-      phoneNumber: yup
-        .string()
-        .required("Số điện thoại không được để trống.")
-        .min(8, "Số điện thoại có ít nhất 8 số")
-        .max(11, "Số điện thoại không hợp lệ"),
-      address: yup
-        .string()
-        .required("Địa chỉ không được để trống."),
-    });
     return {
-      patientLocal: {
+      selectedMedicine: null,
+      selectedMedicines: [],
+      medicines: [],
+      medicalrecordLocal: {
         name: this.patient.name,
         year: this.patient.year,
         gender: this.patient.gender,
@@ -151,8 +202,37 @@ export default {
         bacsi: this.getBacsi(),
         symptom: "",
         diagnosis: "",
+        prescription: "",
       },
-      patientFormSchema,
+      medicalrecordFormSchema: yup.object().shape({
+        name: yup
+        .string()
+        .required("Tên không được để trống.")
+        .min(10, "Tên phải có ít nhất 10 ký tự.")
+        .max(50, "Tên có nhiều nhất 50 ký tự."),
+        year: yup
+        .string().required("Hãy nhập vào năm sinh")
+        .test("valid-year", "Năm sinh không hợp lệ", (value) => {
+          return value > 1800 && value < new Date().getFullYear();
+        }),
+        gender: yup
+        .string()
+        .required("Hãy chọn giới tính"),
+        phoneNumber: yup
+        .string()
+        .required("Số điện thoại không được để trống.")
+        .min(8, "Số điện thoại có ít nhất 8 số")
+        .max(11, "Số điện thoại không hợp lệ"),
+        address: yup
+        .string()
+        .required("Địa chỉ không được để trống."),
+        symptom: yup
+        .string()
+        .required("Triệu chứng không dược để trống"),
+        diagnosis: yup
+        .string()
+        .required("Hãy chẩn đoán bệnh"),
+      }),
     };
   },
   methods: {
@@ -161,18 +241,66 @@ export default {
       this.staff = staffData || {};
       return `${this.staff.name}`;
     },
-
     getCurrentDate() {
       const currentDate = new Date();
+      const hours = String(currentDate.getHours()).padStart(2, '0');
+      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
       const day = String(currentDate.getDate()).padStart(2, '0');
       const month = String(currentDate.getMonth() + 1).padStart(2, '0');
       const year = currentDate.getFullYear();
-      return `${day}-${month}-${year}`;
+      return `${hours}:${minutes} ${day}/${month}/${year}`;
     },
 
-    submitPatient() {
-      this.$emit("submit:patient", this.patientLocal);
+    async fetchMedicines() {
+      try {
+        const response = await fetch('http://localhost:3000/api/medicines');
+        const data = await response.json();
+        this.medicines = data;
+      } catch (error) {
+        console.error('Error fetching medicines:', error);
+      }
     },
+
+    isMedicineSelected(medicine) {
+      return this.selectedMedicines.some(selectedMedicine => selectedMedicine._id === medicine._id);
+    },
+
+    addMedicine() {
+      if (this.selectedMedicine) {
+        const selectedOption = this.medicines.find(medicine => medicine._id === this.selectedMedicine);
+        if (selectedOption && !this.selectedMedicines.some(med => med._id === selectedOption._id)) {
+          this.selectedMedicines.push({
+            ...selectedOption,
+            SoLuong: 1,
+            HDSD: ''
+          });
+          this.selectedMedicine = null;
+        }
+      }
+    },
+
+    removeMedicine(index) {
+      this.selectedMedicines.splice(index, 1);
+    },
+
+    submitMedicalrecord() {
+      if (this.selectedMedicines.length === 0) {
+        toast.error("Đơn thuốc rỗng")
+      
+      } else {
+        this.medicalrecordLocal.prescription = this.selectedMedicines.map(medicine => ({
+          tenThuoc: medicine.tenThuoc,
+          Gia: medicine.Gia,
+          Donvi: medicine.Donvi,
+          SoLuong: medicine.SoLuong,
+          HDSD: medicine.HDSD
+        }));
+        this.$emit("submit:medicalrecord", this.medicalrecordLocal);
+      }
+    },
+  },
+  async created() {
+    await this.fetchMedicines();
   },
 };
 </script>
@@ -185,6 +313,19 @@ h1 {
 
 img {
   border: 1px solid;
+}
+
+.container-selected-medicine {
+  background-color:rgb(248, 240, 224);
+  border: 1px solid black;
+  padding: 2%;
+  min-height: 100px;
+  border-radius: var(--bs-border-radius);
+  ;
+}
+
+.selected-medicine {
+  margin-bottom: 13px;
 }
 
 /* ------------------- Button ----------------------- */

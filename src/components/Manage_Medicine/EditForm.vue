@@ -61,7 +61,7 @@
             <ErrorMessage name="MoTa" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
-          <div class="mb-3 mt-3">
+          <!-- <div class="mb-3 mt-3">
             <label for="HDSD">Cách sử dụng:</label>
             <Field as="select" name="HDSD" class="form-control" v-model="medicineLocal.HDSD" required>
               <optgroup label="Uống">
@@ -77,7 +77,7 @@
               </optgroup>
             </Field>
             <ErrorMessage name="HDSD" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div>
+          </div> -->
 
           <div class="mb-3 mt-3">
             <label for="GhiChu">Ghi Chú:</label>
@@ -158,10 +158,10 @@ export default {
         .string()
         .required("Mô tả không được để trống.")
         .min(5, "Nhập ít nhất 5 ký tự.")
-        .max(255, "Quá số kí tự được phép."),
-      HDSD: yup
-        .string()
-        .required("Hãy chỉ định cách sử dụng."),
+        .max(1000, "Quá số kí tự được phép."),
+      // HDSD: yup
+      //   .string()
+      //   .required("Hãy chỉ định cách sử dụng."),
       GhiChu: yup
         .string(),
       nhaCungCap: yup
@@ -172,7 +172,7 @@ export default {
       imgURL: yup
         .string()
         .required("Vui lòng chọn một ảnh.")
-        .matches(/(\.jpg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, png hoặc webp."),
+        .matches(/(\.jpg|\.jpeg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, jpeg, png hoặc webp."),
     });
     return {
       medicineLocal: this.medicine,

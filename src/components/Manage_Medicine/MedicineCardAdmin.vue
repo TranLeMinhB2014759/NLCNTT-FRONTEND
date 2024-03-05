@@ -28,10 +28,10 @@ export default {
                 <strong>Mô tả:</strong>
                 {{ medicine.MoTa }}
             </div>
-            <div class="p-1">
+            <!-- <div class="p-1">
                 <strong>Cách dùng:</strong>
                 {{ medicine.HDSD }}
-            </div>
+            </div> -->
             <div class="p-1">
                 <strong>Ghi chú:</strong>
                 {{ medicine.GhiChu }}
