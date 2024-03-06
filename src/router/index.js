@@ -23,33 +23,6 @@ const routes = [
         name: "products",
         component: () => import("@/views/Products.vue"),
       },
-      // {
-      //   path: "/product/:id",
-      //   name: "product",
-      //   component: () => import("@/views/Product.vue"),
-      //   props: true,
-      // },
-
-      // {
-      //   path: "/login",
-      //   name: "login",
-      //   component: () => import("@/views/Auth/Login.vue"),
-      // },
-      // {
-      //   path: "/signup",
-      //   name: "signup",
-      //   component: () => import("@/views/Auth/SignUp.vue"),
-      // },
-      // {
-      //   path: "/cart",
-      //   name: "cart", //name: "cart/:id",
-      //   component: () => import("@/views/Cart.vue"),
-      // },
-      // {
-      //   path: "/order",
-      //   name: "order",
-      //   component: () => import("@/views/Order.vue"),
-      // },
     ],
   },
 
@@ -159,15 +132,17 @@ const routes = [
         name: "add-medicalrecord",
         component: () => import("@/components/Medical_Record/Record/add_medicalrecord.vue"),
       },
-      // {
-      //   path: "order",
-      //   name: "admin-order",
-      //   component: () => import("@/views/Admin/Manage_Orders/Orders.vue"),
-      // },
     ],
   },
 
-
+  // ----------------------------- PRINT PAGE -----------------------------
+  {
+    path: '/print/:idmedicalrecord',
+    name: 'PrintPage',
+    component: () => import("@/components/Print/PrintPrescriptionPage.vue"),
+    props: true,
+  },
+  
   // ----------------------------- NOT FOUND -----------------------------
   {
     path: "/:pathMatch(.*)*",

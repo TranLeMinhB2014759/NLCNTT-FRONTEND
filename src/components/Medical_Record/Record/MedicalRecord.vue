@@ -97,6 +97,32 @@
                                             </div>
 
                                             <div class="modal-body">
+                                                <div class="d-flex">
+                                                    <div class="text-start">
+                                                       <img src="@/assets/images/logo.png" class="rounded-circle" width="60" height="60" alt="Logo">
+                                                    </div>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <div class="text-start">
+                                                        <strong>PHÒNG KHÁM DA LIỄU</strong>
+                                                        <p>Thới Bình 1, Thuận An, Thốt Nốt, Cần Thơ</p>
+                                                    </div>
+                                                </div>
+                                                <h4 class="modal-title" style="padding-bottom: 10px;">ĐƠN THUỐC</h4>
+                                                <div class="d-flex">
+                                                    <div class="text-start">
+                                                        <p>Họ tên:</p>
+                                                        <p>Năm sinh:</p>
+                                                        <p>Địa chỉ:</p>
+                                                        <p>Chẩn đoán:</p>
+                                                        <p>Thuốc điều trị:</p>
+                                                    </div>
+                                                    <div class="text-start">
+                                                        <p><strong>{{ medicalrecord.name }}</strong></p>
+                                                        <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{ medicalrecord.year }})</p>
+                                                        <p>{{ medicalrecord.diagnosis }}</p>
+                                                        <p>{{ medicalrecord.address }}</p>
+                                                    </div>
+                                                </div>
                                                 <table class="table table-bordered">
                                                     <thead class="table-success">
                                                         <tr>
@@ -120,11 +146,23 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <div class="d-flex">
+                                                    <div class="text-start justify-content-start">
+                                                        <p>Tái khám nhớ mang theo đơn thuốc này!</p>
+                                                    </div>
+                                                    <div class="justify-content-end">
+                                                        <p>Cần Thơ, {{ medicalrecord.ngayKham }}</p>
+                                                        <p>Bác sĩ điều trị</p>
+                                                        <strong>{{ medicalrecord.bacsi }}</strong>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-bs-dismiss="modal">Close</button>
+                                                <router-link :to="{ name: 'PrintPage', params: { idmedicalrecord: medicalrecord._id } }">
+                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Print</button>
+                                                </router-link>
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
