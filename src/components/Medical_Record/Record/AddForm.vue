@@ -103,28 +103,30 @@
                   <select class="form-control" v-model="medicine.HDSD" required>
                     <option disabled selected value="">---------------- Hãy chỉ định cách dùng ----------------</option>
                     <optgroup label="Uống">
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">1 lần | Sáng</option>
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">1 lần | Trưa</option>
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">1 lần | Chiều</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, trưa">2 lần |  Sáng, Trưa</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">2 lần |  Sáng, Chiều</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | trưa, chiều">2 lần |  Trưa, Chiều</option>
-                      <option value="Ngày uống 3 lần, mỗi lần 1 viên | sáng, trưa, chiều">3 lần |  Sáng, Trưa, Chiều</option>
+                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">Uống: 1 lần | Sáng</option>
+                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">Uống: 1 lần | Trưa</option>
+                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">Uống: 1 lần | Chiều</option>
+                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, trưa">Uống: 2 lần | Sáng, Trưa</option>
+                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">Uống: 2 lần | Sáng, Chiều</option>
+                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | trưa, chiều">Uống: 2 lần | Trưa, Chiều</option>
+                      <option value="Ngày uống 3 lần, mỗi lần 1 viên | sáng, trưa, chiều">Uống: 3 lần | Sáng, Trưa,
+                        Chiều</option>
                     </optgroup>
                     <optgroup label="Thoa">
-                      <option value="Ngày thoa 1 lần | sáng">1 lần | Sáng</option>
-                      <option value="Ngày thoa 1 lần | trưa">1 lần | Trưa</option>
-                      <option value="Ngày thoa 1 lần | chiều">1 lần | Chiều</option>
-                      <option value="Ngày thoa 2 lần | sáng, trưa">2 lần | Sáng, Trưa</option>
-                      <option value="Ngày thoa 2 lần | sáng, chiều">2 lần | Sáng, Chiều</option>
-                      <option value="Ngày thoa 2 lần | trưa, chiều">2 lần | Trưa, Chiều</option>
+                      <option value="Ngày thoa 1 lần | sáng">Thoa: 1 lần | Sáng</option>
+                      <option value="Ngày thoa 1 lần | trưa">Thoa: 1 lần | Trưa</option>
+                      <option value="Ngày thoa 1 lần | chiều">Thoa: 1 lần | Chiều</option>
+                      <option value="Ngày thoa 2 lần | sáng, trưa">Thoa: 2 lần | Sáng, Trưa</option>
+                      <option value="Ngày thoa 2 lần | sáng, chiều">Thoa: 2 lần | Sáng, Chiều</option>
+                      <option value="Ngày thoa 2 lần | trưa, chiều">Thoa: 2 lần | Trưa, Chiều</option>
                       <option value="Ngày thoa 3 lần | sáng, trưa, chiều">3 lần | Sáng, Trưa, Chiều</option>
                     </optgroup>
                   </select>
                 </div>
                 <div class="col-12 col-md-1">
                   <label for="HDSD"><strong>Xóa:</strong></label>
-                  <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i class="fa-solid fa-minus"></i></button>
+                  <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i
+                      class="fa-solid fa-minus"></i></button>
                 </div>
 
               </div>
@@ -173,6 +175,7 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
+import MedicineService from "@/services/medicine.service.js";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import * as yup from "yup";
@@ -206,32 +209,32 @@ export default {
       },
       medicalrecordFormSchema: yup.object().shape({
         name: yup
-        .string()
-        .required("Tên không được để trống.")
-        .min(10, "Tên phải có ít nhất 10 ký tự.")
-        .max(50, "Tên có nhiều nhất 50 ký tự."),
+          .string()
+          .required("Tên không được để trống.")
+          .min(10, "Tên phải có ít nhất 10 ký tự.")
+          .max(50, "Tên có nhiều nhất 50 ký tự."),
         year: yup
-        .string().required("Hãy nhập vào năm sinh")
-        .test("valid-year", "Năm sinh không hợp lệ", (value) => {
-          return value > 1800 && value < new Date().getFullYear();
-        }),
+          .string().required("Hãy nhập vào năm sinh")
+          .test("valid-year", "Năm sinh không hợp lệ", (value) => {
+            return value > 1800 && value < new Date().getFullYear();
+          }),
         gender: yup
-        .string()
-        .required("Hãy chọn giới tính"),
+          .string()
+          .required("Hãy chọn giới tính"),
         phoneNumber: yup
-        .string()
-        .required("Số điện thoại không được để trống.")
-        .min(8, "Số điện thoại có ít nhất 8 số")
-        .max(11, "Số điện thoại không hợp lệ"),
+          .string()
+          .required("Số điện thoại không được để trống.")
+          .min(8, "Số điện thoại có ít nhất 8 số")
+          .max(11, "Số điện thoại không hợp lệ"),
         address: yup
-        .string()
-        .required("Địa chỉ không được để trống."),
+          .string()
+          .required("Địa chỉ không được để trống."),
         symptom: yup
-        .string()
-        .required("Triệu chứng không dược để trống"),
+          .string()
+          .required("Triệu chứng không dược để trống"),
         diagnosis: yup
-        .string()
-        .required("Hãy chẩn đoán bệnh"),
+          .string()
+          .required("Hãy chẩn đoán bệnh"),
       }),
     };
   },
@@ -251,13 +254,11 @@ export default {
       return `${hours}:${minutes} ${day}/${month}/${year}`;
     },
 
-    async fetchMedicines() {
+    async retrieveMedicines() {
       try {
-        const response = await fetch('http://localhost:3000/api/medicines');
-        const data = await response.json();
-        this.medicines = data;
+        this.medicines = await MedicineService.getAll();
       } catch (error) {
-        console.error('Error fetching medicines:', error);
+        console.log(error);
       }
     },
 
@@ -286,7 +287,7 @@ export default {
     submitMedicalrecord() {
       if (this.selectedMedicines.length === 0) {
         toast.error("Đơn thuốc rỗng")
-      
+
       } else {
         this.medicalrecordLocal.prescription = this.selectedMedicines.map(medicine => ({
           tenThuoc: medicine.tenThuoc,
@@ -300,7 +301,7 @@ export default {
     },
   },
   async created() {
-    await this.fetchMedicines();
+    await this.retrieveMedicines();
   },
 };
 </script>
@@ -316,7 +317,7 @@ img {
 }
 
 .container-selected-medicine {
-  background-color:rgb(248, 240, 224);
+  background-color: rgb(248, 240, 224);
   border: 1px solid black;
   padding: 2%;
   min-height: 100px;

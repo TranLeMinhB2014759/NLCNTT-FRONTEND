@@ -159,7 +159,7 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                                <router-link :to="{ name: 'PrintPage', params: { idmedicalrecord: medicalrecord._id } }">
+                                                <router-link :to="{ name: 'PrintPage', params: { idmedicalrecord: medicalrecord._id } }" target="_blank">
                                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Print</button>
                                                 </router-link>
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
