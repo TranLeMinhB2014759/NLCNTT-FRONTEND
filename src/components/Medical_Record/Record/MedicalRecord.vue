@@ -46,15 +46,13 @@
     <h1 class="h3 mt-5"><strong>Hồ Sơ Bệnh Án</strong></h1>
     <div class="card">
         <div class="card-body">
-            <router-link :to="{ name: 'add-medicalrecord', params: { id: patient._id } }">
-                <button title="Add" class="cssbuttons-io-button">
-                    <svg height="25" width="25" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
-                    </svg>
-                    <span>Add</span>
-                </button>
-            </router-link>
+            <button title="Add" class="cssbuttons-io-button" @click="goToAddRecord(patient._id)">
+                <svg height="25" width="25" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path>
+                </svg>
+                <span>Add</span>
+            </button>
             <div class="row">
                 <div class="container col-12 col-sm-4">
                     <InputSearch v-model="searchText" />
@@ -263,6 +261,9 @@ export default {
                 this.refreshList();
                 toast.success("Delete Succesfully!");
             }
+        },
+        goToAddRecord(patientId) {
+            this.$router.push({ name: 'add-medicalrecord', params: { id: patientId }});
         },
     },
 

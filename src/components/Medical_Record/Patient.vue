@@ -3,10 +3,8 @@
     <div class="card-body">
       <div class="banner text-center">QUẢN LÝ BỆNH NHÂN</div>
       <div class="container">
-        <button class="btn btn-sm" @click="goToAddPatient()">
-          <router-link :to="{ name: 'add-patient' }" class="text-success">
+        <button class="btn btn-sm text-success" @click="goToAddPatient()">
             <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
-          </router-link>
         </button>
         <div class="row">
           <div class="container col-12 col-sm-4">

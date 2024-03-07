@@ -87,6 +87,24 @@
           <div class="mb-3 mt-3">
             <strong>Đơn thuốc: </strong>
             <div class="container-selected-medicine">
+              <div class="mb-3 mt-3">
+                <div class="row">
+                  <div class="col-12 col-md-5">
+                    <input name="prescription" list="prescription" class="form-control" v-model="selectedMedicine" placeholder="Hãy nhập vào tên thuốc" required>
+                      <datalist id="prescription">
+                        <option v-for="medicine in medicines" :key="medicine._id" :value="medicine.tenThuoc" :disabled="isMedicineSelected(medicine)"></option>
+                      </datalist>
+                    </input>
+                  </div>
+                  <div class="col-12 col-md-2">
+                    <button type="button" @click="addMedicine" :disabled="!selectedMedicine"
+                      class="btn btn-primary form-control"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <p class="border border-dark border-bottom"></p>
+
               <div v-for="(medicine, index) in selectedMedicines" :key="index" class="row selected-medicine">
                 <strong>{{ index + 1 }}. {{ medicine.tenThuoc }}</strong>
                 <div class="col-6 col-md-3">
@@ -119,7 +137,7 @@
                       <option value="Ngày thoa 2 lần | sáng, trưa">Thoa: 2 lần | Sáng, Trưa</option>
                       <option value="Ngày thoa 2 lần | sáng, chiều">Thoa: 2 lần | Sáng, Chiều</option>
                       <option value="Ngày thoa 2 lần | trưa, chiều">Thoa: 2 lần | Trưa, Chiều</option>
-                      <option value="Ngày thoa 3 lần | sáng, trưa, chiều">3 lần | Sáng, Trưa, Chiều</option>
+                      <option value="Ngày thoa 3 lần | sáng, trưa, chiều">Thoa: 3 lần | Sáng, Trưa, Chiều</option>
                     </optgroup>
                   </select>
                 </div>
@@ -133,25 +151,6 @@
             </div>
           </div>
 
-          <!-- Chọn thuốc -->
-          <div class="mb-3 mt-3">
-            <div class="row">
-              <div class="col-11">
-                <label for="prescription"><strong>Chọn thuốc: </strong></label>
-                <Field name="prescription" as="select" class="form-control" v-model="selectedMedicine" required>
-                  <option v-for="medicine in medicines" :key="medicine._id" :value="medicine._id"
-                    :disabled="isMedicineSelected(medicine)">
-                    {{ medicine.tenThuoc }}
-                  </option>
-                </Field>
-              </div>
-              <div class="col-1">
-                <label><strong>Thêm: </strong></label>
-                <button type="button" @click="addMedicine" :disabled="!selectedMedicine"
-                  class="btn btn-primary form-control"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
           <!-- Nút lưu -->
           <div class="mb-3 mt-3 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary button-submit">
@@ -268,14 +267,20 @@ export default {
 
     addMedicine() {
       if (this.selectedMedicine) {
-        const selectedOption = this.medicines.find(medicine => medicine._id === this.selectedMedicine);
-        if (selectedOption && !this.selectedMedicines.some(med => med._id === selectedOption._id)) {
+        const selectedOption = this.medicines.find(medicine => medicine.tenThuoc === this.selectedMedicine);
+        if (selectedOption && !this.selectedMedicines.some(med => med.tenThuoc === selectedOption.tenThuoc)) {
           this.selectedMedicines.push({
             ...selectedOption,
             SoLuong: 1,
             HDSD: ''
           });
+        } else if(selectedOption && this.selectedMedicines.some(med => med.tenThuoc === selectedOption.tenThuoc)){
           this.selectedMedicine = null;
+          toast.warn("Thuốc đã được thêm vào toa");
+
+        } else {
+          this.selectedMedicine = null;
+          toast.error("Hãy điền đúng tên thuốc");
         }
       }
     },
