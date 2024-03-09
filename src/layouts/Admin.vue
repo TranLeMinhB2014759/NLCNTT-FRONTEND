@@ -40,6 +40,10 @@ export default {
                 case 'medicalrecord':
                     this.activeTab = 4;
                     break;
+                case 'admin-bill':
+                case 'add-bill':
+                    this.activeTab = 5;
+                    break;
                 default:
                     this.activeTab = 1;
             }
@@ -83,29 +87,29 @@ export default {
 
                     <li class="sidebar-item tab-2" :class="{ 'active': activeTab === 2 }" @click="setActiveTab(2)">
                         <router-link :to="{ name: 'admin-staff' }" class="sidebar-link">
-                            <i class="align-middle"></i> <span class="align-middle">Personnel Management</span>
+                            <i class="fa-solid fa-hospital-user"></i> <span class="align-middle">Personnel Management</span>
                         </router-link>
                     </li>
 
                     <li class="sidebar-item tab-3" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
                         <router-link :to="{ name: 'admin-medicine' }" class="sidebar-link">
-                            <i class="align-middle"></i> <span class="align-middle">Medication
+                            <i class="fa-solid fa-capsules fa-2xs"></i> <span class="align-middle">Medication
                                 Management</span>
                         </router-link>
                     </li>
 
                     <li class="sidebar-item" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
                         <router-link :to="{ name: 'admin-patient' }" class="sidebar-link">
-                            <i class="align-middle"></i> <span class="align-middle">Medical
+                            <i class="fa-solid fa-clipboard-user"></i> <span class="align-middle">Medical
                                 Record</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#">
-                            <i class="align-middle"></i> <span class="align-middle">Bill
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
+                        <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
+                            <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
                                 management</span>
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
             </div>

@@ -42,7 +42,7 @@
             </div>
             <div></div>
         </div>
-        <table class="table table-bordered text-center">
+        <table class="table table-bordered table-sm text-center">
             <thead class="table-success">
                 <tr>
                     <th>STT</th>

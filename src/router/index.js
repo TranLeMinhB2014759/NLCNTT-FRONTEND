@@ -132,6 +132,11 @@ const routes = [
         name: "add-medicalrecord",
         component: () => import("@/components/Medical_Record/Record/add_medicalrecord.vue"),
       },
+      {
+        path: "bill",
+        name: "admin-bill",
+        component: () => import("@/components/Manage_Bill/Bill.vue"),
+      },
     ],
   },
 

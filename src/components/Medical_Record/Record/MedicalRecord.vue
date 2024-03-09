@@ -61,8 +61,8 @@
 
                 </div>
             </div>
-            <div class="container mt-3">
-                <table class="table table-bordered table-hover text-center" v-if="filteredMedicalrecordsCount > 0"
+            <div class="container mt-3 table-responsive">
+                <table class="table table-bordered table-hover table-responsive text-center" v-if="filteredMedicalrecordsCount > 0"
                     :medicalrecords="filteredMedicalrecords">
                     <thead>
                         <tr>
@@ -168,7 +168,8 @@
                             </td>
                             <td>
                                 <button type="button" class="ml-2 btn btn-danger"
-                                    @click="deleteMedicalrecord(medicalrecord._id)">
+                                    @click="deleteMedicalrecord(medicalrecord._id)"
+                                    :disabled="getCurrentDoctor() != medicalrecord.bacsi">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </td>
@@ -224,6 +225,12 @@ export default {
     },
 
     methods: {
+        getCurrentDoctor() {
+            const staffData = JSON.parse(window.localStorage.getItem('staff'));
+            this.staff = staffData || {};
+            return `${this.staff.name}`;
+        },
+
         async getPatient() {
             const id = this.$route.params.id;
             try {

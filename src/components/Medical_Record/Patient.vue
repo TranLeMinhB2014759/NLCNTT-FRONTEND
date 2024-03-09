@@ -12,7 +12,7 @@
           </div>
           <div class="col-sm-8"></div>
         </div>
-        <div class="container mt-3">
+        <div class="container mt-3 table-responsive">
           <table class="table table-bordered table-hover text-center" v-if="filteredPatientsCount > 0"
             :patients="filteredPatients">
             <thead>
