@@ -1,17 +1,25 @@
 <template>
     <div class="container">
-        <div class="d-flex">
-            <div class="text-start">
-                <img src="@/assets/images/logo.png" class="rounded" width="100" height="100" alt="Logo">
+        <div class="row">
+            <div class="d-flex col-8">
+                <div class="text-start">
+                    <img src="@/assets/images/logo.png" class="rounded" width="100" height="100" alt="Logo">
+                </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="text-start">
+                    <strong>PHÒNG KHÁM DA LIỄU</strong>
+                    <p>Thới Bình 1, Thuận An, Thốt Nốt, Cần Thơ.</p>
+                    <p>SĐT: 0939 111 333</p>
+                </div>
             </div>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="text-start">
-                <strong>PHÒNG KHÁM DA LIỄU</strong>
-                <p>Thới Bình 1, Thuận An, Thốt Nốt, Cần Thơ</p>
-                <p>SĐT: 0939 111 333</p>
+            <div class="col-4">
+                <div class="text-end">
+                    <strong>MSBN</strong>
+                    <p>{{ medicalrecord.MSBN }}</p>
+                </div>
             </div>
         </div>
-        <h4 class="text-center" style="padding-bottom: 10px;">ĐƠN THUỐC</h4>
+        <h4 class="text-center">ĐƠN THUỐC</h4>
 
         <div class="d-flex justify-content-around">
             <div class="text-start">
@@ -156,8 +164,18 @@ export default {
         visibility: hidden;
     }
 }
-p{
+
+h4 {
+    padding: 10px 0;
+}
+
+p {
+    font-size: 15px;
     margin-bottom: 5px !important;
+}
+
+table {
+    font-size: 15px;
 }
 /* ---------------- BTN PRINT -------------------- */
 .print-btn {
