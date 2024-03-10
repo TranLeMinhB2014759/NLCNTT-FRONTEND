@@ -17,6 +17,7 @@
             :patients="filteredPatients">
             <thead>
               <tr class="">
+                <th>MSBN</th>
                 <th>Họ và tên</th>
                 <th>Năm sinh</th>
                 <th>Giới tính</th>
@@ -30,6 +31,7 @@
             <tbody v-for="(patient, index) in filteredPatients" :key="index" :class="{ active: index === activeIndex }"
               @click="updateActiveIndex(index)">
               <tr>
+                <td>{{ patient.MSBN }}</td>
                 <td>{{ patient.name }}</td>
                 <td>{{ patient.year }} ( {{ calculateAge(patient.year) }} tuổi )</td>
                 <td>{{ patient.gender }}</td>
@@ -57,7 +59,7 @@
               </tr>
             </tbody>
           </table>
-          <p v-else>Không tìm thấy tài bệnh nhân phù hợp.</p>
+          <p v-else>Không tìm thấy bệnh nhân phù hợp.</p>
         </div>
       </div>
     </div>
@@ -84,8 +86,8 @@ export default {
   computed: {
     patientStrings() {
       return this.patients.map((patient) => {
-        const { name, phoneNumber, password, address } = patient;
-        return [name, phoneNumber, password, address].join("");
+        const { MSBN, name, phoneNumber } = patient;
+        return [ MSBN, name, phoneNumber ].join("");
       });
     },
     filteredPatients() {

@@ -22,6 +22,7 @@
         <Form @submit="submitMedicalrecord" :validation-schema="medicalrecordFormSchema">
           <!-- Thông tin bệnh nhân -->
           <div class="row">
+            <Field name="MSBN" type="text" class="form-control" v-model="medicalrecordLocal.MSBN" required hidden />
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
                 <label for="name"><strong>Họ và tên: </strong>{{ medicalrecordLocal.name }}</label>
@@ -109,7 +110,7 @@
                 <strong>{{ index + 1 }}. {{ medicine.tenThuoc }}</strong>
                 <div class="col-6 col-md-3">
                   <label for="SoLuong">Số Lượng:</label>
-                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" required>
+                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required>
                 </div>
                 <div class="col-6 col-md-2">
                   <label for="Donvi">Đơn vị tính:</label>
@@ -195,6 +196,7 @@ export default {
       selectedMedicines: [],
       medicines: [],
       medicalrecordLocal: {
+        MSBN: this.patient.MSBN,
         name: this.patient.name,
         year: this.patient.year,
         gender: this.patient.gender,
@@ -296,7 +298,6 @@ export default {
       } else {
         this.medicalrecordLocal.prescription = this.selectedMedicines.map(medicine => ({
           tenThuoc: medicine.tenThuoc,
-          Gia: medicine.Gia,
           Donvi: medicine.Donvi,
           SoLuong: medicine.SoLuong,
           HDSD: medicine.HDSD

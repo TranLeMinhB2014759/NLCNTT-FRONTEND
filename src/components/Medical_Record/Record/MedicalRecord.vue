@@ -26,10 +26,13 @@
         <div class="card-body">
             <div>
                 <div v-if="patient">
-                    <h2>{{ patient.name }}</h2>
                     <div class="row">
-                        <div class="col-6 col-md-2"><strong>Tuổi:</strong> {{ calculateAge(patient.year) }} ({{
-            patient.year }})</div>
+                        <div class="col-12 col-md-7"><h2>{{ patient.name }}</h2></div>
+                        <div class="col-12 col-md-5"><strong>MSBN:</strong> {{ patient.MSBN }}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-6 col-md-2"><strong>Tuổi:</strong> {{ calculateAge(patient.year) }} ({{ patient.year }})</div>
                         <div class="col-6 col-md-2"><strong>Giới tính:</strong> {{ patient.gender }}</div>
                         <div class="col-12 col-md-3"><strong>Số điện thoại:</strong> {{ patient.phoneNumber }}</div>
                         <div class="col-12 col-md-5"><strong>Địa chỉ:</strong> {{ patient.address }}</div>
@@ -111,14 +114,16 @@
                                                         <p>Họ tên:</p>
                                                         <p>Năm sinh:</p>
                                                         <p>Địa chỉ:</p>
+                                                        <p>Triệu chứng:</p>
                                                         <p>Chẩn đoán:</p>
                                                         <p>Thuốc điều trị:</p>
                                                     </div>
                                                     <div class="text-start">
                                                         <p><strong>{{ medicalrecord.name }}</strong></p>
                                                         <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{ medicalrecord.year }})</p>
-                                                        <p>{{ medicalrecord.diagnosis }}</p>
                                                         <p>{{ medicalrecord.address }}</p>
+                                                        <p>{{ medicalrecord.symptom}}</p>
+                                                        <p>{{ medicalrecord.diagnosis }}</p>
                                                     </div>
                                                 </div>
                                                 <table class="table table-bordered">
@@ -126,7 +131,7 @@
                                                         <tr>
                                                             <th>STT</th>
                                                             <th>Tên thuốc</th>
-                                                            <th>Giá</th>
+                                                            <th>ĐVT</th>
                                                             <th>SL</th>
                                                         </tr>
                                                     </thead>
@@ -134,7 +139,7 @@
                                                         <tr>
                                                             <td rowspan="2">{{ idx + 1 }}</td>
                                                             <td class="text-start">{{ medicalrecord.tenThuoc }}</td>
-                                                            <td>{{ medicalrecord.Gia }} / {{ medicalrecord.Donvi }} </td>
+                                                            <td>{{ medicalrecord.Donvi }} </td>
                                                             <td>{{ medicalrecord.SoLuong }}</td>
                                                         </tr>
                                                         <tr>

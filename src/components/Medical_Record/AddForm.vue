@@ -17,6 +17,7 @@
         </div>
 
         <Form @submit="submitPatient" :validation-schema="patientFormSchema">
+          <Field name="MSBN" type="number" class="form-control" v-model="formatMSBN" hidden />
           <div class="row">
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
@@ -62,7 +63,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="mb-3 mt-3 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary button-submit">
               <div class="svg-wrapper-1">
@@ -85,6 +86,7 @@
 
 <script>
 import { ErrorMessage, Field, Form } from "vee-validate";
+import PatientService from "@/services/patient.service.js";
 import * as yup from "yup";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -121,8 +123,11 @@ export default {
         .string()
         .required("Địa chỉ không được để trống."),
     });
+    
     return {
+      patients: [],
       patientLocal: {
+        MSBN: "",
         name: "",
         year: "",
         gender: "",
@@ -133,10 +138,43 @@ export default {
 
     };
   },
+  computed: {
+    formatMSBN() {
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const year = String(currentDate.getFullYear()).slice(-2);
+      let patientCount;
+      if (this.patients.length > 0) {
+        const latestPatient = this.patients[this.patients.length - 1];
+        const lastSection = latestPatient.MSBN.split('.').pop();
+        const latestCount = parseInt(lastSection) + 1;
+        patientCount = String(latestCount).padStart(4, '0');
+      } else {
+        patientCount = '0001';
+      }
+      const MSBN = `${day}${month}${year}.1101.${patientCount}`;
+      this.patientLocal.MSBN = MSBN;
+      return MSBN;
+    }
+  },
+
   methods: {
+    async retrievePatients() {
+      try {
+        this.patients = await PatientService.getAll();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     submitPatient() {
       this.$emit("submit:patient", this.patientLocal);
     },
+  },
+
+  async created() {
+    await this.retrievePatients();
   },
 };
 </script>

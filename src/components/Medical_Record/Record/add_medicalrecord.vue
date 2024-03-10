@@ -37,7 +37,7 @@ export default {
           }
       },
       async addMedicalrecord(data) {
-          const confirmed = window.confirm("Đơn thuốc khi đã lập là không thể sửa. Bạn có chắc chắn muốn lặp đơn thuốc này?");
+          const confirmed = window.confirm("Đơn thuốc khi đã lập là không thể sửa. Bạn có chắc chắn muốn lập đơn thuốc này?");
           if (confirmed) {
               try {
                   await MedicalrecordService.create(data);

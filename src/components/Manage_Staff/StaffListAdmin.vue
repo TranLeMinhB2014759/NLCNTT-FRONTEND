@@ -65,12 +65,13 @@ export default {
 }
 
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 10px;
+  box-shadow: inset 0 0 5px gray;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  background: rgb(192, 191, 191);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
