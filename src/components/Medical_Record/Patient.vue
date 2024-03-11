@@ -15,8 +15,8 @@
         <div class="container mt-3 table-responsive">
           <table class="table table-bordered table-hover text-center" v-if="filteredPatientsCount > 0"
             :patients="filteredPatients">
-            <thead>
-              <tr class="">
+            <thead class="table-success">
+              <tr>
                 <th>MSBN</th>
                 <th>Họ và tên</th>
                 <th>Năm sinh</th>

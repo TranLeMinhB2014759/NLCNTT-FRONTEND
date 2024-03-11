@@ -21,6 +21,7 @@ export default {
             message: "",
         };
     },
+    
     methods: {
         async getStaff() {
             const id = this.$route.params.id;
@@ -35,7 +36,7 @@ export default {
             if (confirmed) {
                 try {
                     await StaffService.update(this.staff ? this.staff._id : null, data);
-                    this.message = "Cập nhật sản phẩm thành công";
+                    this.message = "Cập nhật tài khoản thành công";
                     // alert(this.message);
                     toast.success(this.message);
                     // this.$router.push({ name: 'admin-staff' });

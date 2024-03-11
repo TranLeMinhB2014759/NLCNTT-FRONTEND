@@ -67,7 +67,7 @@
             <div class="container mt-3 table-responsive">
                 <table class="table table-bordered table-hover table-responsive text-center" v-if="filteredMedicalrecordsCount > 0"
                     :medicalrecords="filteredMedicalrecords">
-                    <thead>
+                    <thead class="table-success">
                         <tr>
                             <th>Bác sĩ chuẩn đoán</th>
                             <th>Ngày khám</th>

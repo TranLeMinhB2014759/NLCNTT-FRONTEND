@@ -107,6 +107,22 @@ const routes = [
         props: true,
       },
       {
+        path: "diseases",
+        name: "admin-diseases",
+        component: () => import("@/components/Manage_Diseases/Diseases.vue"),
+      },
+      {
+        path: "add-diseases",
+        name: "add-diseases",
+        component: () => import("@/components/Manage_Diseases/add_diseases.vue"),
+      },
+      {
+        path: "edit-diseases/:id",
+        name: "edit-diseases",
+        component: () => import("@/components/Manage_Diseases/edit_diseases.vue"),
+        props: true,
+      },
+      {
         path: "patient",
         name: "admin-patient",
         component: () => import("@/components/Medical_Record/Patient.vue"),
@@ -136,6 +152,11 @@ const routes = [
         path: "bill",
         name: "admin-bill",
         component: () => import("@/components/Manage_Bill/Bill.vue"),
+      },
+      {
+        path: "add-bill",
+        name: "add-bill",
+        component: () => import("@/components/Manage_Bill/add_bill.vue"),
       },
     ],
   },
