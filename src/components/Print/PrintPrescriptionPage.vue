@@ -20,36 +20,64 @@
             </div>
         </div>
         <h4 class="text-center">ĐƠN THUỐC</h4>
-
-        <div class="d-flex justify-content-around">
-            <div class="text-start">
+        <div class="row">
+            <div class="col-3">
                 <p>Họ tên:</p>
-                <p>Năm sinh:</p>
-                <p>Địa chỉ:</p>
-                <p>Triệu chứng:</p>
-                <p>Thuốc điều trị:</p>
             </div>
-            <div class="text-start">
+            <div class="col-9">
                 <p><strong>{{ medicalrecord.name }}</strong></p>
-                <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{ medicalrecord.year }})</p>
-                <p>{{ medicalrecord.address }}</p>
-                <p>{{ medicalrecord.symptom }}</p>
             </div>
-            <div></div>
-            <div class="text-start">
-                <p>&nbsp</p>
-                <p>Giới tính</p>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <p>Năm sinh:</p>
+            </div>
+            <div class="col-4">
+                <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{ medicalrecord.year }})</p>
+            </div>
+            <div class="col-3 text-end">
+                <p>Giới tính:</p>
+            </div>
+            <div class="col-2">
+                <p>{{ medicalrecord.gender }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <p>Địa chỉ:</p>
+            </div>
+            <div class="col-5">
+                <p>{{ medicalrecord.address }}</p>
+            </div>
+            <div class="col-2 text-end">
                 <p>SĐT:</p>
+            </div>
+            <div class="col-2">
+                <p>{{ maskedPhoneNumber }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <p>Triệu chứng:</p>
+            </div>
+            <div class="col-9">{{ medicalrecord.symptom }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
                 <p>Chẩn đoán:</p>
             </div>
-            <div class="text-start">    
-                <p>&nbsp</p>
-                <p>{{ medicalrecord.gender }}</p>
-                <p>{{ maskedPhoneNumber }}</p>
-                <p>{{ medicalrecord.diagnosis }}</p>
+            <div class="col-9">
+                <span v-for="(record, index) in medicalrecord.diagnosis" :key="index">
+                    ({{ record.code }}) {{ record.tenBenh }}.
+                </span>
             </div>
-            <div></div>
         </div>
+        
+        <p>Thuốc điều trị:</p>
         <table class="table table-bordered table-sm text-center">
             <thead class="table-success">
                 <tr>
@@ -177,6 +205,7 @@ p {
 table {
     font-size: 15px;
 }
+
 /* ---------------- BTN PRINT -------------------- */
 .print-btn {
     width: 100px;

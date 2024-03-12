@@ -27,12 +27,15 @@
             <div>
                 <div v-if="patient">
                     <div class="row">
-                        <div class="col-12 col-md-7"><h2>{{ patient.name }}</h2></div>
+                        <div class="col-12 col-md-7">
+                            <h2>{{ patient.name }}</h2>
+                        </div>
                         <div class="col-12 col-md-5"><strong>MSBN:</strong> {{ patient.MSBN }}</div>
                     </div>
-                    
+
                     <div class="row">
-                        <div class="col-6 col-md-2"><strong>Tuổi:</strong> {{ calculateAge(patient.year) }} ({{ patient.year }})</div>
+                        <div class="col-6 col-md-2"><strong>Tuổi:</strong> {{ calculateAge(patient.year) }} ({{
+            patient.year }})</div>
                         <div class="col-6 col-md-2"><strong>Giới tính:</strong> {{ patient.gender }}</div>
                         <div class="col-12 col-md-3"><strong>Số điện thoại:</strong> {{ patient.phoneNumber }}</div>
                         <div class="col-12 col-md-5"><strong>Địa chỉ:</strong> {{ patient.address }}</div>
@@ -65,8 +68,8 @@
                 </div>
             </div>
             <div class="container mt-3 table-responsive">
-                <table class="table table-bordered table-hover table-responsive text-center" v-if="filteredMedicalrecordsCount > 0"
-                    :medicalrecords="filteredMedicalrecords">
+                <table class="table table-bordered table-hover table-responsive text-center"
+                    v-if="filteredMedicalrecordsCount > 0" :medicalrecords="filteredMedicalrecords">
                     <thead class="table-success">
                         <tr>
                             <th>Bác sĩ chuẩn đoán</th>
@@ -83,10 +86,14 @@
                             <td>{{ medicalrecord.bacsi }}</td>
                             <td>{{ medicalrecord.ngayKham }}</td>
                             <td>{{ medicalrecord.symptom }}</td>
-                            <td>{{ medicalrecord.diagnosis }}</td>
+                            <td>
+                                <span v-for="(medicalrecord, index) in medicalrecord.diagnosis" :key="index">
+                                    ({{ medicalrecord.code }}) {{ medicalrecord.tenBenh }}<br>
+                                </span>
+                            </td>
                             <td>
                                 <button type="button" class="ml-2 btn btn-info" data-bs-toggle="modal"
-                                :data-bs-target="'#modalMediaRecord_' + index">
+                                    :data-bs-target="'#modalMediaRecord_' + index">
                                     <i class="fa-solid fa-eye"></i>
                                 </button>
                                 <div class="modal fade" :id="'modalMediaRecord_' + index">
@@ -94,13 +101,15 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title">Toa thuốc</h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal"></button>
                                             </div>
 
                                             <div class="modal-body">
                                                 <div class="d-flex">
                                                     <div class="text-start">
-                                                       <img src="@/assets/images/logo.png" class="rounded-circle" width="60" height="60" alt="Logo">
+                                                        <img src="@/assets/images/logo.png" class="rounded-circle"
+                                                            width="60" height="60" alt="Logo">
                                                     </div>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                                     <div class="text-start">
@@ -114,16 +123,19 @@
                                                         <p>Họ tên:</p>
                                                         <p>Năm sinh:</p>
                                                         <p>Địa chỉ:</p>
-                                                        <p>Triệu chứng:</p>
+                                                        <p>Triệu chứng:&nbsp</p>
                                                         <p>Chẩn đoán:</p>
-                                                        <p>Thuốc điều trị:</p>
                                                     </div>
                                                     <div class="text-start">
                                                         <p><strong>{{ medicalrecord.name }}</strong></p>
                                                         <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{ medicalrecord.year }})</p>
                                                         <p>{{ medicalrecord.address }}</p>
-                                                        <p>{{ medicalrecord.symptom}}</p>
-                                                        <p>{{ medicalrecord.diagnosis }}</p>
+                                                        <p>{{ medicalrecord.symptom }}</p>
+                                                        <p>
+                                                            <span v-for="(medicalrecord, idx) in medicalrecord.diagnosis" :key="idx">
+                                                                ({{ medicalrecord.code }}) {{ medicalrecord.tenBenh }}<br>
+                                                            </span>
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <table class="table table-bordered">
@@ -135,7 +147,8 @@
                                                             <th>SL</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody v-for="(medicalrecord, idx) in medicalrecord.prescription":key="idx">
+                                                    <tbody v-for="(medicalrecord, idx) in medicalrecord.prescription"
+                                                        :key="idx">
                                                         <tr>
                                                             <td rowspan="2">{{ idx + 1 }}</td>
                                                             <td class="text-start">{{ medicalrecord.tenThuoc }}</td>
@@ -162,10 +175,14 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                                <router-link :to="{ name: 'PrintPage', params: { idmedicalrecord: medicalrecord._id } }" target="_blank">
-                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Print</button>
+                                                <router-link
+                                                    :to="{ name: 'PrintPage', params: { idmedicalrecord: medicalrecord._id } }"
+                                                    target="_blank">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal">Print</button>
                                                 </router-link>
-                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
@@ -275,7 +292,7 @@ export default {
             }
         },
         goToAddRecord(patientId) {
-            this.$router.push({ name: 'add-medicalrecord', params: { id: patientId }});
+            this.$router.push({ name: 'add-medicalrecord', params: { id: patientId } });
         },
     },
 

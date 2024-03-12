@@ -72,19 +72,48 @@
             </div>
           </div>
 
-          <!-- Symptom và Diagnosis -->
+          <!-- Symptom -->
           <div class="mb-3 mt-3">
             <label for="symptom"><strong>Triệu chứng: </strong></label>
             <Field name="symptom" type="text" class="form-control" v-model="medicalrecordLocal.symptom" required />
             <ErrorMessage name="symptom" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
+
+          <!-- Diagnosis -->
           <div class="mb-3 mt-3">
-            <label for="diagnosis"><strong>Chẩn đoán: </strong></label>
-            <Field name="diagnosis" type="text" class="form-control" v-model="medicalrecordLocal.diagnosis" required />
-            <ErrorMessage name="diagnosis" class="error-feedback" style="color: rgb(238, 15, 15);" />
+            <strong>Chẩn đoán: </strong>
+            <div class="container-selected-medicine">
+              <div class="mb-3 mt-3">
+                <div class="row">
+                  <div class="col-12 col-md-5">
+                    <input name="diagnosis" list="diagnosis" class="form-control" v-model="selectedDisease" placeholder="Hãy nhập vào tên bệnh" required>
+                      <datalist id="diagnosis">
+                        <option v-for="disease in diseases" :key="disease._id" :value="disease.tenBenh" :disabled="isDiseaseSelected(disease)">{{ disease.code }}</option>
+                      </datalist>
+                    </input>
+                  </div>
+                  <div class="col-12 col-md-2">
+                    <button type="button" @click="addDiagnosis" :disabled="!selectedDisease"
+                      class="btn btn-primary form-control"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <p class="border border-dark border-bottom"></p>
+
+              <div v-for="(disease, index) in selectedDiseases" :key="index" class="row selected-medicine d-flex align-items-center">
+                <div class="col-12 col-md-10">
+                  <strong>{{ index + 1 }}. ({{ disease.code }}) {{ disease.tenBenh }}</strong>
+                </div>
+                <div class="col-12 col-md-2">
+                  <button type="button" class="btn btn-danger form-control" @click="removeDiagnosis(index)"><i
+                      class="fa-solid fa-minus"></i></button>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Danh sách thuốc đã chọn -->
+          <!-- Medicines -->
           <div class="mb-3 mt-3">
             <strong>Đơn thuốc: </strong>
             <div class="container-selected-medicine">
@@ -147,7 +176,6 @@
                   <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i
                       class="fa-solid fa-minus"></i></button>
                 </div>
-
               </div>
             </div>
           </div>
@@ -175,6 +203,7 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
+import DiseaseService from "@/services/disease.service.js";
 import MedicineService from "@/services/medicine.service.js";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -192,8 +221,11 @@ export default {
   },
   data() {
     return {
+      selectedDisease: null,
+      selectedDiseases: [],
       selectedMedicine: null,
       selectedMedicines: [],
+      diseases: [],
       medicines: [],
       medicalrecordLocal: {
         MSBN: this.patient.MSBN,
@@ -233,9 +265,6 @@ export default {
         symptom: yup
           .string()
           .required("Triệu chứng không dược để trống"),
-        diagnosis: yup
-          .string()
-          .required("Hãy chẩn đoán bệnh"),
       }),
     };
   },
@@ -255,6 +284,42 @@ export default {
       return `${hours}:${minutes} ${day}/${month}/${year}`;
     },
 
+    // --------------- selectedDisease -----------------------
+    async retrieveDiseases() {
+      try {
+        this.diseases = await DiseaseService.getAll();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    isDiseaseSelected(disease) {
+      return this.selectedDiseases.some(selectedDisease => selectedDisease._id === disease._id);
+    },
+
+    addDiagnosis() {
+      if (this.selectedDisease) {
+        const selectedOption = this.diseases.find(disease => disease.tenBenh === this.selectedDisease);
+        if (selectedOption && !this.selectedDiseases.some(dis => dis.tenBenh === selectedOption.tenBenh)) {
+          this.selectedDiseases.push({
+            ...selectedOption,
+          });
+        } else if(selectedOption && this.selectedDiseases.some(dis => dis.tenBenh === selectedOption.tenBenh)){
+          this.selectedDisease = null;
+          toast.warn("Đã thêm chẩn đoán này");
+
+        } else {
+          this.selectedDisease = null;
+          toast.error("Hãy điền đúng tên bệnh");
+        }
+      }
+    },
+
+    removeDiagnosis(index) {
+      this.selectedDiseases.splice(index, 1);
+    },
+
+    // --------------- selectedMedicine -----------------------
     async retrieveMedicines() {
       try {
         this.medicines = await MedicineService.getAll();
@@ -291,11 +356,18 @@ export default {
       this.selectedMedicines.splice(index, 1);
     },
 
+    // ------------------------- Submit Form -------------------------
     submitMedicalrecord() {
       if (this.selectedMedicines.length === 0) {
-        toast.error("Đơn thuốc rỗng")
+        toast.error("Đơn thuốc rỗng");
 
+      } else if (this.selectedDiseases.length === 0){
+        toast.error("Chưa chẩn đoán tình trạng bệnh");
       } else {
+        this.medicalrecordLocal.diagnosis = this.selectedDiseases.map(disease => ({
+          code: disease.code,
+          tenBenh: disease.tenBenh,
+        }));
         this.medicalrecordLocal.prescription = this.selectedMedicines.map(medicine => ({
           tenThuoc: medicine.tenThuoc,
           Donvi: medicine.Donvi,
@@ -307,6 +379,7 @@ export default {
     },
   },
   async created() {
+    await this.retrieveDiseases();
     await this.retrieveMedicines();
   },
 };
