@@ -34,9 +34,9 @@ export default {
                 case 'edit-medicine':
                     this.activeTab = 3;
                     break;
-                case 'admin-diseases':
-                case 'add-diseases':
-                case 'edit-diseases':
+                case 'admin-disease':
+                case 'add-disease':
+                case 'edit-disease':
                     this.activeTab = 4;
                     break;
                 case 'admin-patient':
@@ -104,7 +104,7 @@ export default {
                     </li>
 
                     <li class="sidebar-item tab-3" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
-                        <router-link :to="{ name: 'admin-diseases' }" class="sidebar-link">
+                        <router-link :to="{ name: 'admin-disease' }" class="sidebar-link">
                             <i class="fa-solid fa-square-virus"></i> <span class="align-middle">Disease
                                 Management</span>
                         </router-link>

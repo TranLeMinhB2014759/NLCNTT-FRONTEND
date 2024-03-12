@@ -7,7 +7,7 @@
             <h1 class="d-flex justify-content-center">Thêm Bệnh Mới</h1>
           </div>
           <div class="col-2">
-            <router-link :to="{ name: 'admin-diseases' }">
+            <router-link :to="{ name: 'admin-disease' }">
               <button class="button-close">
                 <span class="X"></span>
                 <span class="Y"></span>
@@ -16,18 +16,18 @@
           </div>
         </div>
 
-        <Form @submit="submitDiseases" :validation-schema="diseasesFormSchema">
+        <Form @submit="submitDisease" :validation-schema="diseaseFormSchema">
 
 
           <div class="mb-3 mt-3">
             <label for="code">Mã bệnh theo ICD 10:</label>
-            <Field name="code" type="text" class="form-control" v-model="diseasesLocal.code" required />
+            <Field name="code" type="text" class="form-control" v-model="diseaseLocal.code" required />
             <ErrorMessage name="code" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
           <div class="mb-3 mt-3">
             <label for="tenBenh">Tên loại bệnh:</label>
-            <Field name="tenBenh" class="form-control" v-model="diseasesLocal.tenBenh" required />
+            <Field name="tenBenh" class="form-control" v-model="diseaseLocal.tenBenh" required />
             <ErrorMessage name="tenBenh" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
@@ -55,7 +55,7 @@
 
 <script>
 import { ErrorMessage, Field, Form } from "vee-validate";
-import DiseasesService from "@/services/diseases.service.js";
+import DiseaseService from "@/services/disease.service.js";
 import * as yup from "yup";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -66,9 +66,9 @@ export default {
     Field,
     ErrorMessage,
   },
-  emits: ["submit:diseases"],
+  emits: ["submit:disease"],
   data() {
-    const diseasesFormSchema = yup.object().shape({
+    const diseaseFormSchema = yup.object().shape({
       code: yup
         .string()
         .required("Mã bệnh theo ICD 10 không được để trống."),
@@ -78,32 +78,32 @@ export default {
     });
 
     return {
-      diseases: [],
-      diseasesLocal: {
+      disease: [],
+      diseaseLocal: {
         code: "",
         tenBenh: "",
       },
-      diseasesFormSchema,
+      diseaseFormSchema,
 
     };
   },
 
   methods: {
-    async retrieveDiseases() {
+    async retrieveDisease() {
       try {
-        this.diseases = await DiseasesService.getAll();
+        this.disease = await DiseaseService.getAll();
       } catch (error) {
         console.error(error);
       }
     },
 
-    submitDiseases() {
-      this.$emit("submit:diseases", this.diseasesLocal);
+    submitDisease() {
+      this.$emit("submit:disease", this.diseaseLocal);
     },
   },
 
   async created() {
-    await this.retrieveDiseases();
+    await this.retrieveDisease();
   },
 };
 </script>

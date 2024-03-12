@@ -107,19 +107,19 @@ const routes = [
         props: true,
       },
       {
-        path: "diseases",
-        name: "admin-diseases",
-        component: () => import("@/components/Manage_Diseases/Diseases.vue"),
+        path: "disease",
+        name: "admin-disease",
+        component: () => import("@/components/Manage_Disease/Disease.vue"),
       },
       {
-        path: "add-diseases",
-        name: "add-diseases",
-        component: () => import("@/components/Manage_Diseases/add_diseases.vue"),
+        path: "add-disease",
+        name: "add-disease",
+        component: () => import("@/components/Manage_Disease/add_disease.vue"),
       },
       {
-        path: "edit-diseases/:id",
-        name: "edit-diseases",
-        component: () => import("@/components/Manage_Diseases/edit_diseases.vue"),
+        path: "edit-disease/:id",
+        name: "edit-disease",
+        component: () => import("@/components/Manage_Disease/edit_disease.vue"),
         props: true,
       },
       {
