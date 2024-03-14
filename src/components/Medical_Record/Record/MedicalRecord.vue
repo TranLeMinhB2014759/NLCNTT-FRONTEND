@@ -215,6 +215,10 @@ export default {
     components: {
         InputSearch,
     },
+    props: {
+        id: String
+    },
+
     data() {
         return {
             patient: [],

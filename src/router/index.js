@@ -142,11 +142,13 @@ const routes = [
         path: "medicalrecord/:id",
         name: "medicalrecord",
         component: () => import("@/components/Medical_Record/Record/MedicalRecord.vue"),
+        props: true,
       },
       {
         path: "add-medicalrecord/:id",
         name: "add-medicalrecord",
         component: () => import("@/components/Medical_Record/Record/add_medicalrecord.vue"),
+        props: true,
       },
       {
         path: "bill",

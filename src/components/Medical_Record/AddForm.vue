@@ -117,8 +117,10 @@ export default {
       phoneNumber: yup
         .string()
         .required("Số điện thoại không được để trống.")
-        .min(8, "Số điện thoại có ít nhất 8 số")
-        .max(11, "Số điện thoại không hợp lệ"),
+        .matches(
+          /((09|03|07|08|05|01)+([0-9]{8})\b)/g,
+          "Số điện thoại không hợp lệ."
+        ),
       address: yup
         .string()
         .required("Địa chỉ không được để trống."),

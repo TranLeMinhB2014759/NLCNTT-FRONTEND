@@ -15,11 +15,12 @@ export default {
     components: {
         add,
     },
-    props: {
-        staff: { type: Object, require: true },
+    data() {
+      return {
+        message: "",
+      }
     },
     methods: {
-    
     async createStaff(data) {
       const confirmed = window.confirm("Bạn có thêm tài khoản mới?");
 

@@ -15,14 +15,14 @@ export default {
     components: {
         add,
     },
-    props: {
-        patient: { type: Object, require: true },
+    data() {
+      return {
+        message: "",
+      }
     },
     methods: {
-    
     async createPatient(data) {
-      const confirmed = window.confirm("Bạn có thêm tài khoản mới?");
-
+      const confirmed = window.confirm("Bạn có thêm bệnh nhân mới này?");
       if (confirmed) {
         try {
           await PatientService.create(data);

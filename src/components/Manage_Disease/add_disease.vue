@@ -15,14 +15,14 @@ export default {
     components: {
         add,
     },
-    props: {
-        disease: { type: Object, require: true },
+    data() {
+      return {
+        message: "",
+      }
     },
     methods: {
-    
     async createDisease(data) {
       const confirmed = window.confirm("Bạn chắc chắn về các thông tin đã điền vào?");
-
       if (confirmed) {
         try {
           await DiseaseService.create(data);

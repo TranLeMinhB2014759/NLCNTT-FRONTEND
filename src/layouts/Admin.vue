@@ -163,6 +163,7 @@ export default {
             </main>
         </div>
     </div>
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa-solid fa-arrow-up fa-2xl"></i></button>
 </template>
 
 <style scoped>

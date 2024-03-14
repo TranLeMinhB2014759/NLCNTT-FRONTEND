@@ -136,7 +136,11 @@ export default {
         .required("Địa chỉ không được để trống."),
       phoneNumber: yup
         .string()
-        .required("Số điện thoại không được để trống."),
+        .required("Số điện thoại không được để trống.")
+        .matches(
+          /((09|03|07|08|05)+([0-9]{8})\b)/g,
+          "Số điện thoại không hợp lệ."
+        ),
       password: yup
         .string()
         .required("Mật khẩu phải có giá trị.")
@@ -169,7 +173,6 @@ export default {
   methods: {
     submitStaff() {
       this.$emit("submit:staff", this.staffLocal);
-      // Handle form submission here
     },
   },
 };

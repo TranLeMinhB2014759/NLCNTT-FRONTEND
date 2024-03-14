@@ -13,21 +13,14 @@ export default {
     components: {
         add,
     },
-    props: {
-        medicine: { type: Object, require: true },
-    },
     data() {
         return {
-
             message: "",
         };
     },
     methods: {
-    
     async createMedicine(data) {
-      // Hiển thị cửa sổ xác nhận
       const confirmed = window.confirm("Bạn có thêm thuốc này?");
-
       if (confirmed) {
         try {
           await MedicineService.create(data);
