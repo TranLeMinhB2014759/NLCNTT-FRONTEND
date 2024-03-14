@@ -152,9 +152,9 @@ export default {
         .required("Vui lòng chọn một ảnh.")
         .matches(/(\.jpg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, png hoặc webp."),
     });
-    const staffeCopy = JSON.parse(JSON.stringify(this.staff));
+    const staffCopy = JSON.parse(JSON.stringify(this.staff));
     return {
-      staffLocal: staffeCopy,
+      staffLocal: staffCopy,
       staffFormSchema,
     };
   },

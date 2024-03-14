@@ -121,8 +121,9 @@ export default {
         .string()
         .required("Địa chỉ không được để trống."),
     });
+    const patientCopy = JSON.parse(JSON.stringify(this.patient));
     return {
-      patientLocal: this.patient,
+      patientLocal: patientCopy,
       patientFormSchema,
     };
   },
