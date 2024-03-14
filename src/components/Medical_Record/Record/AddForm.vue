@@ -304,6 +304,7 @@ export default {
           this.selectedDiseases.push({
             ...selectedOption,
           });
+          this.selectedDisease = '';
         } else if(selectedOption && this.selectedDiseases.some(dis => dis.tenBenh === selectedOption.tenBenh)){
           this.selectedDisease = null;
           toast.warn("Đã thêm chẩn đoán này");
@@ -341,6 +342,7 @@ export default {
             SoLuong: 1,
             HDSD: ''
           });
+          this.selectedMedicine = '';
         } else if(selectedOption && this.selectedMedicines.some(med => med.tenThuoc === selectedOption.tenThuoc)){
           this.selectedMedicine = null;
           toast.warn("Thuốc đã được thêm vào toa");
@@ -358,11 +360,8 @@ export default {
 
     // ------------------------- Submit Form -------------------------
     submitMedicalrecord() {
-      if (this.selectedMedicines.length === 0) {
-        toast.error("Đơn thuốc rỗng");
-
-      } else if (this.selectedDiseases.length === 0){
-        toast.error("Chưa chẩn đoán tình trạng bệnh");
+      if (this.selectedMedicines.length === 0 || this.selectedDiseases.length === 0) {
+        toast.error("Hãy điền đầy đủ các thông tin");
       } else {
         this.medicalrecordLocal.diagnosis = this.selectedDiseases.map(disease => ({
           code: disease.code,

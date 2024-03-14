@@ -4,7 +4,7 @@
       <div class="container" style="padding: 20px 70px;">
         <div class="row">
           <div class="col-10">
-            <h1 class="d-flex justify-content-center">Thêm Bệnh Mới</h1>
+            <h1 class="d-flex justify-content-center">Chỉnh sửa</h1>
           </div>
           <div class="col-2">
             <router-link :to="{ name: 'admin-disease' }">
@@ -73,8 +73,11 @@ export default {
         .string()
         .required("Hãy nhập vào tên loại bệnh"),
     });
+
+    const diseaseCopy = JSON.parse(JSON.stringify(this.disease));
+    
     return {
-      diseaseLocal: this.disease,
+      diseaseLocal: diseaseCopy,
       diseaseFormSchema,
 
     };

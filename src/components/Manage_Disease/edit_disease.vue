@@ -14,7 +14,7 @@ export default {
   components: {
     edit,
   },
-  
+
   data() {
     return {
       disease: null,
@@ -35,16 +35,30 @@ export default {
       const confirmed = window.confirm("Bạn chắc chắn về các thông tin đã điền vào?");
       if (confirmed) {
         try {
-          await DiseaseService.update(this.disease ? this.disease._id : null, data);
+          const newData = {};
+          if (data.code === this.disease.code) {
+            newData.tenBenh = data.tenBenh;
+          } else {
+              newData.code = data.code;
+              newData.tenBenh = data.tenBenh;
+          }
+          await DiseaseService.update(this.disease ? this.disease._id : null, newData);
           this.$router.push({ name: 'admin-disease' });
-        } catch (error) {
+          }
+        catch (error) {
           console.log(error);
+          if (error.response && error.response.status === 400 && error.response.data.message === "Code already exists") {
+            toast.error("Mã bệnh đã tồn tại");
+          } else {
+            toast.error("Đã có lỗi xảy ra khi thêm");
+          }
         }
       }
     },
+
   },
   created() {
-        this.getDisease();
-    },
+    this.getDisease();
+  },
 };
 </script>
