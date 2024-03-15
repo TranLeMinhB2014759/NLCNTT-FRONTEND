@@ -22,7 +22,13 @@ export default {
         async loginStaff(data) {
             try {
                 const response = await StaffService.login(data);
-                localStorage.setItem('staff', JSON.stringify(response.staff));
+                var staffDataToSave = {
+                    name: response.staff.name,
+                    role: response.staff.role,
+                    imgURL: response.staff.imgURL,
+                    _id: response.staff._id
+                };
+                localStorage.setItem('staff', JSON.stringify(staffDataToSave));
 
                 if (response && response.message === 'Đăng nhập thành công') {
                     // Check the staff's role

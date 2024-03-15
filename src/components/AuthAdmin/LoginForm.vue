@@ -19,13 +19,13 @@
                     <div class="mb-3">
                       <label class="form-label">Email</label>
                       <Field class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email"
-                        v-model="loginLocal.email" autocomplete="off" />
+                        v-model="loginLocal.email" autocomplete="on" />
                       <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);"/>
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Password</label>
                       <Field class="form-control form-control-lg" type="password" name="password"
-                        placeholder="Enter your password" v-model="loginLocal.password" autocomplete="off" />
+                        placeholder="Enter your password" v-model="loginLocal.password" autocomplete="on" />
                       <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);"/>
                     </div>
                     <!-- <div>

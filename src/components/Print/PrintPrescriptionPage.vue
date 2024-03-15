@@ -17,6 +17,10 @@
                     <strong>MSBN</strong>
                     <p>{{ medicalrecord.MSBN }}</p>
                 </div>
+                <div class="text-end">
+                    <strong>MSDT</strong>
+                    <p>{{ medicalrecord.MSDT }}</p>
+                </div>
             </div>
         </div>
         <h4 class="text-center">ĐƠN THUỐC</h4>

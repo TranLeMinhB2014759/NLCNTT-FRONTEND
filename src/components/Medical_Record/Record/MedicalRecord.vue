@@ -72,6 +72,7 @@
                     v-if="filteredMedicalrecordsCount > 0" :medicalrecords="filteredMedicalrecords">
                     <thead class="table-success">
                         <tr>
+                            <th>Mã đơn thuốc</th>
                             <th>Bác sĩ chuẩn đoán</th>
                             <th>Ngày khám</th>
                             <th>Triệu chứng</th>
@@ -83,6 +84,7 @@
                     <tbody v-for="(medicalrecord, index) in filteredMedicalrecords" :key="index"
                         :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
                         <tr>
+                            <td>{{ medicalrecord.MSDT }}</td>
                             <td>{{ medicalrecord.bacsi }}</td>
                             <td>{{ medicalrecord.ngayKham }}</td>
                             <td>{{ medicalrecord.symptom }}</td>
@@ -179,7 +181,7 @@
                                                     :to="{ name: 'PrintPage', params: { idmedicalrecord: medicalrecord._id } }"
                                                     target="_blank">
                                                     <button type="button" class="btn btn-primary"
-                                                        data-bs-dismiss="modal">Print</button>
+                                                        data-bs-dismiss="modal">Preview</button>
                                                 </router-link>
                                                 <button type="button" class="btn btn-danger"
                                                     data-bs-dismiss="modal">Close</button>
@@ -273,8 +275,16 @@ export default {
         },
 
         async retrieveMedicalrecords() {
-            const phoneNumber = this.patient.phoneNumber;
-            this.medicalrecords = await MedicalrecordService.getRecord(phoneNumber);
+            try {
+                const phoneNumber = this.patient.phoneNumber;
+                this.medicalrecords = await MedicalrecordService.getRecord(phoneNumber);
+            } catch(error) {
+                if (error.response && error.response.status === 404 && error.response.data.message === "No medical records found for the provided phone number") {
+                    toast.info("Chưa có hồ sơ nào");
+                } else {
+                    toast.error("Đã xảy ra lỗi trong quá trình truy vấn");
+                }
+            }
         },
 
         updateActiveIndex(index) {
@@ -302,7 +312,6 @@ export default {
 
     async created() {
         await this.getPatient();
-        await this.retrieveMedicalrecords();
         this.refreshList();
     },
 };

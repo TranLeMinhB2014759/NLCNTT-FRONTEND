@@ -23,6 +23,7 @@
           <!-- Thông tin bệnh nhân -->
           <div class="row">
             <Field name="MSBN" type="text" class="form-control" v-model="medicalrecordLocal.MSBN" required hidden />
+            <Field name="MSDT" type="text" class="form-control" v-model="formatMSDT" hidden />
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
                 <label for="name"><strong>Họ và tên: </strong>{{ medicalrecordLocal.name }}</label>
@@ -75,7 +76,7 @@
           <!-- Symptom -->
           <div class="mb-3 mt-3">
             <label for="symptom"><strong>Triệu chứng: </strong></label>
-            <Field name="symptom" type="text" class="form-control" v-model="medicalrecordLocal.symptom" required />
+            <Field name="symptom" type="text" class="form-control" v-model="medicalrecordLocal.symptom" required autocomplete="off"/>
             <ErrorMessage name="symptom" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
@@ -86,7 +87,7 @@
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
-                    <input name="diagnosis" list="diagnosis" class="form-control" v-model="selectedDisease" placeholder="Hãy nhập vào tên bệnh" required>
+                    <input name="diagnosis" list="diagnosis" class="form-control" v-model="selectedDisease" placeholder="Hãy nhập vào tên bệnh" required autocomplete="off">
                       <datalist id="diagnosis">
                         <option v-for="disease in diseases" :key="disease._id" :value="disease.tenBenh" :disabled="isDiseaseSelected(disease)">{{ disease.code }}</option>
                       </datalist>
@@ -120,7 +121,7 @@
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
-                    <input name="prescription" list="prescription" class="form-control" v-model="selectedMedicine" placeholder="Hãy nhập vào tên thuốc" required>
+                    <input name="prescription" list="prescription" class="form-control" v-model="selectedMedicine" placeholder="Hãy nhập vào tên thuốc" required autocomplete="off">
                       <datalist id="prescription">
                         <option v-for="medicine in medicines" :key="medicine._id" :value="medicine.tenThuoc" :disabled="isMedicineSelected(medicine)"></option>
                       </datalist>
@@ -139,7 +140,7 @@
                 <strong>{{ index + 1 }}. {{ medicine.tenThuoc }}</strong>
                 <div class="col-6 col-md-3">
                   <label for="SoLuong">Số Lượng:</label>
-                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required>
+                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required autocomplete="off">
                 </div>
                 <div class="col-6 col-md-2">
                   <label for="Donvi">Đơn vị tính:</label>
@@ -148,28 +149,24 @@
                 </div>
                 <div class="col-12 col-md-6">
                   <label for="HDSD">HDSD:</label>
-                  <select class="form-control" v-model="medicine.HDSD" required>
-                    <option disabled selected value="">---------------- Hãy chỉ định cách dùng ----------------</option>
-                    <optgroup label="Uống">
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">Uống: 1 lần | Sáng</option>
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">Uống: 1 lần | Trưa</option>
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">Uống: 1 lần | Chiều</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, trưa">Uống: 2 lần | Sáng, Trưa</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">Uống: 2 lần | Sáng, Chiều</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | trưa, chiều">Uống: 2 lần | Trưa, Chiều</option>
-                      <option value="Ngày uống 3 lần, mỗi lần 1 viên | sáng, trưa, chiều">Uống: 3 lần | Sáng, Trưa,
-                        Chiều</option>
-                    </optgroup>
-                    <optgroup label="Thoa">
-                      <option value="Ngày thoa 1 lần | sáng">Thoa: 1 lần | Sáng</option>
-                      <option value="Ngày thoa 1 lần | trưa">Thoa: 1 lần | Trưa</option>
-                      <option value="Ngày thoa 1 lần | chiều">Thoa: 1 lần | Chiều</option>
-                      <option value="Ngày thoa 2 lần | sáng, trưa">Thoa: 2 lần | Sáng, Trưa</option>
-                      <option value="Ngày thoa 2 lần | sáng, chiều">Thoa: 2 lần | Sáng, Chiều</option>
-                      <option value="Ngày thoa 2 lần | trưa, chiều">Thoa: 2 lần | Trưa, Chiều</option>
-                      <option value="Ngày thoa 3 lần | sáng, trưa, chiều">Thoa: 3 lần | Sáng, Trưa, Chiều</option>
-                    </optgroup>
-                  </select>
+                  <input name="HDSD" list="HDSD" class="form-control" v-model="medicine.HDSD" required autocomplete="off">
+                    <datalist id="HDSD">
+                        <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">U1S</option>
+                        <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">U1T</option>
+                        <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">U1C</option>
+                        <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, trưa">U2ST</option>
+                        <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">U2SC</option>
+                        <option value="Ngày uống 2 lần, mỗi lần 1 viên | trưa, chiều">U2TC</option>
+                        <option value="Ngày uống 3 lần, mỗi lần 1 viên | sáng, trưa, chiều">U3</option>
+                        <option value="Ngày thoa 1 lần | sáng">T1S</option>
+                        <option value="Ngày thoa 1 lần | trưa">T1T</option>
+                        <option value="Ngày thoa 1 lần | chiều">T1C</option>
+                        <option value="Ngày thoa 2 lần | sáng, trưa">T2ST</option>
+                        <option value="Ngày thoa 2 lần | sáng, chiều">T2SC</option>
+                        <option value="Ngày thoa 2 lần | trưa, chiều">T2TC</option>
+                        <option value="Ngày thoa 3 lần | sáng, trưa, chiều">T3</option>
+                    </datalist>
+                  </input>
                 </div>
                 <div class="col-12 col-md-1">
                   <label for="HDSD"><strong>Xóa:</strong></label>
@@ -203,6 +200,7 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
+import MedicalrecordService from "@/services/medicalrecord.service.js";
 import DiseaseService from "@/services/disease.service.js";
 import MedicineService from "@/services/medicine.service.js";
 import { toast } from 'vue3-toastify';
@@ -221,6 +219,7 @@ export default {
   },
   data() {
     return {
+      medicalrecords: [],
       selectedDisease: null,
       selectedDiseases: [],
       selectedMedicine: null,
@@ -229,6 +228,7 @@ export default {
       medicines: [],
       medicalrecordLocal: {
         MSBN: this.patient.MSBN,
+        MSDT: "",
         name: this.patient.name,
         year: this.patient.year,
         gender: this.patient.gender,
@@ -241,34 +241,37 @@ export default {
         prescription: "",
       },
       medicalrecordFormSchema: yup.object().shape({
-        name: yup
-          .string()
-          .required("Tên không được để trống.")
-          .min(10, "Tên phải có ít nhất 10 ký tự.")
-          .max(50, "Tên có nhiều nhất 50 ký tự."),
-        year: yup
-          .string().required("Hãy nhập vào năm sinh")
-          .test("valid-year", "Năm sinh không hợp lệ", (value) => {
-            return value > 1800 && value < new Date().getFullYear();
-          }),
-        gender: yup
-          .string()
-          .required("Hãy chọn giới tính"),
-        phoneNumber: yup
-          .string()
-          .required("Số điện thoại không được để trống.")
-          .min(8, "Số điện thoại có ít nhất 8 số")
-          .max(11, "Số điện thoại không hợp lệ"),
-        address: yup
-          .string()
-          .required("Địa chỉ không được để trống."),
         symptom: yup
           .string()
           .required("Triệu chứng không dược để trống"),
       }),
     };
   },
+  computed: {
+    formatMSDT() {
+      let recordCount;
+      if (this.medicalrecords.length > 0) {
+        const latestRecord = this.medicalrecords[this.medicalrecords.length - 1];
+        const lastSection = latestRecord.MSDT.split('.').pop();
+        const latestCount = parseInt(lastSection) + 1;
+        recordCount = String(latestCount).padStart(4, '0');
+      } else {
+        recordCount = '0001';
+      }
+      const MSDT = `${this.patient.MSBN.split('.').pop()}.${recordCount}`;
+      this.medicalrecordLocal.MSDT = MSDT;
+      return MSDT;
+    }
+  },
   methods: {
+    async retrieveRecords() {
+      try {
+        this.medicalrecords = await MedicalrecordService.getAll();
+      } catch(error) {
+        toast.error("Đã xảy ra lỗi trong quá trình truy vấn");
+      }
+    },
+
     getBacsi() {
       const staffData = JSON.parse(window.localStorage.getItem('staff'));
       this.staff = staffData || {};
@@ -378,6 +381,7 @@ export default {
     },
   },
   async created() {
+    await this.retrieveRecords(),
     await this.retrieveDiseases();
     await this.retrieveMedicines();
   },
