@@ -21,10 +21,11 @@ export default {
             message: "",
         };
     },
-
+    props: {
+        id: { type: String, required: true },
+    },
     methods: {
-        async getStaff() {
-            const id = this.$route.params.id;
+        async getStaff(id) {
             try {
                 this.staff = await StaffService.get(id);
             } catch (error) {
@@ -67,7 +68,8 @@ export default {
         },
     },
     created() {
-        this.getStaff();
+        this.getStaff(this.id);
+        this.message = "";
     },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div v-if="patient" class="card">
     <div class="card-body">
       <div class="container" style="padding: 20px 70px;">
         <div class="row">
@@ -83,7 +83,7 @@
           <!-- Diagnosis -->
           <div class="mb-3 mt-3">
             <strong>Chẩn đoán: </strong>
-            <div class="container-selected-medicine">
+            <div class="container-selected">
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
@@ -102,7 +102,7 @@
 
               <p class="border border-dark border-bottom"></p>
 
-              <div v-for="(disease, index) in selectedDiseases" :key="index" class="row selected-medicine d-flex align-items-center">
+              <div v-for="(disease, index) in selectedDiseases" :key="index" class="row selected d-flex align-items-center">
                 <div class="col-12 col-md-10">
                   <strong>{{ index + 1 }}. ({{ disease.code }}) {{ disease.tenBenh }}</strong>
                 </div>
@@ -117,7 +117,7 @@
           <!-- Medicines -->
           <div class="mb-3 mt-3">
             <strong>Đơn thuốc: </strong>
-            <div class="container-selected-medicine">
+            <div class="container-selected">
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
@@ -136,7 +136,7 @@
 
               <p class="border border-dark border-bottom"></p>
 
-              <div v-for="(medicine, index) in selectedMedicines" :key="index" class="row selected-medicine">
+              <div v-for="(medicine, index) in selectedMedicines" :key="index" class="row selected">
                 <strong>{{ index + 1 }}. {{ medicine.tenThuoc }}</strong>
                 <div class="col-6 col-md-3">
                   <label for="SoLuong">Số Lượng:</label>
@@ -196,6 +196,14 @@
       </div>
     </div>
   </div>
+  <div class="card" v-else>
+    <div class="card-body">
+      <div class="d-flex justify-content-center">
+        <span class="loader"></span>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -219,6 +227,7 @@ export default {
   },
   data() {
     return {
+      patient: [],
       medicalrecords: [],
       selectedDisease: null,
       selectedDiseases: [],
@@ -381,7 +390,7 @@ export default {
     },
   },
   async created() {
-    await this.retrieveRecords(),
+    await this.retrieveRecords();
     await this.retrieveDiseases();
     await this.retrieveMedicines();
   },
@@ -398,16 +407,15 @@ img {
   border: 1px solid;
 }
 
-.container-selected-medicine {
-  background-color: rgb(248, 240, 224);
+.container-selected {
+  background-color: lightcyan;
   border: 1px solid black;
-  padding: 2%;
+  padding: 1% 8%;
   min-height: 100px;
   border-radius: var(--bs-border-radius);
-  ;
 }
 
-.selected-medicine {
+.selected {
   margin-bottom: 13px;
 }
 
@@ -502,5 +510,54 @@ img {
 
 .button-close:active {
   background-color: gray;
+}
+
+
+/* ----------------- LOADING -------------------- */
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: #FFF #FFF transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent #FF3D00 #FF3D00;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+    
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
 }
 </style>

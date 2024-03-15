@@ -21,9 +21,12 @@ export default {
       message: "",
     };
   },
+  props: {
+    id: { type: String, required: true },
+  },
+
   methods: {
-    async getDisease() {
-      const id = this.$route.params.id;
+    async getDisease(id) {
       try {
         this.disease = await DiseaseService.get(id);
       } catch (error) {
@@ -58,7 +61,7 @@ export default {
 
   },
   created() {
-    this.getDisease();
+    this.getDisease(this.id);
   },
 };
 </script>

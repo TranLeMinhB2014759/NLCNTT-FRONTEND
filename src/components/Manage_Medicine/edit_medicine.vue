@@ -21,13 +21,16 @@ export default {
             message: "",
         };
     },
+
+    props: {
+        id: { type: String, required: true },
+    },
+
     methods: {
-        async getMedicine() {
-            const id = this.$route.params.id; // Lấy id từ route
+        async getMedicine(id) {
             try {
                 this.medicine = await MedicineService.get(id);
             } catch (error) {
-                // Xử lý lỗi, ví dụ: chuyển hướng đến trang 404
                 this.$router.push({ name: "notfound" });
             }
         },
@@ -47,7 +50,7 @@ export default {
         },
     },
     created() {
-        this.getMedicine();
+        this.getMedicine(this.id);
     },
 };
 </script>

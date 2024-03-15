@@ -16,6 +16,7 @@ export default {
     },
 
     props: {
+        id: { type: String, required: true },
         medicalrecord: { type: Object, require: true },
     },
 
@@ -27,8 +28,7 @@ export default {
     },
     
     methods: {
-        async getPatient() {
-            const id = this.$route.params.id;
+        async getPatient(id) {
             try {
                 this.patient = await PatientService.get(id);
             } catch (error) {
@@ -69,7 +69,7 @@ export default {
         },
     },
     created() {
-        this.getPatient();
+        this.getPatient(this.id);
     },
 };
 </script>

@@ -279,11 +279,12 @@ export default {
                 const phoneNumber = this.patient.phoneNumber;
                 this.medicalrecords = await MedicalrecordService.getRecord(phoneNumber);
             } catch(error) {
-                if (error.response && error.response.status === 404 && error.response.data.message === "No medical records found for the provided phone number") {
-                    toast.info("Chưa có hồ sơ nào");
-                } else {
-                    toast.error("Đã xảy ra lỗi trong quá trình truy vấn");
-                }
+                // if (error.response && error.response.status === 404 && error.response.data.message === "No medical records found for the provided phone number") {
+                //     toast.info("Chưa có hồ sơ nào");
+                // } else {
+                //     toast.error("Đã xảy ra lỗi trong quá trình truy vấn");
+                // }
+                toast.error("Đã xảy ra lỗi trong quá trình truy vấn");
             }
         },
 
