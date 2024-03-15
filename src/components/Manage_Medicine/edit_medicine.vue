@@ -3,12 +3,11 @@
         <edit :medicine="medicine" @submit:medicine="editMedicine" />
     </div>
 </template>
-  
+
 <script>
 import edit from "@/components/Manage_Medicine/EditForm.vue";
 import MedicineService from "@/services/medicine.service";
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -35,18 +34,36 @@ export default {
             }
         },
         async editMedicine(data) {
-            const confirmed = window.confirm("Bạn có chắc cập nhật thuốc này này?");
-            if (confirmed) {
-                try {
-                    await MedicineService.update(this.medicine ? this.medicine._id : null, data);
-                    this.message = "Cập nhật thuốc thành công";
-                    // alert(this.message);
-                    toast.success(this.message);
-                    // this.$router.push({ name: 'admin-medicine' });
-                } catch (error) {
-                    console.error(error);
+            Swal.fire({
+                title: "Bạn chắc chắn về các thông số cập nhật?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await MedicineService.update(this.medicine ? this.medicine._id : null, data);
+                        this.$router.push({ name: 'admin-medicine' });
+                        Swal.fire({
+                            icon: "success",
+                            title: "Cập nhật thành công",
+                            showConfirmButton: true,
+                            timer: 1500
+                        });
+                    } catch (error) {
+                        console.error(error);
+                    }
+                } else if (result.isDenied) {
+                    Swal.fire({
+                        icon: "info",
+                        title: "Những thay đổi không được lưu",
+                        showConfirmButton: true,
+                        timer: 1500
+                    });
+                    this.$router.push({ name: 'admin-medicine' })
                 }
-            }
+            });
         },
     },
     created() {

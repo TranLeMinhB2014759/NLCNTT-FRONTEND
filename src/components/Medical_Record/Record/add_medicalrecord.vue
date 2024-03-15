@@ -8,8 +8,7 @@
 import add from "@/components/Medical_Record/Record/AddForm.vue";
 import PatientService from "@/services/patient.service";
 import MedicalrecordService from "@/services/medicalrecord.service";
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -37,19 +36,31 @@ export default {
             }
         },
         async addMedicalrecord(data) {
-            const confirmed = window.confirm("Đơn thuốc khi đã lập là không thể sửa. Bạn có chắc chắn muốn lập đơn thuốc này?");
-            if (confirmed) {
-                try {
-                    await MedicalrecordService.create(data);
-                    this.$router.push({ name: 'medicalrecord', params: { id: this.id }});
-            } catch (error) {
-                console.error(error);
-            }
-        }
+            Swal.fire({
+                title: "Đơn thuốc khi đã lập là không thể sửa. Bạn chắc chắn muốn lập đơn thuốc này?",
+                showCancelButton: true,
+                confirmButtonText: "Đồng ý",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await MedicalrecordService.create(data);
+                        this.message = "Tạo đơn thuốc thành công";
+                        Swal.fire({
+                            icon: "success",
+                            title: this.message,
+                            showConfirmButton: true,
+                            timer: 2000
+                        });
+                        this.$router.push({ name: 'medicalrecord', params: { id: this.id } });
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+            });
+        },
     },
-},
-created() {
-    this.getPatient(this.id);
-},
+    created() {
+        this.getPatient(this.id);
+    },
 };
 </script>

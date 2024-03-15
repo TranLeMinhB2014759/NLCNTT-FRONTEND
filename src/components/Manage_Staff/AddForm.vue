@@ -138,7 +138,7 @@ export default {
         .string()
         .required("Số điện thoại không được để trống.")
         .matches(
-          /((09|03|07|08|05)+([0-9]{8})\b)/g,
+          /((09|03|07|08|05|01)+([0-9]{8})\b)/g,
           "Số điện thoại không hợp lệ."
         ),
       password: yup
