@@ -87,7 +87,7 @@
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
-                    <input name="diagnosis" list="diagnosis" class="form-control" v-model="selectedDisease" placeholder="Hãy nhập vào tên bệnh" required autocomplete="off">
+                    <input name="diagnosis" list="diagnosis" class="form-control" v-model="selectedDisease" placeholder="Hãy nhập vào mã ICD 10 hoặc tên bệnh " required autocomplete="off">
                       <datalist id="diagnosis">
                         <option v-for="disease in diseases" :key="disease._id" :value="disease.tenBenh" :disabled="isDiseaseSelected(disease)">{{ disease.code }}</option>
                       </datalist>
@@ -381,6 +381,7 @@ export default {
         }));
         this.medicalrecordLocal.prescription = this.selectedMedicines.map(medicine => ({
           tenThuoc: medicine.tenThuoc,
+          Gia: medicine.Gia,
           Donvi: medicine.Donvi,
           SoLuong: medicine.SoLuong,
           HDSD: medicine.HDSD

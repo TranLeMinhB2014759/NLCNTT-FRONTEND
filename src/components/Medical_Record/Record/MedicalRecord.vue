@@ -84,7 +84,12 @@
                     <tbody v-for="(medicalrecord, index) in filteredMedicalrecords" :key="index"
                         :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
                         <tr>
-                            <td>{{ medicalrecord.MSDT }}</td>
+                            <td>
+                                {{ medicalrecord.MSDT }} 
+                                <button type="button" class="btn btn-sm btn-secondary" @click="copy( medicalrecord.MSDT )"> 
+                                    <i class="fas fa-copy"></i> 
+                                </button>
+                            </td>
                             <td>{{ medicalrecord.bacsi }}</td>
                             <td>{{ medicalrecord.ngayKham }}</td>
                             <td>{{ medicalrecord.symptom }}</td>
@@ -102,23 +107,12 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title">Toa thuốc</h4>
+                                                <h4 class="modal-title">Chi tiết</h4>
                                                 <button type="button" class="btn-close"
                                                     data-bs-dismiss="modal"></button>
                                             </div>
 
                                             <div class="modal-body">
-                                                <div class="d-flex">
-                                                    <div class="text-start">
-                                                        <img src="@/assets/images/logo.png" class="rounded-circle"
-                                                            width="60" height="60" alt="Logo">
-                                                    </div>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <div class="text-start">
-                                                        <strong>PHÒNG KHÁM DA LIỄU</strong>
-                                                        <p>Thới Bình 1, Thuận An, Thốt Nốt, Cần Thơ</p>
-                                                    </div>
-                                                </div>
                                                 <h4 class="modal-title" style="padding-bottom: 10px;">ĐƠN THUỐC</h4>
                                                 <div class="d-flex">
                                                     <div class="text-start">
@@ -178,7 +172,7 @@
 
                                             <div class="modal-footer">
                                                 <router-link
-                                                    :to="{ name: 'PrintPage', params: { idmedicalrecord: medicalrecord._id } }"
+                                                    :to="{ name: 'PrintPrescription', params: { idmedicalrecord: medicalrecord._id } }"
                                                     target="_blank">
                                                     <button type="button" class="btn btn-primary"
                                                         data-bs-dismiss="modal">Preview</button>
@@ -312,6 +306,16 @@ export default {
         },
         goToAddRecord(patientId) {
             this.$router.push({ name: 'add-medicalrecord', params: { id: patientId } });
+        },
+
+        async copy(msdt){
+            try{
+                await navigator.clipboard.writeText(msdt);
+                toast.success('Sao chép thành công');
+            } catch (error) {
+                toast.error('Sao chép thất bại');
+                console.error(error);
+            }
         },
     },
 

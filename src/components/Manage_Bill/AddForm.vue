@@ -17,15 +17,35 @@
         </div>
 
         <Form @submit="submitBill" :validation-schema="billFormSchema">
+          <div class="row">
+            <div class="col-10 col-md-5">
+              <div class="mb-3 mt-3">
+                <Field name="MSDT" type="text" class="form-control" v-model="billLocal.MSDT" required
+                  placeholder="Nhập vào mã số đơn thuốc" />
+                <ErrorMessage name="MSDT" class="error-feedback" style="color: rgb(238, 15, 15);" />
+              </div>
+            </div>
+            <div class="col-2 col-md-2">
+              <div class="mb-3 mt-3">
+                <button type="button" class="btn btn-light" @click="getRecordByMSDT">
+                  <i class="fa-solid fa-rotate-right fa-2xl"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
           <div class="mb-3 mt-3">
             <label for="name">Tên khách hàng:</label>
-            <Field name="name" type="text" class="form-control" v-model="billLocal.name" required />
+            <Field name="name" type="text" class="form-control" v-model="billLocal.name" required
+              placeholder="Nhập vào tên khách hàng" />
             <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
           <div class="mb-3 mt-3">
             <label for="phoneNumber">Số điện thoại:</label>
-            <Field name="phoneNumber" type="text" class="form-control" v-model="billLocal.phoneNumber" required />
+            <Field name="phoneNumber" type="text" class="form-control" v-model="billLocal.phoneNumber" required
+              placeholder="0123456789 (10 số)" />
             <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
@@ -56,49 +76,24 @@
                 <strong>{{ index + 1 }}. {{ medicine.tenThuoc }}</strong>
                 <div class="col-6 col-md-3">
                   <label for="SoLuong">Số Lượng:</label>
-                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required>
+                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1"
+                    required />
                 </div>
 
-                <div class="col-6 col-md-2">
+                <div class="col-6 col-md-3">
                   <label for="Donvi">Đơn vị tính:</label>
-                  <input class="form-control" v-model="medicine.Donvi" disabled>
-                  <input v-model="medicine.Donvi" hidden>
+                  <input class="form-control" v-model="medicine.Donvi" disabled />
+                  <input v-model="medicine.Donvi" hidden />
                 </div>
 
-                <div class="col-12 col-md-4">
-                  <label for="HDSD">HDSD:</label>
-                  <select class="form-control" v-model="medicine.HDSD" required>
-                    <option disabled selected value="">----- Hãy chỉ định cách dùng -----</option>
-                    <optgroup label="Uống">
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">Uống: 1 lần | Sáng</option>
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">Uống: 1 lần | Trưa</option>
-                      <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">Uống: 1 lần | Chiều</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, trưa">Uống: 2 lần | Sáng, Trưa</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">Uống: 2 lần | Sáng, Chiều</option>
-                      <option value="Ngày uống 2 lần, mỗi lần 1 viên | trưa, chiều">Uống: 2 lần | Trưa, Chiều</option>
-                      <option value="Ngày uống 3 lần, mỗi lần 1 viên | sáng, trưa, chiều">Uống: 3 lần | Sáng, Trưa,
-                        Chiều</option>
-                    </optgroup>
-                    <optgroup label="Thoa">
-                      <option value="Ngày thoa 1 lần | sáng">Thoa: 1 lần | Sáng</option>
-                      <option value="Ngày thoa 1 lần | trưa">Thoa: 1 lần | Trưa</option>
-                      <option value="Ngày thoa 1 lần | chiều">Thoa: 1 lần | Chiều</option>
-                      <option value="Ngày thoa 2 lần | sáng, trưa">Thoa: 2 lần | Sáng, Trưa</option>
-                      <option value="Ngày thoa 2 lần | sáng, chiều">Thoa: 2 lần | Sáng, Chiều</option>
-                      <option value="Ngày thoa 2 lần | trưa, chiều">Thoa: 2 lần | Trưa, Chiều</option>
-                      <option value="Ngày thoa 3 lần | sáng, trưa, chiều">Thoa: 3 lần | Sáng, Trưa, Chiều</option>
-                    </optgroup>
-                  </select>
-                </div>
-
-                <div class="col-12 col-md-2">
+                <div class="col-12 col-md-3">
                   <label for="Gia">Giá:</label>
-                  <input type="number" class="form-control" :value="calculateTotalPrice(medicine)" disabled>
-                  <input type="number" :value="calculateTotalPrice(medicine)" hidden>
+                  <input type="number" class="form-control" :value="calculateTotalPrice(medicine)" disabled />
+                  <input type="number" :value="calculateTotalPrice(medicine)" hidden />
                 </div>
 
                 <div class="col-12 col-md-1">
-                  <label for="HDSD"><strong>Xóa:</strong></label>
+                  <label><strong>Xóa:</strong></label>
                   <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i
                       class="fa-solid fa-minus"></i></button>
                 </div>
@@ -109,8 +104,8 @@
               <div class="mb-3 mt-3">
                 <div class="col-12 col-md-2">
                   <label for="total_bill">Tổng tiền:</label>
-                  <input type="number" class="form-control" :value="calculateTotalBill()" disabled>
-                  <input type="number" :value="calculateTotalBill()" hidden>
+                  <input type="number" class="form-control" :value="calculateTotalBill()" disabled />
+                  <input type="number" :value="calculateTotalBill()" hidden />
                 </div>
               </div>
             </div>
@@ -137,6 +132,7 @@
 </template>
 
 <script>
+import MedicalrecordService from "@/services/medicalrecord.service.js";
 import MedicineService from "@/services/medicine.service.js";
 import { ErrorMessage, Field, Form } from "vee-validate";
 import { toast } from 'vue3-toastify';
@@ -155,13 +151,14 @@ export default {
         .string()
         .required("Hãy nhập vào tên khách hàng.")
         .min(10, "Tên phải có ít nhất 10 ký tự."),
-        phoneNumber: yup
+      phoneNumber: yup
         .string()
         .required("Số điện thoại không được để trống.")
         .min(8, "Số điện thoại có ít nhất 8 số")
         .max(11, "Số điện thoại không hợp lệ"),
     });
     return {
+      record: null,
       selectedMedicine: null,
       selectedMedicines: [],
       medicines: [],
@@ -194,6 +191,24 @@ export default {
       return `${hours}:${minutes} ${day}/${month}/${year}`;
     },
 
+    async getRecordByMSDT() {
+      try {
+        const MSDT = this.billLocal.MSDT;
+        const record = await MedicalrecordService.getRecordByMSDT(MSDT);
+        this.billLocal.name = record[0].name;
+        this.billLocal.phoneNumber = record[0].phoneNumber;
+        this.selectedMedicines = record[0].prescription.map(presc => ({
+          tenThuoc: presc.tenThuoc,
+          Gia: presc.Gia,
+          Donvi: presc.Donvi,
+          SoLuong: presc.SoLuong,
+        }));
+        toast.success("Hóa đơn của " + record[0].name);
+      } catch (error) {
+        toast.info("Không tìm thấy mã đơn thuốc");
+      }
+    },
+
     async retrieveMedicines() {
       try {
         this.medicines = await MedicineService.getAll();
@@ -213,7 +228,6 @@ export default {
           this.selectedMedicines.push({
             ...selectedOption,
             SoLuong: 1,
-            HDSD: ''
           });
         } else if (selectedOption && this.selectedMedicines.some(med => med.tenThuoc === selectedOption.tenThuoc)) {
           this.selectedMedicine = null;
@@ -247,14 +261,12 @@ export default {
     submitBill() {
       if (this.selectedMedicines.length === 0) {
         toast.error("Đơn thuốc rỗng")
-
       } else {
         this.billLocal.prescription = this.selectedMedicines.map(medicine => ({
           tenThuoc: medicine.tenThuoc,
           Gia: medicine.Gia,
           Donvi: medicine.Donvi,
           SoLuong: medicine.SoLuong,
-          HDSD: medicine.HDSD
         }));
         this.billLocal.total_bill = this.calculateTotalBill();
         this.$emit("submit:bill", this.billLocal);
@@ -289,6 +301,11 @@ img {
 
 .selected-medicine {
   margin-bottom: 13px;
+}
+
+.btn-light {
+  padding: 8px;
+  border-radius: 50%;
 }
 
 /* ------------------- Button ----------------------- */

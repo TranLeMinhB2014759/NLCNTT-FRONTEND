@@ -165,9 +165,15 @@ const routes = [
 
   // ----------------------------- PRINT PAGE -----------------------------
   {
-    path: '/print/:idmedicalrecord',
-    name: 'PrintPage',
+    path: '/printprescription/:idmedicalrecord',
+    name: 'PrintPrescription',
     component: () => import("@/components/Print/PrintPrescriptionPage.vue"),
+    props: true,
+  },
+  {
+    path: '/printbill/:idbill',
+    name: 'PrintBill',
+    component: () => import("@/components/Print/PrintBillPage.vue"),
     props: true,
   },
   
