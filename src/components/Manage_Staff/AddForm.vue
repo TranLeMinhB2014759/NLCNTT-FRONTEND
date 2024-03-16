@@ -21,7 +21,7 @@
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="name">Tên tài khoản:</label>
-                <Field name="name" type="text" class="form-control" v-model="staffLocal.name" required />
+                <Field name="name" type="text" class="form-control" v-model="staffLocal.name" required placeholder="Nhập vào tên nhân viên"/>
                 <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -43,14 +43,14 @@
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="email">Email:</label>
-                <Field name="email" type="email" class="form-control" v-model="staffLocal.email" required />
+                <Field name="email" type="email" class="form-control" v-model="staffLocal.email" required placeholder="example@gmail.com"/>
                 <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="password">Mật khẩu:</label>
-                <Field name="password" type="password" class="form-control" v-model="staffLocal.password" required />
+                <Field name="password" type="password" class="form-control" v-model="staffLocal.password" required placeholder="Nhập vào mật khẩu"/>
                 <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -60,14 +60,14 @@
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="phoneNumber">Số điện thoại:</label>
-                <Field name="phoneNumber" type="text" class="form-control" v-model="staffLocal.phoneNumber" required />
+                <Field name="phoneNumber" type="text" class="form-control" v-model="staffLocal.phoneNumber" required placeholder="0123456789 (10 chữ số)"/>
                 <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="address">Địa chỉ:</label>
-                <Field name="address" type="text" class="form-control" v-model="staffLocal.address" required />
+                <Field name="address" type="text" class="form-control" v-model="staffLocal.address" required placeholder="Khu II Đại học Cần Thơ"/>
                 <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -81,7 +81,7 @@
             <div class="col-12 col-md-9">
               <div class="mb-3 mt-3">
                 <label for="imgURL">Ảnh:</label>
-                <Field name="imgURL" type="text" class="form-control" v-model="staffLocal.imgURL" required />
+                <Field name="imgURL" type="text" class="form-control" v-model="staffLocal.imgURL" required placeholder="https://example.jpg"/>
                 <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>

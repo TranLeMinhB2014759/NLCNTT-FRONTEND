@@ -19,13 +19,13 @@
         <Form @submit="submitDisease" :validation-schema="diseaseFormSchema">
           <div class="mb-3 mt-3">
             <label for="code">Mã bệnh theo ICD 10:</label>
-            <Field name="code" type="text" class="form-control" v-model="diseaseLocal.code" required />
+            <Field name="code" type="text" class="form-control" v-model="diseaseLocal.code" required placeholder="Nhập vào mã ICD 10 theo cập nhật của Bộ Y Tế"/>
             <ErrorMessage name="code" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
           <div class="mb-3 mt-3">
             <label for="tenBenh">Tên loại bệnh:</label>
-            <Field name="tenBenh" class="form-control" v-model="diseaseLocal.tenBenh" required />
+            <Field name="tenBenh" class="form-control" v-model="diseaseLocal.tenBenh" required placeholder="Nhập vào tên loại bệnh"/>
             <ErrorMessage name="tenBenh" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
           <div class="mb-3 mt-3 d-flex justify-content-center">

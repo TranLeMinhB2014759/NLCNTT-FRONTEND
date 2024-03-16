@@ -24,6 +24,10 @@ class MedicineService {
   async getRecord(phoneNumber){
     return (await this.api.get(`/phone/${phoneNumber}`)).data;
   }
+
+  async getRecordByMSDT(MSDT){
+    return (await this.api.get(`/msdt/${MSDT}`)).data;
+  }
 }
 
 export default new MedicineService();

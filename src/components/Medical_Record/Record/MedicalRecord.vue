@@ -190,10 +190,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                            <td v-if="getCurrentDoctor() === medicalrecord.bacsi">
                                 <button type="button" class="ml-2 btn btn-danger"
-                                    @click="deleteMedicalrecord(medicalrecord._id)"
-                                    :disabled="getCurrentDoctor() != medicalrecord.bacsi">
+                                    @click="deleteMedicalrecord(medicalrecord._id)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                            <td v-else>
+                                <button type="button" class="ml-2 btn btn-danger" disabled>
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </td>

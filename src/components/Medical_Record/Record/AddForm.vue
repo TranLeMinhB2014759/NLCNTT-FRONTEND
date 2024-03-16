@@ -76,7 +76,7 @@
           <!-- Symptom -->
           <div class="mb-3 mt-3">
             <label for="symptom"><strong>Triệu chứng: </strong></label>
-            <Field name="symptom" type="text" class="form-control" v-model="medicalrecordLocal.symptom" required autocomplete="off"/>
+            <Field name="symptom" type="text" class="form-control" v-model="medicalrecordLocal.symptom" required placeholder="Nhập vào triệu chứng" autocomplete="off"/>
             <ErrorMessage name="symptom" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
@@ -149,7 +149,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                   <label for="HDSD">HDSD:</label>
-                  <input name="HDSD" list="HDSD" class="form-control" v-model="medicine.HDSD" required autocomplete="off">
+                  <input name="HDSD" list="HDSD" class="form-control" v-model="medicine.HDSD" required placeholder="E.g: 'U1S' là Uống 1 lần vào buổi sáng" autocomplete="off">
                     <datalist id="HDSD">
                         <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">U1S</option>
                         <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">U1T</option>

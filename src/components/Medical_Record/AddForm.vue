@@ -22,7 +22,7 @@
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
                 <label for="name">Họ và tên</label>
-                <Field name="name" type="text" class="form-control" v-model="patientLocal.name" required />
+                <Field name="name" type="text" class="form-control" v-model="patientLocal.name" required placeholder="Trần Văn A"/>
                 <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -40,7 +40,7 @@
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
                 <label for="year">Năm sinh:</label>
-                <Field name="year" type="number" class="form-control" v-model="patientLocal.year" required />
+                <Field name="year" type="number" class="form-control" v-model="patientLocal.year" required placeholder="Không quá năm hiện tại"/>
                 <ErrorMessage name="year" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -51,14 +51,14 @@
               <div class="mb-3 mt-3">
                 <label for="phoneNumber">Số điện thoại:</label>
                 <Field name="phoneNumber" type="text" class="form-control" v-model="patientLocal.phoneNumber"
-                  required />
+                  required placeholder="0123456789 (10 chữ số)"/>
                 <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-7">
               <div class="mb-3 mt-3">
                 <label for="address">Địa chỉ:</label>
-                <Field name="address" type="text" class="form-control" v-model="patientLocal.address" required />
+                <Field name="address" type="text" class="form-control" v-model="patientLocal.address" required placeholder="Khu II Đại học Cần Thơ"/>
                 <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>

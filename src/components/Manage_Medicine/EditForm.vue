@@ -19,7 +19,7 @@
         <Form @submit="submitMedicine" :validation-schema="medicineFormSchema">
           <div class="mb-3 mt-3">
             <label for="tenThuoc">Tên thuốc:</label>
-            <Field name="tenThuoc" type="text" class="form-control" v-model="medicineLocal.tenThuoc" required />
+            <Field name="tenThuoc" type="text" class="form-control" v-model="medicineLocal.tenThuoc" required placeholder="Nhập vào tên thuốc"/>
             <ErrorMessage name="tenThuoc" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
           
@@ -28,7 +28,7 @@
               <div class="mb-3 mt-3">
                 <label for="Gia">Giá:</label>
                 <div class="input-group">
-                  <Field name="Gia" type="number" class="form-control" v-model="medicineLocal.Gia" required />
+                  <Field name="Gia" type="number" class="form-control" v-model="medicineLocal.Gia" required placeholder="Nhập vào giá"/>
                   <span class="input-group-text">VND</span>
                 </div>
                 <ErrorMessage name="Gia" class="error-feedback" style="color: rgb(238, 15, 15);" />
@@ -49,7 +49,7 @@
             <div class="col-md-4 col-12">
               <div class="mb-3 mt-3">
                 <label for="SoLuong">Số lượng:</label>
-                <Field name="SoLuong" type="number" class="form-control" v-model="medicineLocal.SoLuong" required />
+                <Field name="SoLuong" type="number" class="form-control" v-model="medicineLocal.SoLuong" required placeholder="Nhập vào số lượng"/>
                 <ErrorMessage name="SoLuong" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -57,7 +57,7 @@
 
           <div class="mb-3 mt-3">
             <label for="MoTa">Mô tả:</label>
-            <Field name="MoTa" type="text" class="form-control" v-model="medicineLocal.MoTa" required />
+            <Field name="MoTa" type="text" class="form-control" v-model="medicineLocal.MoTa" required placeholder="Nhập vào mô tả thuốc"/>
             <ErrorMessage name="MoTa" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
@@ -87,7 +87,7 @@
 
           <div class="mb-3 mt-3">
             <label for="nhaCungCap">Nhà Cung Cấp:</label>
-            <Field name="nhaCungCap" type="text" class="form-control" v-model="medicineLocal.nhaCungCap" />
+            <Field name="nhaCungCap" type="text" class="form-control" v-model="medicineLocal.nhaCungCap" placeholder="Nhập vào nhà cung cấp thuốc"/>
             <ErrorMessage name="nhaCungCap" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
@@ -99,7 +99,7 @@
             <div class="col-md-9 col-12">
               <div class="mb-3 mt-3">
                 <label for="imgURL">Ảnh:</label>
-                <Field name="imgURL" type="text" class="form-control" v-model="medicineLocal.imgURL" required />
+                <Field name="imgURL" type="text" class="form-control" v-model="medicineLocal.imgURL" required placeholder="https://example.jpg"/>
                 <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
