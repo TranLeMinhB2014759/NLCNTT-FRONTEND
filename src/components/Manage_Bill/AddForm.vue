@@ -69,44 +69,56 @@
                   </div>
                 </div>
               </div>
-
-              <p class="border border-dark border-bottom"></p>
-
-              <div v-for="(medicine, index) in selectedMedicines" :key="index" class="row selected-medicine">
-                <strong>{{ index + 1 }}. {{ medicine.tenThuoc }}</strong>
-                <div class="col-6 col-md-3">
-                  <label for="SoLuong">Số Lượng:</label>
-                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1"
-                    required />
-                </div>
-
-                <div class="col-6 col-md-3">
-                  <label for="Donvi">Đơn vị tính:</label>
-                  <input class="form-control" v-model="medicine.Donvi" disabled />
-                  <input v-model="medicine.Donvi" hidden />
-                </div>
-
-                <div class="col-12 col-md-3">
-                  <label for="Gia">Giá:</label>
-                  <input type="number" class="form-control" :value="calculateTotalPrice(medicine)" disabled />
-                  <input type="number" :value="calculateTotalPrice(medicine)" hidden />
-                </div>
-
-                <div class="col-12 col-md-1">
-                  <label><strong>Xóa:</strong></label>
-                  <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i
-                      class="fa-solid fa-minus"></i></button>
-                </div>
+              <div v-if="selectedMedicines != ''" class="table-responsive">
+                <table class="table table-bordered text-center">
+                  <thead class="table-success">
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên thuốc</th>
+                      <th>Số lượng</th>
+                      <th>ĐVT</th>
+                      <th>Giá</th>
+                      <th>Thành tiền</th>
+                      <th>Xóa</th>
+                    </tr>
+                  </thead>
+                  <tbody v-for="(medicine, index) in selectedMedicines" :key="index">
+                    <tr>
+                      <td> {{ index + 1 }} </td>
+                      <td> {{ medicine.tenThuoc }} </td>
+                      <td class="d-flex justify-content-center">
+                        <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required style="width: 80px;"/>
+                      </td>
+                      <td>
+                        {{ medicine.Donvi }}
+                        <input v-model="medicine.Donvi" hidden />
+                      </td>
+                      <td> {{ medicine.Gia }} </td>
+                      <td>
+                        {{ calculateTotalPrice(medicine) }}
+                        <input type="number" :value="calculateTotalPrice(medicine)" hidden />
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i
+                            class="fa-solid fa-minus"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="5">
+                        <strong>Tổng tiền</strong>
+                      </td>
+                      <td>
+                        <strong>{{ calculateTotalBill() }}</strong>
+                        <input type="number" :value="calculateTotalBill()" hidden />
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
-
-              <p class="border border-dark border-bottom"></p>
-
-              <div class="mb-3 mt-3">
-                <div class="col-12 col-md-2">
-                  <label for="total_bill">Tổng tiền:</label>
-                  <input type="number" class="form-control" :value="calculateTotalBill()" disabled />
-                  <input type="number" :value="calculateTotalBill()" hidden />
-                </div>
+              <div v-else>
+                <p class="text-danger"><i class="fas fa-exclamation-circle text-danger"></i> Đơn thuốc rỗng</p>
               </div>
             </div>
           </div>
@@ -154,8 +166,9 @@ export default {
       phoneNumber: yup
         .string()
         .required("Số điện thoại không được để trống.")
-        .min(8, "Số điện thoại có ít nhất 8 số")
-        .max(11, "Số điện thoại không hợp lệ"),
+        .matches(
+          /((09|03|07|08|05|01)+([0-9]{8})\b)/g,
+          "Số điện thoại không hợp lệ."),
     });
     return {
       record: null,
@@ -211,7 +224,7 @@ export default {
 
     async retrieveMedicines() {
       try {
-        this.medicines = await MedicineService.getAll();
+        this.medicines = await MedicineService.getIsActive();
       } catch (error) {
         console.log(error);
       }
@@ -229,6 +242,7 @@ export default {
             ...selectedOption,
             SoLuong: 1,
           });
+          this.selectedMedicine = '';
         } else if (selectedOption && this.selectedMedicines.some(med => med.tenThuoc === selectedOption.tenThuoc)) {
           this.selectedMedicine = null;
           toast.warn("Thuốc đã được thêm vào toa");
@@ -297,10 +311,6 @@ img {
   min-height: 100px;
   border-radius: var(--bs-border-radius);
   ;
-}
-
-.selected-medicine {
-  margin-bottom: 13px;
 }
 
 .btn-light {

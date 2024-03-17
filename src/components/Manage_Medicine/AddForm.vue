@@ -56,29 +56,16 @@
           </div>
 
           <div class="mb-3 mt-3">
+            <label for="HSD">Hạn sử dụng:</label>
+            <Field type="date" name="HSD" class="form-control" v-model="medicineLocal.HDSD" required/>
+            <ErrorMessage name="HDSD" class="error-feedback" style="color: rgb(238, 15, 15);" />
+          </div>
+
+          <div class="mb-3 mt-3">
             <label for="MoTa">Mô tả:</label>
             <Field name="MoTa" type="text" class="form-control" v-model="medicineLocal.MoTa" required placeholder="Nhập vào mô tả thuốc"/>
             <ErrorMessage name="MoTa" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
-
-          <!-- <div class="mb-3 mt-3">
-            <label for="HDSD">Cách sử dụng:</label>
-            <Field as="select" name="HDSD" class="form-control" v-model="medicineLocal.HDSD" required>
-              <optgroup label="Uống">
-                <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">Ngày uống 1 lần, mỗi lần 1 viên | sáng</option>
-                <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">Ngày uống 1 lần, mỗi lần 1 viên | chiều</option>
-                <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">Ngày uống 2 lần, mỗi lần 1 viên | sáng,
-                  chiều
-                </option>
-              </optgroup>
-              <optgroup label="Thoa">
-                <option value="Ngày thoa 1 lần | sáng">Ngày thoa 1 lần | sáng</option>
-                <option value="Ngày thoa 1 lần | chiều">Ngày thoa 1 lần | chiều</option>
-                <option value="Ngày thoa 2 lần | sáng, chiều">Ngày thoa 2 lần | sáng, chiều</option>
-              </optgroup>
-            </Field>
-            <ErrorMessage name="HDSD" class="error-feedback" style="color: rgb(238, 15, 15);" />
-          </div> -->
 
           <div class="mb-3 mt-3">
             <label for="GhiChu">Ghi Chú:</label>
@@ -105,7 +92,7 @@
               </div>
             </div>
           </div>
-
+          <Field name="status" type="text" class="form-control" v-model="medicineLocal.status" hidden/>
           <div class="mb-3 mt-3 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary button-submit">
               <div class="svg-wrapper-1">
@@ -151,14 +138,14 @@ export default {
       Donvi: yup
         .string()
         .required("Hãy chọn một đơn vị tính."),
+      HSD: yup
+        .string()
+        .required("Hãy nhập vào hạn sử dụng."),
       MoTa: yup
         .string()
         .required("Mô tả không được để trống.")
         .min(5, "Nhập ít nhất 5 ký tự.")
         .max(1000, "Quá số kí tự được phép."),
-      // HDSD: yup
-      //   .string()
-      //   .required("Hãy chỉ định cách sử dụng."),
       GhiChu: yup
         .string(),
       nhaCungCap: yup
@@ -177,11 +164,12 @@ export default {
         Gia: "",
         Donvi: "",
         SoLuong: "",
+        HSD: "",
         MoTa: "",
-        // HDSD: "",
         GhiChu: "",
         nhaCungCap: "",
         imgURL: "",
+        status: "on",
       },
       medicineFormSchema,
 

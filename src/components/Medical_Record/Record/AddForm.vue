@@ -99,17 +99,31 @@
                   </div>
                 </div>
               </div>
-
-              <p class="border border-dark border-bottom"></p>
-
-              <div v-for="(disease, index) in selectedDiseases" :key="index" class="row selected d-flex align-items-center">
-                <div class="col-12 col-md-10">
-                  <strong>{{ index + 1 }}. ({{ disease.code }}) {{ disease.tenBenh }}</strong>
-                </div>
-                <div class="col-12 col-md-2">
-                  <button type="button" class="btn btn-danger form-control" @click="removeDiagnosis(index)"><i
-                      class="fa-solid fa-minus"></i></button>
-                </div>
+              
+              <div v-if="selectedDiseases != ''" class="table-responsive">
+                <table class="table table-bordered text-center">
+                  <thead class="table-success">
+                    <tr>
+                      <th>STT</th>
+                      <th>Mã ICD 10</th>
+                      <th>Tên bệnh</th>
+                      <th>Xóa</th>
+                    </tr>
+                  </thead>
+                  <tbody v-for="(disease, index) in selectedDiseases" :key="index">
+                    <tr>
+                      <td> {{ index + 1 }} </td>
+                      <td> {{ disease.code }} </td>
+                      <td> {{ disease.tenBenh }} </td>
+                      <td>
+                        <button type="button" class="btn btn-danger form-control" @click="removeDiagnosis(index)"><i class="fa-solid fa-minus"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div v-else>
+                <p class="text-danger"><i class="fas fa-exclamation-circle text-danger"></i> Hãy thêm chuẩn đoán</p>
               </div>
             </div>
           </div>
@@ -134,45 +148,56 @@
                 </div>
               </div>
 
-              <p class="border border-dark border-bottom"></p>
-
-              <div v-for="(medicine, index) in selectedMedicines" :key="index" class="row selected">
-                <strong>{{ index + 1 }}. {{ medicine.tenThuoc }}</strong>
-                <div class="col-6 col-md-3">
-                  <label for="SoLuong">Số Lượng:</label>
-                  <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required autocomplete="off">
-                </div>
-                <div class="col-6 col-md-2">
-                  <label for="Donvi">Đơn vị tính:</label>
-                  <input class="form-control" v-model="medicine.Donvi" disabled>
-                  <input v-model="medicine.Donvi" hidden>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label for="HDSD">HDSD:</label>
-                  <input name="HDSD" list="HDSD" class="form-control" v-model="medicine.HDSD" required placeholder="E.g: 'U1S' là Uống 1 lần vào buổi sáng" autocomplete="off">
-                    <datalist id="HDSD">
-                        <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">U1S</option>
-                        <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">U1T</option>
-                        <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">U1C</option>
-                        <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, trưa">U2ST</option>
-                        <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">U2SC</option>
-                        <option value="Ngày uống 2 lần, mỗi lần 1 viên | trưa, chiều">U2TC</option>
-                        <option value="Ngày uống 3 lần, mỗi lần 1 viên | sáng, trưa, chiều">U3</option>
-                        <option value="Ngày thoa 1 lần | sáng">T1S</option>
-                        <option value="Ngày thoa 1 lần | trưa">T1T</option>
-                        <option value="Ngày thoa 1 lần | chiều">T1C</option>
-                        <option value="Ngày thoa 2 lần | sáng, trưa">T2ST</option>
-                        <option value="Ngày thoa 2 lần | sáng, chiều">T2SC</option>
-                        <option value="Ngày thoa 2 lần | trưa, chiều">T2TC</option>
-                        <option value="Ngày thoa 3 lần | sáng, trưa, chiều">T3</option>
-                    </datalist>
-                  </input>
-                </div>
-                <div class="col-12 col-md-1">
-                  <label for="HDSD"><strong>Xóa:</strong></label>
-                  <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i
-                      class="fa-solid fa-minus"></i></button>
-                </div>
+              <div v-if="selectedMedicines != ''" class="table-responsive">
+                <table class="table table-bordered text-center">
+                  <thead class="table-success">
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên thuốc</th>
+                      <th>Số lượng</th>
+                      <th>DVT</th>
+                      <th>HDSD</th>
+                      <th>Xóa</th>
+                    </tr>
+                  </thead>
+                  <tbody v-for="(medicine, index) in selectedMedicines" :key="index">
+                    <tr>
+                      <td> {{ index + 1 }} </td>
+                      <td> {{ medicine.tenThuoc }} </td>
+                      <td class="d-flex justify-content-center"> <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required autocomplete="off" style="width: 80px;"> </td>
+                      <td>
+                        {{ medicine.Donvi }}
+                        <input v-model="medicine.Donvi" hidden>
+                      </td>
+                      <td>
+                        <input name="HDSD" list="HDSD" class="form-control" v-model="medicine.HDSD" required placeholder="E.g: 'U1S' là Uống 1 lần vào buổi sáng" autocomplete="off">
+                          <datalist id="HDSD">
+                              <option value="Ngày uống 1 lần, mỗi lần 1 viên | sáng">U1S</option>
+                              <option value="Ngày uống 1 lần, mỗi lần 1 viên | trưa">U1T</option>
+                              <option value="Ngày uống 1 lần, mỗi lần 1 viên | chiều">U1C</option>
+                              <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, trưa">U2ST</option>
+                              <option value="Ngày uống 2 lần, mỗi lần 1 viên | sáng, chiều">U2SC</option>
+                              <option value="Ngày uống 2 lần, mỗi lần 1 viên | trưa, chiều">U2TC</option>
+                              <option value="Ngày uống 3 lần, mỗi lần 1 viên | sáng, trưa, chiều">U3</option>
+                              <option value="Ngày thoa 1 lần | sáng">T1S</option>
+                              <option value="Ngày thoa 1 lần | trưa">T1T</option>
+                              <option value="Ngày thoa 1 lần | chiều">T1C</option>
+                              <option value="Ngày thoa 2 lần | sáng, trưa">T2ST</option>
+                              <option value="Ngày thoa 2 lần | sáng, chiều">T2SC</option>
+                              <option value="Ngày thoa 2 lần | trưa, chiều">T2TC</option>
+                              <option value="Ngày thoa 3 lần | sáng, trưa, chiều">T3</option>
+                          </datalist>
+                        </input>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger form-control" @click="removeMedicine(index)"><i class="fa-solid fa-minus"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div v-else>
+                <p class="text-danger"><i class="fas fa-exclamation-circle text-danger"></i> Đơn thuốc rỗng</p>
               </div>
             </div>
           </div>
@@ -227,7 +252,7 @@ export default {
   },
   data() {
     return {
-      patient: [],
+      // patient: [],
       medicalrecords: [],
       selectedDisease: null,
       selectedDiseases: [],
@@ -335,7 +360,7 @@ export default {
     // --------------- selectedMedicine -----------------------
     async retrieveMedicines() {
       try {
-        this.medicines = await MedicineService.getAll();
+        this.medicines = await MedicineService.getIsActive();
       } catch (error) {
         console.log(error);
       }
@@ -411,13 +436,9 @@ img {
 .container-selected {
   background-color: lightcyan;
   border: 1px solid black;
-  padding: 1% 8%;
+  padding: 2%;
   min-height: 100px;
   border-radius: var(--bs-border-radius);
-}
-
-.selected {
-  margin-bottom: 13px;
 }
 
 /* ------------------- Button ----------------------- */

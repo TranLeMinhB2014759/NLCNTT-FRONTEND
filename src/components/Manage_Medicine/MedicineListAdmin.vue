@@ -18,6 +18,18 @@ export default {
     updateActiveIndex(index) {
       this.$emit("update:activeIndex", index);
     },
+    isExpiringSoon(expiryDate) {
+      const thirty = new Date();
+      thirty.setDate(thirty.getDate() + 30);
+      const sixty = new Date();
+      sixty.setDate(sixty.getDate() + 60);
+      const expiry = new Date(expiryDate);
+      if(expiry > thirty && expiry <= sixty){
+        return 60;
+      } else if (expiry <= thirty) {
+        return 30;
+      } return 0;
+    },
     async deleteMedicine(id) {
       const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
       if (confirmed) {
@@ -43,6 +55,12 @@ export default {
   <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-start" v-for="(medicine, index) in medicines"
       :key="index" :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
+      <span v-if="isExpiringSoon(medicine.HSD) === 60">
+        <i class="fas fa-exclamation-circle text-warning" title="Quá hạn trong vòng 60 ngày"></i>
+      </span>
+      <span v-if="isExpiringSoon(medicine.HSD) === 30">
+        <i class="fas fa-exclamation-circle text-danger" title="Quá hạn trong vòng 30 ngày"></i>
+      </span>
       {{ medicine.tenThuoc }}
       <button type="button" class="ml-2 btn btn-danger" @click="deleteMedicine(medicine._id)">
         <i class="fa fa-trash"></i>
@@ -52,6 +70,10 @@ export default {
 </template>
 
 <style scoped>
+.fa-exclamation-circle{
+  padding-right: 6px;
+}
+
 .list-group {
   max-height: 386px;
   overflow-y: scroll;

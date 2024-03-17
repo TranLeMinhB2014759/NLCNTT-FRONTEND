@@ -15,7 +15,7 @@
                 <div class="container mt-3 table-responsive">
                     <table class="table table-bordered table-hover text-center" v-if="filteredBillsCount > 0"
                         :bills="filteredBills">
-                        <thead>
+                        <thead class="table-success">
                             <tr>
                                 <th>Họ và tên</th>
                                 <th>Số điện thoại</th>
