@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="patient">
         <edit :patient="patient" @submit:patient="editPatient" />
     </div>
 </template>

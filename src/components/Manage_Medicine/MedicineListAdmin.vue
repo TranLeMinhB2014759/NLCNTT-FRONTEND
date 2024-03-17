@@ -7,7 +7,6 @@ export default {
   props: {
     medicines: { type: Array, default: [] },
     activeIndex: { type: Number, default: -1 },
-    medicine: { type: Object, required: true },
   },
   // data() {
   //   return {

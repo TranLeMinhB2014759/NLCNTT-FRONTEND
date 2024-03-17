@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="patient">
         <add :patient="patient" @submit:medicalrecord="addMedicalrecord" />
     </div>
 </template>

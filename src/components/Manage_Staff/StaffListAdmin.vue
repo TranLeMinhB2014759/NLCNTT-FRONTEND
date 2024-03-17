@@ -7,7 +7,6 @@ export default {
   props: {
     staffs: { type: Array, default: [] },
     activeIndex: { type: Number, default: -1 },
-    staff: { type: Object, required: true },
   },
   // data() {
   //   return {
