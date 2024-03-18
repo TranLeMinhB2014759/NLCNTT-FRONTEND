@@ -25,9 +25,9 @@
                                 <th>Xóa</th>
                             </tr>
                         </thead>
-                        <tbody v-for="(bill, index) in filteredBills" :key="index"
+                        <tbody>
+                            <tr v-for="(bill, index) in filteredBills" :key="index"
                             :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
-                            <tr>
                                 <td>{{ bill.name }}</td>
                                 <td>{{ bill.phoneNumber }}</td>
                                 <td>{{ bill.ngayLap }}</td>
@@ -72,9 +72,9 @@
                                                                 <th>Thành tiền <i class="donvi">(đồng)</i></th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody v-for="(bill, idx) in bill.prescription" :key="idx">
-                                                            <tr>
-                                                                <td rowspan="2">{{ idx + 1 }}</td>
+                                                        <tbody>
+                                                            <tr v-for="(bill, idx) in bill.prescription" :key="idx">
+                                                                <td>{{ idx + 1 }}</td>
                                                                 <td class="text-start">{{ bill.tenThuoc }}</td>
                                                                 <td>{{ bill.Donvi }} </td>
                                                                 <td>{{ bill.SoLuong }}</td>
@@ -174,8 +174,8 @@ export default {
     computed: {
         billStrings() {
             return this.bills.map((bill) => {
-                const { name, phoneNumber, ngayLap } = bill;
-                return [name, phoneNumber, ngayLap].join("");
+                const { name, phoneNumber, ngayLap, MSDT } = bill;
+                return [name, phoneNumber, ngayLap, MSDT ].join("");
             });
         },
         filteredBills() {

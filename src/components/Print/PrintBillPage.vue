@@ -53,8 +53,8 @@
                     <th>Thành tiền <i class="donvi">(đồng)</i></th>
                 </tr>
             </thead>
-            <tbody v-for="(bill, index) in bill.prescription" :key="index">
-                <tr>
+            <tbody>
+                <tr v-for="(bill, index) in bill.prescription" :key="index">
                     <td>{{ index + 1 }}</td>
                     <td class="text-start">{{ bill.tenThuoc }}</td>
                     <td>{{ bill.Donvi }}</td>

@@ -23,9 +23,9 @@
                 <th>Xóa</th>
               </tr>
             </thead>
-            <tbody v-for="(disease, index) in filteredDisease" :key="index"
+            <tbody>
+              <tr v-for="(disease, index) in filteredDisease" :key="index"
               :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
-              <tr>
                 <td>{{ disease.code }}</td>
                 <td>{{ disease.tenBenh }}</td>
                 <td>

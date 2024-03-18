@@ -80,9 +80,9 @@
                             <th>Xóa</th>
                         </tr>
                     </thead>
-                    <tbody v-for="(medicalrecord, index) in filteredMedicalrecords" :key="index"
+                    <tbody>
+                        <tr  v-for="(medicalrecord, index) in filteredMedicalrecords" :key="index"
                         :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
-                        <tr>
                             <td>
                                 {{ medicalrecord.MSDT }} 
                                 <button type="button" class="btn btn-sm btn-secondary" @click="copy( medicalrecord.MSDT )"> 

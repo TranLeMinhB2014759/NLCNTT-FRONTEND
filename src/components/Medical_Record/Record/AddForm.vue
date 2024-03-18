@@ -111,8 +111,8 @@
                       <th>Xóa</th>
                     </tr>
                   </thead>
-                  <tbody v-for="(disease, index) in selectedDiseases" :key="index">
-                    <tr>
+                  <tbody>
+                    <tr v-for="(disease, index) in selectedDiseases" :key="index">
                       <td> {{ index + 1 }} </td>
                       <td> {{ disease.code }} </td>
                       <td> {{ disease.tenBenh }} </td>
@@ -161,8 +161,8 @@
                       <th>Xóa</th>
                     </tr>
                   </thead>
-                  <tbody v-for="(medicine, index) in selectedMedicines" :key="index">
-                    <tr>
+                  <tbody>
+                    <tr v-for="(medicine, index) in selectedMedicines" :key="index">
                       <td> {{ index + 1 }} </td>
                       <td> {{ medicine.tenThuoc }} </td>
                       <td>

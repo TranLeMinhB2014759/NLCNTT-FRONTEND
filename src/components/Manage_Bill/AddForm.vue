@@ -86,8 +86,8 @@
                       <th>Xóa</th>
                     </tr>
                   </thead>
-                  <tbody v-for="(medicine, index) in selectedMedicines" :key="index">
-                    <tr>
+                  <tbody>
+                    <tr v-for="(medicine, index) in selectedMedicines" :key="index">
                       <td> {{ index + 1 }} </td>
                       <td> {{ medicine.tenThuoc }} </td>
                       <td>
