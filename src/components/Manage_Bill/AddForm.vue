@@ -20,8 +20,8 @@
           <div class="row">
             <div class="col-10 col-md-5">
               <div class="mb-3 mt-3">
-                <Field name="MSDT" type="text" class="form-control" v-model="billLocal.MSDT" required
-                  placeholder="Nhập vào mã số đơn thuốc" />
+                <Field name="search" type="text" class="form-control" v-model="billLocal.search" required
+                  placeholder="Nhập vào mã số đơn thuốc" autocomplete="off"/>
                 <ErrorMessage name="MSDT" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -32,9 +32,13 @@
                 </button>
               </div>
             </div>
-
           </div>
-
+          <div class="mb-3 mt-3">
+            <label for="MSDT">Đơn thuốc:</label>
+            <Field name="MSDT" type="text" class="form-control" v-model="billLocal.MSDT" disabled/>
+            <Field name="_id" type="text" v-model="billLocal._id" required hidden/>
+            <Field name="MSDT" type="text" v-model="billLocal.MSDT" required hidden/>
+          </div>
           <div class="mb-3 mt-3">
             <label for="name">Tên khách hàng:</label>
             <Field name="name" type="text" class="form-control" v-model="billLocal.name" required
@@ -86,8 +90,12 @@
                     <tr>
                       <td> {{ index + 1 }} </td>
                       <td> {{ medicine.tenThuoc }} </td>
-                      <td class="d-flex justify-content-center">
-                        <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required style="width: 80px;"/>
+                      <td>
+                        <div class="d-flex justify-content-around align-items-center">
+                          <button type="button" class="btn btn-outline-secondary" @click="decreaseQuantity(medicine)"><i class="fa-solid fa-minus"></i></button>
+                          <input type="number" v-model="medicine.SoLuong" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
+                          <button type="button" class="btn btn-outline-secondary" @click="increaseQuantity(medicine)"><i class="fa-solid fa-plus"></i></button>
+                        </div>
                       </td>
                       <td>
                         {{ medicine.Donvi }}
@@ -112,6 +120,9 @@
                       <td>
                         <strong>{{ calculateTotalBill() }}</strong>
                         <input type="number" :value="calculateTotalBill()" hidden />
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger form-control" @click="removeAllMedicine()">Delete All</button>
                       </td>
                     </tr>
                   </tfoot>
@@ -177,6 +188,8 @@ export default {
       medicines: [],
 
       billLocal: {
+        search: "",
+        MSDT: "Bán lẻ",
         ngayLap: this.getCurrentDate(),
         name: "",
         phoneNumber: "",
@@ -206,18 +219,28 @@ export default {
 
     async getRecordByMSDT() {
       try {
-        const MSDT = this.billLocal.MSDT;
-        const record = await MedicalrecordService.getRecordByMSDT(MSDT);
-        this.billLocal.name = record[0].name;
-        this.billLocal.phoneNumber = record[0].phoneNumber;
-        this.selectedMedicines = record[0].prescription.map(presc => ({
-          tenThuoc: presc.tenThuoc,
-          Gia: presc.Gia,
-          Donvi: presc.Donvi,
-          SoLuong: presc.SoLuong,
-        }));
-        toast.success("Hóa đơn của " + record[0].name);
+        const search = this.billLocal.search;
+        const record = await MedicalrecordService.getRecordByMSDT(search);
+        if(record && record[0].status === "unsold"){
+          this.billLocal.MSDT = record[0].MSDT;
+          this.billLocal.name = record[0].name;
+          this.billLocal.phoneNumber = record[0].phoneNumber;
+          this.billLocal._id = record[0]._id;
+          this.selectedMedicines = record[0].prescription.map(presc => ({
+            tenThuoc: presc.tenThuoc,
+            Gia: presc.Gia,
+            Donvi: presc.Donvi,
+            SoLuong: presc.SoLuong,
+          }));
+          toast.success("Hóa đơn của " + record[0].name);
+        } else{
+          toast.info("Đơn thuốc đã được bán");
+        }
       } catch (error) {
+        this.billLocal.MSDT = "Bán lẻ",
+        this.billLocal.name = "",
+        this.billLocal.phoneNumber = "",
+        this.selectedMedicines = [],
         toast.info("Không tìm thấy mã đơn thuốc");
       }
     },
@@ -231,7 +254,7 @@ export default {
     },
 
     isMedicineSelected(medicine) {
-      return this.selectedMedicines.some(selectedMedicine => selectedMedicine._id === medicine._id);
+      return this.selectedMedicines.some(selectedMedicine => selectedMedicine.tenThuoc === medicine.tenThuoc);
     },
 
     addMedicine() {
@@ -254,8 +277,24 @@ export default {
       }
     },
 
+    decreaseQuantity(medicine) {
+      if (medicine.SoLuong > 1) {
+        medicine.SoLuong--;
+      }
+    },
+
+    increaseQuantity(medicine) {
+      if (medicine.SoLuong < 999) {
+        medicine.SoLuong++;
+      }
+    },
+
     removeMedicine(index) {
       this.selectedMedicines.splice(index, 1);
+    },
+
+    removeAllMedicine() {
+      this.selectedMedicines = [];
     },
 
     // ------------------------ CALCULATE ------------------------

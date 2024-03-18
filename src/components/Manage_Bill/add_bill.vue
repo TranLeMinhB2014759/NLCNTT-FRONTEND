@@ -7,6 +7,7 @@
 
 <script>
 import add from "@/components/Manage_Bill/AddForm.vue";
+import MedicalrecordService from "@/services/medicalrecord.service.js";
 import BillService from "@/services/bill.service";
 import Swal from 'sweetalert2'
 
@@ -28,6 +29,10 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
+            if(data.MSDT != "Bán lẻ") {
+              const updatedStatus = 'sold';
+              await MedicalrecordService.update(data._id, { status: updatedStatus });
+            }
             await BillService.create(data);
             this.message = "Lập bảng kê khai thành công";
             Swal.fire({

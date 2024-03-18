@@ -51,12 +51,14 @@
                                                             <p><strong>I. Phần hành chính:</strong></p>
                                                             <p>Họ tên:</p>
                                                             <p>Số điện thoại:&nbsp</p>
+                                                            <p>Đơn thuốc:</p>
                                                             <p><strong>II. Phần chi phí khám chữa bệnh:</strong></p>
                                                         </div>
                                                         <div class="text-start">
                                                             <p>&nbsp;</p>
                                                             <p><strong>{{ bill.name }}</strong></p>
                                                             <p>{{ bill.phoneNumber}}</p>
+                                                            <p>{{ bill.MSDT }}</p>
                                                         </div>
                                                     </div>
                                                     <table class="table table-bordered">
@@ -115,7 +117,8 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td v-if="getCurrentStaff() === bill.nguoiLap">
+
+                                <!-- <td v-if="getCurrentStaff() === bill.nguoiLap">
                                     <button type="button" class="ml-2 btn btn-danger" @click="deleteBill(bill._id)">
                                         <i class="fa fa-trash"></i>
                                     </button>
@@ -124,6 +127,22 @@
                                     <button type="button" class="ml-2 btn btn-danger" disabled>
                                         <i class="fa fa-trash"></i>
                                     </button>
+                                </td> -->
+
+                                <td v-if="bill.MSDT === 'Bán lẻ'">
+                                    <span v-if="getCurrentStaff() === bill.nguoiLap">
+                                        <button type="button" class="ml-2 btn btn-danger" @click="deleteBill(bill._id)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </span>
+                                    <span v-else>
+                                        <button type="button" class="ml-2 btn btn-danger" disabled>
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </span>
+                                </td>
+                                <td v-else>
+                                    <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã bán</h3>
                                 </td>
                             </tr>
                         </tbody>
@@ -227,5 +246,10 @@ export default {
 
 i.donvi {
     font-size: small;
+}
+
+.bg-success{
+    color: white;
+    background-color: rgb(65 255 167) !important;
 }
 </style>

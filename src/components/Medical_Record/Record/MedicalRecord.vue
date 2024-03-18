@@ -34,8 +34,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-6 col-md-2"><strong>Tuổi:</strong> {{ calculateAge(patient.year) }} ({{
-            patient.year }})</div>
+                        <div class="col-6 col-md-2"><strong>Tuổi:</strong> {{ calculateAge(patient.year) }} ({{ patient.year }})</div>
                         <div class="col-6 col-md-2"><strong>Giới tính:</strong> {{ patient.gender }}</div>
                         <div class="col-12 col-md-3"><strong>Số điện thoại:</strong> {{ patient.phoneNumber }}</div>
                         <div class="col-12 col-md-5"><strong>Địa chỉ:</strong> {{ patient.address }}</div>
@@ -161,6 +160,7 @@
                                                 <div class="d-flex">
                                                     <div class="text-start justify-content-start">
                                                         <p>Tái khám nhớ mang theo đơn thuốc này!</p>
+                                                        <img v-if="medicalrecord.status === 'sold'" class="soldout" :src="'/src/assets/images/soldout.jpg'" alt="SoldOut">
                                                     </div>
                                                     <div class="justify-content-end">
                                                         <p>Cần Thơ, {{ medicalrecord.ngayKham }}</p>
@@ -184,16 +184,21 @@
                                     </div>
                                 </div>
                             </td>
-                            <td v-if="getCurrentDoctor() === medicalrecord.bacsi">
-                                <button type="button" class="ml-2 btn btn-danger"
-                                    @click="deleteMedicalrecord(medicalrecord._id)">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                            <td v-if="medicalrecord.status === 'unsold'">
+                                <span v-if="getCurrentDoctor() === medicalrecord.bacsi">
+                                    <button type="button" class="ml-2 btn btn-danger"
+                                        @click="deleteMedicalrecord(medicalrecord._id)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </span>
+                                <span v-else>
+                                    <button type="button" class="ml-2 btn btn-danger" disabled>
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </span>
                             </td>
-                            <td v-else>
-                                <button type="button" class="ml-2 btn btn-danger" disabled>
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                            <td v-else class="justify-content-center">
+                                <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã bán</h3>
                             </td>
                         </tr>
                     </tbody>
@@ -327,6 +332,10 @@ export default {
 </script>
 
 <style scoped>
+.bg-success{
+    background-color: rgb(65 255 167) !important;
+}
+
 .back {
     display: inline-block;
 }
@@ -334,6 +343,11 @@ export default {
 a {
     text-decoration: none;
     color: black;
+}
+
+.soldout{
+    max-width: 100px;
+    max-height: 100px;
 }
 
 /* ----------------------- BUTTON BACK --------------------------- */

@@ -22,7 +22,8 @@
         <Form @submit="submitMedicalrecord" :validation-schema="medicalrecordFormSchema">
           <!-- Thông tin bệnh nhân -->
           <div class="row">
-            <Field name="MSBN" type="text" class="form-control" v-model="medicalrecordLocal.MSBN" required hidden />
+            <Field name="MSBN" type="text" v-model="medicalrecordLocal.MSBN" required hidden />
+            <Field name="status" type="text" v-model="medicalrecordLocal.status" required hidden />
             <Field name="MSDT" type="text" class="form-control" v-model="formatMSDT" hidden />
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
@@ -164,7 +165,13 @@
                     <tr>
                       <td> {{ index + 1 }} </td>
                       <td> {{ medicine.tenThuoc }} </td>
-                      <td class="d-flex justify-content-center"> <input type="number" class="form-control" v-model="medicine.SoLuong" placeholder="Số lượng" min="1" required autocomplete="off" style="width: 80px;"> </td>
+                      <td>
+                        <div class="d-flex justify-content-around align-items-center">
+                          <button type="button" class="btn btn-outline-secondary" @click="decreaseQuantity(medicine)"><i class="fa-solid fa-minus"></i></button>
+                          <input type="number" v-model="medicine.SoLuong" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
+                          <button type="button" class="btn btn-outline-secondary" @click="increaseQuantity(medicine)"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                      </td>
                       <td>
                         {{ medicine.Donvi }}
                         <input v-model="medicine.Donvi" hidden>
@@ -273,6 +280,7 @@ export default {
         symptom: "",
         diagnosis: "",
         prescription: "",
+        status: "unsold",
       },
       medicalrecordFormSchema: yup.object().shape({
         symptom: yup
@@ -388,6 +396,18 @@ export default {
           this.selectedMedicine = null;
           toast.error("Hãy điền đúng tên thuốc");
         }
+      }
+    },
+
+    decreaseQuantity(medicine) {
+      if (medicine.SoLuong > 1) {
+        medicine.SoLuong--;
+      }
+    },
+
+    increaseQuantity(medicine) {
+      if (medicine.SoLuong < 999) {
+        medicine.SoLuong++;
       }
     },
 

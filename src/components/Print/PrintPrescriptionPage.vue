@@ -106,8 +106,9 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-around">
-            <div class="text-start">
+            <div class="text-center">
                 <p>Tái khám nhớ mang theo đơn thuốc này!</p>
+                <img v-if="medicalrecord.status === 'sold'" class="soldout" :src="'/src/assets/images/soldout.jpg'" alt="SoldOut">
             </div>
             <div class="text-center">
                 <p>Cần Thơ, {{ medicalrecord.ngayKham }}</p>
@@ -211,6 +212,11 @@ p {
 
 table {
     font-size: 15px;
+}
+
+.soldout{
+    max-width: 100px;
+    max-height: 100px;
 }
 
 /* ---------------- BTN PRINT -------------------- */
