@@ -127,8 +127,7 @@ export default {
     const medicineFormSchema = yup.object().shape({
       tenThuoc: yup
         .string()
-        .required("Hãy nhập vào tên thuốc.")
-        .min(10, "Tên phải có ít nhất 10 ký tự."),
+        .required("Hãy nhập vào tên thuốc."),
       Gia: yup
         .string()
         .required("Hãy nhập vào giá tiền."),

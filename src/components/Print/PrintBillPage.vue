@@ -59,14 +59,14 @@
                     <td class="text-start">{{ bill.tenThuoc }}</td>
                     <td>{{ bill.Donvi }}</td>
                     <td>{{ bill.SoLuong }}</td>
-                    <td>{{ bill.Gia }}</td>
-                    <td>{{ bill.SoLuong * bill.Gia }}</td>
+                    <td>{{ formatToVND(bill.Gia) }}</td>
+                    <td>{{ formatToVND(bill.SoLuong * bill.Gia) }}</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="5"><strong>Tổng cộng</strong></td>
-                    <td><strong>{{ bill.total_bill }}</strong></td>
+                    <td><strong>{{ formatToVND(bill.total_bill) }}</strong></td>
                 </tr>
             </tfoot>
         </table>
@@ -136,6 +136,10 @@ export default {
             } catch (error) {
                 console.error("Error fetching bill:", error);
             }
+        },
+        formatToVND(number) {
+            let formattedNumber = number.toLocaleString('vi-VN');
+            return formattedNumber;
         },
         printDocument() {
             this.printing = true;

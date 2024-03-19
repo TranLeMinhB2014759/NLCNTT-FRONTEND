@@ -4,6 +4,11 @@ export default {
         medicine: { type: Object, required: true },
     },
     methods: {
+        formatToVND(number) {
+            let formattedNumber = number.toLocaleString('vi-VN');
+            formattedNumber += '₫';
+            return formattedNumber;
+        },
         isExpiringSoon(expiryDate) {
             const sixty = new Date();
             sixty.setDate(sixty.getDate() + 60);
@@ -35,7 +40,7 @@ export default {
             </div>
             <div class="p-1">
                 <strong>Giá:</strong>
-                {{ medicine.Gia }}&#8363; / {{ medicine.Donvi }}
+                {{ formatToVND(medicine.Gia) }} / {{ medicine.Donvi }}
             </div>
             <div class="p-1">
                 <strong>Số lượng:</strong>

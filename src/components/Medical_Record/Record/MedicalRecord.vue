@@ -81,7 +81,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  v-for="(medicalrecord, index) in filteredMedicalrecords" :key="index"
+                        <tr  v-for="(medicalrecord, index) in filteredMedicalrecords.slice().reverse()" :key="index"
                         :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
                             <td>
                                 {{ medicalrecord.MSDT }} 

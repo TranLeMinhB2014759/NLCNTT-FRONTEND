@@ -41,7 +41,7 @@ export default {
 
 <template>
   <ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-start" v-for="(staff, index) in staffs"
+    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(staff, index) in staffs"
       :key="index" :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
       {{ staff.name }}
       <button type="button" class="ml-2 btn btn-danger" @click="deleteStaff(staff._id)">

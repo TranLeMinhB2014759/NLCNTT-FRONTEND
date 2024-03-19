@@ -53,15 +53,19 @@ export default {
 
 <template>
   <ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-start" v-for="(medicine, index) in medicines"
+    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(medicine, index) in medicines"
       :key="index" :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
       <span v-if="isExpiringSoon(medicine.HSD) === 60">
         <i class="fas fa-exclamation-circle text-warning" title="Quá hạn trong vòng 60 ngày"></i>
+        {{ medicine.tenThuoc }}
       </span>
-      <span v-if="isExpiringSoon(medicine.HSD) === 30">
+      <span v-else-if="isExpiringSoon(medicine.HSD) === 30">
         <i class="fas fa-exclamation-circle text-danger" title="Quá hạn trong vòng 30 ngày"></i>
+        {{ medicine.tenThuoc }}
       </span>
-      {{ medicine.tenThuoc }}
+      <span v-else>
+        {{ medicine.tenThuoc }}
+      </span>
       <button type="button" class="ml-2 btn btn-danger" @click="deleteMedicine(medicine._id)">
         <i class="fa fa-trash"></i>
       </button>
@@ -70,10 +74,6 @@ export default {
 </template>
 
 <style scoped>
-.fa-exclamation-circle{
-  padding-right: 6px;
-}
-
 .list-group {
   max-height: 386px;
   overflow-y: scroll;

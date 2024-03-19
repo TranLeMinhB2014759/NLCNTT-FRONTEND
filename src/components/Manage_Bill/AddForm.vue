@@ -232,6 +232,7 @@ export default {
             Donvi: presc.Donvi,
             SoLuong: presc.SoLuong,
           }));
+          this.billLocal.search = "",
           toast.success("Hóa đơn của " + record[0].name);
         } else{
           toast.info("Đơn thuốc đã được bán");

@@ -26,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(bill, index) in filteredBills" :key="index"
+                            <tr v-for="(bill, index) in filteredBills.slice().reverse()" :key="index"
                             :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
                                 <td>{{ bill.name }}</td>
                                 <td>{{ bill.phoneNumber }}</td>
@@ -78,14 +78,14 @@
                                                                 <td class="text-start">{{ bill.tenThuoc }}</td>
                                                                 <td>{{ bill.Donvi }} </td>
                                                                 <td>{{ bill.SoLuong }}</td>
-                                                                <td>{{ bill.Gia }}</td>
-                                                                <td>{{ bill.SoLuong * bill.Gia }}</td>
+                                                                <td>{{ formatToVND(bill.Gia) }}</td>
+                                                                <td>{{ formatToVND(bill.SoLuong * bill.Gia) }}</td>
                                                             </tr>
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
                                                                 <td colspan="5"><strong>Tổng cộng</strong></td>
-                                                                <td><strong>{{ bill.total_bill }}</strong></td>
+                                                                <td><strong>{{ formatToVND(bill.total_bill) }}</strong></td>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
@@ -192,6 +192,10 @@ export default {
         },
     },
     methods: {
+        formatToVND(number) {
+            let formattedNumber = number.toLocaleString('vi-VN');
+            return formattedNumber;
+        },
         getCurrentStaff() {
             const staffData = JSON.parse(window.localStorage.getItem('staff'));
             this.staff = staffData || {};
