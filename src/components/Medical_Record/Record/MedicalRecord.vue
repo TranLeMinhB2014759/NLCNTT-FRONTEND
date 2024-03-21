@@ -148,7 +148,7 @@
                                                             <td rowspan="2">{{ idx + 1 }}</td>
                                                             <td class="text-start">{{ medicalrecord.tenThuoc }}</td>
                                                             <td>{{ medicalrecord.Donvi }} </td>
-                                                            <td>{{ medicalrecord.SoLuong }}</td>
+                                                            <td>{{ medicalrecord.SoLuongBan }}</td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="4" class="text-start">

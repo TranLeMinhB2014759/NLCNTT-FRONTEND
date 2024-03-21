@@ -77,9 +77,9 @@
                                                                 <td>{{ idx + 1 }}</td>
                                                                 <td class="text-start">{{ bill.tenThuoc }}</td>
                                                                 <td>{{ bill.Donvi }} </td>
-                                                                <td>{{ bill.SoLuong }}</td>
+                                                                <td>{{ bill.SoLuongBan }}</td>
                                                                 <td>{{ formatToVND(bill.Gia) }}</td>
-                                                                <td>{{ formatToVND(bill.SoLuong * bill.Gia) }}</td>
+                                                                <td>{{ formatToVND(bill.SoLuongBan * bill.Gia) }}</td>
                                                             </tr>
                                                         </tbody>
                                                         <tfoot>

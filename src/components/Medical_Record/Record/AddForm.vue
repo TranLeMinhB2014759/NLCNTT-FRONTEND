@@ -168,7 +168,7 @@
                       <td>
                         <div class="d-flex justify-content-around align-items-center">
                           <button type="button" class="btn btn-outline-secondary" @click="decreaseQuantity(medicine)"><i class="fa-solid fa-minus"></i></button>
-                          <input type="number" v-model="medicine.SoLuong" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
+                          <input type="number" v-model="medicine.SoLuongBan" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
                           <button type="button" class="btn btn-outline-secondary" @click="increaseQuantity(medicine)"><i class="fa-solid fa-plus"></i></button>
                         </div>
                       </td>
@@ -384,7 +384,7 @@ export default {
         if (selectedOption && !this.selectedMedicines.some(med => med.tenThuoc === selectedOption.tenThuoc)) {
           this.selectedMedicines.push({
             ...selectedOption,
-            SoLuong: 1,
+            SoLuongBan: 1,
             HDSD: ''
           });
           this.selectedMedicine = '';
@@ -400,14 +400,14 @@ export default {
     },
 
     decreaseQuantity(medicine) {
-      if (medicine.SoLuong > 1) {
-        medicine.SoLuong--;
+      if (medicine.SoLuongBan > 1) {
+        medicine.SoLuongBan--;
       }
     },
 
     increaseQuantity(medicine) {
-      if (medicine.SoLuong < 999) {
-        medicine.SoLuong++;
+      if (medicine.SoLuongBan < 999) {
+        medicine.SoLuongBan++;
       }
     },
 
@@ -425,10 +425,11 @@ export default {
           tenBenh: disease.tenBenh,
         }));
         this.medicalrecordLocal.prescription = this.selectedMedicines.map(medicine => ({
+          _id: medicine._id,
           tenThuoc: medicine.tenThuoc,
           Gia: medicine.Gia,
           Donvi: medicine.Donvi,
-          SoLuong: medicine.SoLuong,
+          SoLuongBan: medicine.SoLuongBan,
           HDSD: medicine.HDSD
         }));
         this.$emit("submit:medicalrecord", this.medicalrecordLocal);

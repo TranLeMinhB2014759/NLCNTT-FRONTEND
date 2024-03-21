@@ -96,7 +96,7 @@
                     <td>{{ index + 1 }}</td>
                     <td class="text-start">{{ record.tenThuoc }}</td>
                     <td>{{ record.Donvi }}</td>
-                    <td>{{ record.SoLuong }}</td>
+                    <td>{{ record.SoLuongBan }}</td>
                 </tr>
                 <tr>
                     <td colspan="4" class="text-start">

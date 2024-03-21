@@ -27,7 +27,7 @@
             </div>
             <div class="col-2 col-md-2">
               <div class="mb-3 mt-3">
-                <button type="button" class="btn btn-light" @click="getRecordByMSDT">
+                <button type="button" class="btn btn-light" @click="getRecordByMSDT(billLocal.search)">
                   <i class="fa-solid fa-rotate-right fa-2xl"></i>
                 </button>
               </div>
@@ -93,7 +93,7 @@
                       <td>
                         <div class="d-flex justify-content-around align-items-center">
                           <button type="button" class="btn btn-outline-secondary" @click="decreaseQuantity(medicine)"><i class="fa-solid fa-minus"></i></button>
-                          <input type="number" v-model="medicine.SoLuong" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
+                          <input type="number" v-model="medicine.SoLuongBan" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
                           <button type="button" class="btn btn-outline-secondary" @click="increaseQuantity(medicine)"><i class="fa-solid fa-plus"></i></button>
                         </div>
                       </td>
@@ -217,9 +217,8 @@ export default {
       return `${hours}:${minutes} ${day}/${month}/${year}`;
     },
 
-    async getRecordByMSDT() {
+    async getRecordByMSDT(search) {
       try {
-        const search = this.billLocal.search;
         const record = await MedicalrecordService.getRecordByMSDT(search);
         if(record && record[0].status === "unsold"){
           this.billLocal.MSDT = record[0].MSDT;
@@ -227,10 +226,11 @@ export default {
           this.billLocal.phoneNumber = record[0].phoneNumber;
           this.billLocal._id = record[0]._id;
           this.selectedMedicines = record[0].prescription.map(presc => ({
+            _id: presc._id,
             tenThuoc: presc.tenThuoc,
             Gia: presc.Gia,
             Donvi: presc.Donvi,
-            SoLuong: presc.SoLuong,
+            SoLuongBan: presc.SoLuongBan,
           }));
           this.billLocal.search = "",
           toast.success("Hóa đơn của " + record[0].name);
@@ -264,7 +264,7 @@ export default {
         if (selectedOption && !this.selectedMedicines.some(med => med.tenThuoc === selectedOption.tenThuoc)) {
           this.selectedMedicines.push({
             ...selectedOption,
-            SoLuong: 1,
+            SoLuongBan: 1,
           });
           this.selectedMedicine = '';
         } else if (selectedOption && this.selectedMedicines.some(med => med.tenThuoc === selectedOption.tenThuoc)) {
@@ -279,14 +279,14 @@ export default {
     },
 
     decreaseQuantity(medicine) {
-      if (medicine.SoLuong > 1) {
-        medicine.SoLuong--;
+      if (medicine.SoLuongBan > 1) {
+        medicine.SoLuongBan--;
       }
     },
 
     increaseQuantity(medicine) {
-      if (medicine.SoLuong < 999) {
-        medicine.SoLuong++;
+      if (medicine.SoLuongBan < 999) {
+        medicine.SoLuongBan++;
       }
     },
 
@@ -300,7 +300,7 @@ export default {
 
     // ------------------------ CALCULATE ------------------------
     calculateTotalPrice(medicine) {
-      return (medicine.SoLuong || 0) * (medicine.Gia || 0);
+      return (medicine.SoLuongBan || 0) * (medicine.Gia || 0);
     },
 
     calculateTotalBill() {
@@ -317,10 +317,11 @@ export default {
         toast.error("Đơn thuốc rỗng")
       } else {
         this.billLocal.prescription = this.selectedMedicines.map(medicine => ({
+          _id: medicine._id,
           tenThuoc: medicine.tenThuoc,
           Gia: medicine.Gia,
           Donvi: medicine.Donvi,
-          SoLuong: medicine.SoLuong,
+          SoLuongBan: medicine.SoLuongBan,
         }));
         this.billLocal.total_bill = this.calculateTotalBill();
         this.$emit("submit:bill", this.billLocal);
