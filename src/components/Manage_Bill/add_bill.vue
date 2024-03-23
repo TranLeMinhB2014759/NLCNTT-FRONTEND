@@ -32,28 +32,39 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            if (data.MSDT != "Bán lẻ") {
-              const updatedStatus = 'sold';
-              await MedicalrecordService.update(data._id, { status: updatedStatus });
-            }
+            let allMedicinesSufficient = true;
             for (const medicine of data.prescription) {
               const getMedicineByID = await MedicineService.get(medicine._id);
               const SoLuongHienTai = getMedicineByID.SoLuong;
               const SoLuongConLai = SoLuongHienTai - medicine.SoLuongBan;
+
               if (SoLuongConLai < 0) {
+                allMedicinesSufficient = false;
                 toast.error("Số thuốc còn lại không đủ");
-              } else {
-                await MedicineService.update(medicine._id, { SoLuong: SoLuongConLai });
-                await BillService.create(data);
-                this.message = "Lập bảng kê khai thành công";
-                Swal.fire({
-                  icon: "success",
-                  title: this.message,
-                  showConfirmButton: true,
-                  timer: 2000
-                });
-                this.$router.push({ name: 'admin-bill' });
+                break;
               }
+            }
+            if (allMedicinesSufficient) {
+              for (const medicine of data.prescription) {
+                const getMedicineByID = await MedicineService.get(medicine._id);
+                const SoLuongHienTai = getMedicineByID.SoLuong;
+                const SoLuongConLai = SoLuongHienTai - medicine.SoLuongBan;
+                await MedicineService.update(medicine._id, { SoLuong: SoLuongConLai });
+              }
+              if (data.MSDT != "Bán lẻ") {
+                const updatedStatus = 'sold';
+                await MedicalrecordService.update(data._id, { status: updatedStatus });
+              }
+              await BillService.create(data);
+              this.message = "Lập bảng kê khai thành công";
+              Swal.fire({
+                icon: "success",
+                title: this.message,
+                showConfirmButton: true,
+                timer: 2000
+              });
+              this.$router.push({ name: 'admin-bill' });
+
             }
           } catch (error) {
             console.log(error);
@@ -63,6 +74,4 @@ export default {
     },
   },
 };
-
-
 </script>

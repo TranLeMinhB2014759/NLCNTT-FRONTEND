@@ -1,9 +1,9 @@
 <template>
     <div class="card">
       <div class="card-body">
-        <div class="banner text-center">QUẢN LÝ PHÒNG KHÁM</div>
+        <div class="banner text-center">QUẢN LÝ DỊCH VỤ</div>
         <div class="container">
-          <button class="btn btn-sm text-success" @click="goToAddRoom()">
+          <button class="btn btn-sm text-success" @click="goToAddService()">
             <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
           </button>
           <div class="row">
@@ -13,43 +13,37 @@
             <div class="col-sm-8"></div>
           </div>
           <div class="container mt-3 table-responsive">
-            <table class="table table-bordered table-hover text-center" v-if="filteredRoomCount > 0"
-              :room="filteredRoom">
+            <table class="table table-bordered table-hover text-center" v-if="filteredServiceCount > 0"
+              :service="filteredService">
               <thead class="table-success">
                 <tr>
-                  <th>Tầng</th>
-                  <th>Mã phòng</th>
-                  <th>Bác sĩ chính</th>
-                  <th>Dịch vụ</th>
+                  <th>Mã dịch vụ</th>
+                  <th>Tên dịch vụ</th>
+                  <th>Giá tiền</th>
                   <th>Sửa</th>
                   <th>Xóa</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(room, index) in sortedRooms" :key="index"
+                <tr v-for="(service, index) in sortedServices" :key="index"
                 :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
-                  <td>{{ room.floor }}</td>
-                  <td>{{ room.maPhong }}</td>
-
-                  <td v-if="room.bacSiChinh ===''">Phòng trống</td>
-                  <td v-else>{{ room.bacSiChinh }}</td>
-
-                  <td v-if="room.dichVu ===''">Phòng trống</td>
-                  <td v-else>{{ room.dichVu }}</td>
+                  <td>{{ service.code }}</td>
+                  <td class="text-start">{{ service.tenDichVu }}</td>
+                  <td>{{ formatToVND(service.Gia) }}</td>
                   <td>
-                      <button type="button" class="ml-2 btn btn-primary"  @click="goToEditRoom(room._id)">
-                        <i class="fa fa-edit"></i>
-                      </button> 
+                    <button type="button" class="ml-2 btn btn-primary"  @click="goToEditService(service._id)">
+                      <i class="fa fa-edit"></i>
+                    </button> 
                   </td>
                   <td>
-                    <button type="button" class="ml-2 btn btn-danger" @click="deleteRoom(room._id)">
+                    <button type="button" class="ml-2 btn btn-danger" @click="deleteService(service._id)">
                       <i class="fa fa-trash"></i>
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <p v-else>Không tìm thông tin phù hợp.</p>
+            <p v-else>Không tìm thấy dịch vụ.</p>
           </div>
         </div>
       </div>
@@ -57,7 +51,7 @@
   </template>
   
   <script>
-  import RoomService from "@/services/room.service.js";
+  import ServiceService from "@/services/service.service.js";
   import InputSearch from "@/components/InputSearch.vue";
   import { toast } from 'vue3-toastify';
   import 'vue3-toastify/dist/index.css';
@@ -68,58 +62,63 @@
     },
     data() {
       return {
-        room: [],
+        service: [],
         activeIndex: -1,
         searchText: "",
       };
     },
     computed: {
-      roomStrings() {
-        return this.room.map((room) => {
-          const { maPhong, bacSiChinh, dichVu } = room;
-          return [ maPhong, bacSiChinh, dichVu].join("");
+      serviceStrings() {
+        return this.service.map((service) => {
+          const { code, tenDichVu } = service;
+          return [code, tenDichVu].join("");
         });
       },
-      filteredRoom() {
-        if (!this.searchText) return this.room;
-        return this.room.filter((_room, index) =>
-          this.roomStrings[index].includes(this.searchText)
+      filteredService() {
+        if (!this.searchText) return this.service;
+        return this.service.filter((_service, index) =>
+          this.serviceStrings[index].includes(this.searchText)
         );
       },
-      filteredRoomCount() {
-        return this.filteredRoom.length;
+      filteredServiceCount() {
+        return this.filteredService.length;
       },
-      sortedRooms() {
-        return this.filteredRoom.slice().sort((a, b) => {
-          return a.maPhong.localeCompare(b.maPhong);
+      sortedServices() {
+        return this.filteredService.slice().sort((a, b) => {
+          return a.code.localeCompare(b.code);
         });
       }
     },
     methods: {
-      async retrieveRoom() {
+      async retrieveService() {
         try {
-          this.room = await RoomService.getAll();
+          this.service = await ServiceService.getAll();
         } catch (error) {
           console.error(error);
         }
       },
+      formatToVND(number) {
+            let formattedNumber = number.toLocaleString('vi-VN');
+            formattedNumber += "₫";
+            return formattedNumber;
+      },
       refreshList() {
-        this.retrieveRoom();
+        this.retrieveService();
         this.activeIndex = -1;
       },
-      goToAddRoom() {
-        this.$router.push({ name: 'add-room' });
+      goToAddService() {
+        this.$router.push({ name: 'add-service' });
       },
-      goToEditRoom(id) {
-        this.$router.push({ name: 'edit-room', params: { id } });
+      goToEditService(id) {
+        this.$router.push({ name: 'edit-service', params: { id } });
       },
       updateActiveIndex(index) {
         this.activeIndex = index;
       },
-      async deleteRoom(id) {
+      async deleteService(id) {
         const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
         if (confirmed) {
-          await RoomService.delete(id);
+          await ServiceService.delete(id);
           this.refreshList();
           toast.success("Delete Succesfully!");
         }

@@ -24,10 +24,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(disease, index) in filteredDisease" :key="index"
+              <tr v-for="(disease, index) in sortedDiseases" :key="index"
               :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
                 <td>{{ disease.code }}</td>
-                <td>{{ disease.tenBenh }}</td>
+                <td class="text-start">{{ disease.tenBenh }}</td>
                 <td>
                   <router-link :to="{ name: 'edit-disease', params: { id: disease._id } }">
                     <button type="button" class="ml-2 btn btn-primary">
@@ -97,6 +97,11 @@ export default {
     filteredDiseaseCount() {
       return this.filteredDisease.length;
     },
+    sortedDiseases() {
+        return this.filteredDisease.slice().sort((a, b) => {
+          return a.code.localeCompare(b.code);
+        });
+      }
   },
   methods: {
     async retrieveDisease() {

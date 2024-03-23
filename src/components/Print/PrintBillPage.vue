@@ -1,5 +1,5 @@
 <template>
-    <div  v-if="bill" class="container">
+    <div v-if="bill" class="container">
         <div class="row">
             <div class="d-flex col-8">
                 <div class="text-start">
@@ -45,7 +45,6 @@
         <table class="table table-bordered table-sm text-center">
             <thead class="table-success">
                 <tr>
-                    <th>STT</th>
                     <th>Tên thuốc</th>
                     <th>ĐVT</th>
                     <th>SL</th>
@@ -53,10 +52,32 @@
                     <th>Thành tiền <i class="donvi">(đồng)</i></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-start" v-if="bill.service.length > 0">
+                <tr>
+                    <td colspan="6">
+                        <strong>Khám bệnh</strong>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody v-if="bill.service.length > 0">
+                <tr v-for="(bill, index) in bill.service" :key="index">
+                    <td class="text-start"> {{ index + 1 }}. {{ bill.tenDichVu }}</td>
+                    <td>Lần</td>
+                    <td>{{ bill.SoLan }}</td>
+                    <td>{{ formatToVND(bill.Gia) }}</td>
+                    <td>{{ formatToVND(bill.SoLan * bill.Gia) }}</td>
+                </tr>
+            </tbody>
+            <tbody class="text-start" v-if="bill.prescription.length > 0">
+                <tr>
+                    <td colspan="5">
+                        <strong>Thuốc</strong>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody v-if="bill.prescription.length > 0">
                 <tr v-for="(bill, index) in bill.prescription" :key="index">
-                    <td>{{ index + 1 }}</td>
-                    <td class="text-start">{{ bill.tenThuoc }}</td>
+                    <td class="text-start"> {{ index + 1 }}. {{ bill.tenThuoc }}</td>
                     <td>{{ bill.Donvi }}</td>
                     <td>{{ bill.SoLuongBan }}</td>
                     <td>{{ formatToVND(bill.Gia) }}</td>
@@ -65,7 +86,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5"><strong>Tổng cộng</strong></td>
+                    <td colspan="4"><strong>Tổng cộng</strong></td>
                     <td><strong>{{ formatToVND(bill.total_bill) }}</strong></td>
                 </tr>
             </tfoot>
@@ -181,6 +202,7 @@ table {
 i.donvi {
     font-size: small;
 }
+
 /* ---------------- BTN PRINT -------------------- */
 .print-btn {
     width: 100px;
@@ -252,49 +274,52 @@ i.donvi {
 
 /* ----------------- LOADING -------------------- */
 .loader {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  border: 3px solid;
-  border-color: #FFF #FFF transparent;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color: #FFF #FFF transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
 }
+
 .loader::after {
-  content: '';  
-  box-sizing: border-box;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  border: 3px solid;
-  border-color: transparent #FF3D00 #FF3D00;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  animation: rotationBack 0.5s linear infinite;
-  transform-origin: center center;
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border: 3px solid;
+    border-color: transparent #FF3D00 #FF3D00;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    animation: rotationBack 0.5s linear infinite;
+    transform-origin: center center;
 }
 
 @keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} 
-    
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 @keyframes rotationBack {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
 }
 </style>

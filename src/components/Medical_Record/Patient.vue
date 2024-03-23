@@ -32,11 +32,11 @@
               <tr v-for="(patient, index) in filteredPatients" :key="index" :class="{ active: index === activeIndex }"
               @click="updateActiveIndex(index)">
                 <td>{{ patient.MSBN }}</td>
-                <td>{{ patient.name }}</td>
+                <td class="text-start">{{ patient.name }}</td>
                 <td>{{ patient.year }} ( {{ calculateAge(patient.year) }} tuổi )</td>
                 <td>{{ patient.gender }}</td>
                 <td>{{ patient.phoneNumber }}</td>
-                <td>{{ patient.address }}</td>
+                <td class="text-start">{{ patient.address }}</td>
                 <td>
                   <router-link :to="{ name: 'medicalrecord', params: { id: patient._id } }">
                     <button type="button" class="ml-2 btn btn-info">

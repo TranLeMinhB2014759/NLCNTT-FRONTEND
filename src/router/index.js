@@ -125,6 +125,23 @@ const routes = [
         component: () => import("@/components/Manage_Disease/edit_disease.vue"),
         props: true,
       },
+            // ----------------------------- Service -----------------------------
+            {
+              path: "service",
+              name: "admin-service",
+              component: () => import("@/components/Manage_Service/Service.vue"),
+            },
+            {
+              path: "add-service",
+              name: "add-service",
+              component: () => import("@/components/Manage_Service/add_service.vue"),
+            },
+            {
+              path: "edit-service/:id",
+              name: "edit-service",
+              component: () => import("@/components/Manage_Service/edit_service.vue"),
+              props: true,
+            },
       // ----------------------------- Room -----------------------------
       {
         path: "room",

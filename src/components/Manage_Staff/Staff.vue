@@ -16,7 +16,7 @@
         </div>
         <div class="row">
           <div class="mt-3 col-12 col-sm-4 products">
-            <StaffListAdmin v-if="filteredStaffsCount > 0" :staffs="filteredStaffs" v-model:activeIndex="activeIndex" />
+            <StaffListAdmin v-if="filteredStaffsCount > 0" :staffs="sortedStaffs" v-model:activeIndex="activeIndex" />
             <p v-else>Không tìm thấy tài khoản phù hợp.</p>
           </div>
           <div class="mt-3 col-12 col-sm-8">
@@ -76,12 +76,17 @@ export default {
         this.staffStrings[index].includes(this.searchText)
       );
     },
+    sortedStaffs() {
+      return this.filteredStaffs.slice().sort((a, b) => {
+        return a.role.localeCompare(b.role);
+      });
+    },
     activeStaff() {
       if (this.activeIndex < 0) return null;
-      return this.filteredStaffs[this.activeIndex];
+      return this.sortedStaffs[this.activeIndex];
     },
     filteredStaffsCount() {
-      return this.filteredStaffs.length;
+      return this.sortedStaffs.length;
     },
   },
   methods: {

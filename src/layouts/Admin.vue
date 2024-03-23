@@ -38,11 +38,15 @@ export default {
                 case 'add-disease':
                 case 'edit-disease':
                     this.activeTab = 4;
+                case 'admin-service':
+                case 'add-service':
+                case 'edit-service':
+                    this.activeTab = 5;
                     break;
                 case 'admin-room':
                 case 'add-room':
                 case 'edit-room':
-                    this.activeTab = 5;
+                    this.activeTab = 6;
                     break;
                 case 'admin-patient':
                 case 'add-patient':
@@ -50,11 +54,11 @@ export default {
                 case 'medicalrecord':
                 case 'add-medicalrecord':
                 case 'edit-medicalrecord':
-                    this.activeTab = 6;
+                    this.activeTab = 7;
                     break;
                 case 'admin-bill':
                 case 'add-bill':
-                    this.activeTab = 7;
+                    this.activeTab = 8;
                     break;
                 default:
                     this.activeTab = 1;
@@ -99,7 +103,8 @@ export default {
 
                     <li class="sidebar-item tab-2" :class="{ 'active': activeTab === 2 }" @click="setActiveTab(2)">
                         <router-link :to="{ name: 'admin-staff' }" class="sidebar-link">
-                            <i class="fa-solid fa-hospital-user"></i> <span class="align-middle">Personnel Management</span>
+                            <i class="fa-solid fa-hospital-user"></i> <span class="align-middle">Personnel
+                                Management</span>
                         </router-link>
                     </li>
 
@@ -118,19 +123,25 @@ export default {
                     </li>
 
                     <li class="sidebar-item" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
+                        <router-link :to="{ name: 'admin-service' }" class="sidebar-link">
+                            <i class="fa-solid fa-stethoscope"></i> <span class="align-middle">Service Management</span>
+                        </router-link>
+                    </li>
+
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)">
                         <router-link :to="{ name: 'admin-room' }" class="sidebar-link">
                             <i class="fa-solid fa-house"></i> <span class="align-middle">Room Management</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 7 }" @click="setActiveTab(7)">
                         <router-link :to="{ name: 'admin-patient' }" class="sidebar-link">
                             <i class="fa-solid fa-clipboard-user"></i> <span class="align-middle">Medical
                                 Record</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 7 }" @click="setActiveTab(7)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 8 }" @click="setActiveTab(8)">
                         <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
                             <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
                                 management</span>
@@ -149,11 +160,13 @@ export default {
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav navbar-align">
                         <li class="nav-item dropdown">
-                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+                                data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
                             </a>
 
-                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+                                data-bs-toggle="dropdown">
                                 <img :src="staff.imgURL" class="avatar img-fluid rounded me-1" alt="Charles Hall" />
                                 <span class="text-dark">{{ staff.name ? staff.name : 'Guest' }}</span>
                             </a>

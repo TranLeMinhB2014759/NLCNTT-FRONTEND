@@ -129,7 +129,61 @@
             </div>
           </div>
 
-          <!-- Medicines -->
+          <!-- Services -->
+          <div class="mb-3 mt-3">
+            <strong>Dịch vụ sử dụng: </strong>
+            <div class="container-selected">
+              <div class="mb-3 mt-3">
+                <div class="row">
+                  <div class="col-12 col-md-5">
+                    <input name="services" list="services" class="form-control" v-model="selectedService" placeholder="Hãy nhập vào mã hoặc tên dịch vụ " required autocomplete="off">
+                      <datalist id="services">
+                        <option v-for="service in services" :key="service._id" :value="service.tenDichVu" :disabled="isServiceSelected(service)">{{ service.code }}</option>
+                      </datalist>
+                    </input>
+                  </div>
+                  <div class="col-12 col-md-2">
+                    <button type="button" @click="addService" :disabled="!selectedService"
+                      class="btn btn-primary form-control"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              <div v-if="selectedServices != ''" class="table-responsive">
+                <table class="table table-bordered text-center">
+                  <thead class="table-success">
+                    <tr>
+                      <th>STT</th>
+                      <th>Mã dịch vụ</th>
+                      <th>Số lần</th>
+                      <th>Tên dịch vụ</th>
+                      <th>Xóa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(service, index) in selectedServices" :key="index">
+                      <td> {{ index + 1 }} </td>
+                      <div class="d-flex justify-content-around align-items-center">
+                          <button type="button" class="btn btn-outline-secondary" @click="decreaseQuantity(service)"><i class="fa-solid fa-minus"></i></button>
+                          <input type="number" v-model="service.SoLuongBan" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
+                          <button type="button" class="btn btn-outline-secondary" @click="increaseQuantity(service)"><i class="fa-solid fa-plus"></i></button>
+                      </div>
+                      <td> {{ service.code }} </td>
+                      <td> {{ service.tenDichVu }} </td>
+                      <td>
+                        <button type="button" class="btn btn-danger form-control" @click="removeServices(index)"><i class="fa-solid fa-minus"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div v-else>
+                <p class="text-danger"><i class="fas fa-exclamation-circle text-danger"></i> Hãy thêm chuẩn đoán</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prescriptions -->
           <div class="mb-3 mt-3">
             <strong>Đơn thuốc: </strong>
             <div class="container-selected">
@@ -242,6 +296,7 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import MedicalrecordService from "@/services/medicalrecord.service.js";
 import DiseaseService from "@/services/disease.service.js";
+import ServiceService from "@/services/service.service.js";
 import MedicineService from "@/services/medicine.service.js";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -263,6 +318,8 @@ export default {
       medicalrecords: [],
       selectedDisease: null,
       selectedDiseases: [],
+      selectedService: null,
+      selectedServices: [],
       selectedMedicine: null,
       selectedMedicines: [],
       diseases: [],
@@ -279,6 +336,7 @@ export default {
         bacsi: this.getBacsi(),
         symptom: "",
         diagnosis: "",
+        service: "",
         prescription: "",
         status: "unsold",
       },
@@ -329,6 +387,18 @@ export default {
       return `${hours}:${minutes}, ${day}/${month}/${year}`;
     },
 
+    decreaseQuantity(object) {
+      if (object.SoLuongBan > 1) {
+        object.SoLuongBan--;
+      }
+    },
+
+    increaseQuantity(object) {
+      if (object.SoLuongBan < 999) {
+        object.SoLuongBan++;
+      }
+    },
+
     // --------------- selectedDisease -----------------------
     async retrieveDiseases() {
       try {
@@ -365,6 +435,43 @@ export default {
       this.selectedDiseases.splice(index, 1);
     },
 
+    // --------------- selectedService -----------------------
+    async retrieveServices() {
+      try {
+        this.services = await ServiceService.getAll();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    isServiceSelected(service) {
+      return this.selectedServices.some(selectedService => selectedService._id === service._id);
+    },
+
+    addService() {
+      if (this.selectedService) {
+        const selectedOption = this.services.find(service => service.tenDichVu === this.selectedService);
+        if (selectedOption && !this.selectedServices.some(ser => ser.tenDichVu === selectedOption.tenDichVu)) {
+          this.selectedServices.push({
+            ...selectedOption,
+            SoLuongBan: 1,
+          });
+          this.selectedService = '';
+        } else if(selectedOption && this.selectedServices.some(ser => ser.tenDichVu === selectedOption.tenDichVu)){
+          this.selectedService = null;
+          toast.warn("Đã thêm dịch vụ này");
+
+        } else {
+          this.selectedService = null;
+          toast.error("Hãy điền đúng tên dịch vụ");
+        }
+      }
+    },
+
+    removeServices(index) {
+      this.selectedServices.splice(index, 1);
+    },
+
     // --------------- selectedMedicine -----------------------
     async retrieveMedicines() {
       try {
@@ -399,30 +506,24 @@ export default {
       }
     },
 
-    decreaseQuantity(medicine) {
-      if (medicine.SoLuongBan > 1) {
-        medicine.SoLuongBan--;
-      }
-    },
-
-    increaseQuantity(medicine) {
-      if (medicine.SoLuongBan < 999) {
-        medicine.SoLuongBan++;
-      }
-    },
-
     removeMedicine(index) {
       this.selectedMedicines.splice(index, 1);
     },
 
     // ------------------------- Submit Form -------------------------
     submitMedicalrecord() {
-      if (this.selectedMedicines.length === 0 || this.selectedDiseases.length === 0) {
+      if (this.selectedMedicines.length === 0 || this.selectedDiseases.length === 0 || this.selectedServices.length === 0) {
         toast.error("Hãy điền đầy đủ các thông tin");
       } else {
         this.medicalrecordLocal.diagnosis = this.selectedDiseases.map(disease => ({
           code: disease.code,
-          tenBenh: disease.tenBenh,
+          tenBenh: disease.tenBenh
+        }));
+        this.medicalrecordLocal.service = this.selectedServices.map(service => ({
+          code: service.code,
+          tenDichVu: service.tenDichVu,
+          SoLan: service.SoLuongBan,
+          Gia: service.Gia
         }));
         this.medicalrecordLocal.prescription = this.selectedMedicines.map(medicine => ({
           _id: medicine._id,
@@ -439,6 +540,7 @@ export default {
   async created() {
     await this.retrieveRecords();
     await this.retrieveDiseases();
+    await this.retrieveServices();
     await this.retrieveMedicines();
   },
 };

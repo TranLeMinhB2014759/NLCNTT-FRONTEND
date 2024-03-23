@@ -27,13 +27,14 @@
                         </thead>
                         <tbody>
                             <tr v-for="(bill, index) in filteredBills.slice().reverse()" :key="index"
-                            :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
+                                :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
                                 <td>{{ bill.name }}</td>
                                 <td>{{ bill.phoneNumber }}</td>
                                 <td>{{ bill.ngayLap }}</td>
                                 <td>{{ bill.nguoiLap }}</td>
                                 <td>
-                                    <button type="button" class="ml-2 btn btn-info" data-bs-toggle="modal" :data-bs-target="'#modalBill_' + index">
+                                    <button type="button" class="ml-2 btn btn-info" data-bs-toggle="modal"
+                                        :data-bs-target="'#modalBill_' + index">
                                         <i class="fa-solid fa-eye"></i>
                                     </button>
                                     <div class="modal fade" :id="'modalBill_' + index">
@@ -41,11 +42,13 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">Chi tiết</h4>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
                                                 </div>
 
                                                 <div class="modal-body">
-                                                    <h5 class="modal-title" style="padding-bottom: 10px;">BẢNG KÊ KHAI CHI PHÍ KHÁM BỆNH</h5>
+                                                    <h5 class="modal-title" style="padding-bottom: 10px;">BẢNG KÊ KHAI
+                                                        CHI PHÍ</h5>
                                                     <div class="d-flex justify-content-start">
                                                         <div class="text-start">
                                                             <p><strong>I. Phần hành chính:</strong></p>
@@ -57,25 +60,48 @@
                                                         <div class="text-start">
                                                             <p>&nbsp;</p>
                                                             <p><strong>{{ bill.name }}</strong></p>
-                                                            <p>{{ bill.phoneNumber}}</p>
+                                                            <p>{{ bill.phoneNumber }}</p>
                                                             <p>{{ bill.MSDT }}</p>
                                                         </div>
                                                     </div>
                                                     <table class="table table-bordered">
                                                         <thead class="table-success">
                                                             <tr>
-                                                                <th>STT</th>
-                                                                <th>Tên thuốc</th>
+                                                                <th>Nội dung</th>
                                                                 <th>ĐVT</th>
                                                                 <th>SL</th>
                                                                 <th>Đơn giá <i class="donvi">(đồng)</i></th>
                                                                 <th>Thành tiền <i class="donvi">(đồng)</i></th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tbody class="text-start" v-if="bill.service.length > 0">
+                                                            <tr>
+                                                                <td colspan="6">
+                                                                    <strong>Dịch vụ</strong>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody v-if="bill.service.length > 0">
+                                                            <tr v-for="(bill, idx) in bill.service" :key="idx">
+                                                                <td class="text-start"> {{ idx + 1 }}. {{ bill.tenDichVu
+                                                                    }}</td>
+                                                                <td>Lần</td>
+                                                                <td>{{ bill.SoLan }}</td>
+                                                                <td>{{ formatToVND(bill.Gia) }}</td>
+                                                                <td>{{ formatToVND(bill.SoLan * bill.Gia) }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody class="text-start" v-if="bill.prescription.length > 0">
+                                                            <tr>
+                                                                <td colspan="6">
+                                                                    <strong>Thuốc</strong>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody v-if="bill.prescription.length > 0">
                                                             <tr v-for="(bill, idx) in bill.prescription" :key="idx">
-                                                                <td>{{ idx + 1 }}</td>
-                                                                <td class="text-start">{{ bill.tenThuoc }}</td>
+                                                                <td class="text-start"> {{ idx + 1 }}. {{ bill.tenThuoc
+                                                                    }}</td>
                                                                 <td>{{ bill.Donvi }} </td>
                                                                 <td>{{ bill.SoLuongBan }}</td>
                                                                 <td>{{ formatToVND(bill.Gia) }}</td>
@@ -84,8 +110,9 @@
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="5"><strong>Tổng cộng</strong></td>
-                                                                <td><strong>{{ formatToVND(bill.total_bill) }}</strong></td>
+                                                                <td colspan="4"><strong>Tổng cộng</strong></td>
+                                                                <td><strong>{{ formatToVND(bill.total_bill) }}</strong>
+                                                                </td>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
@@ -142,7 +169,8 @@
                                     </span>
                                 </td>
                                 <td v-else>
-                                    <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã thanh toán</h3>
+                                    <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã thanh toán
+                                    </h3>
                                 </td>
                             </tr>
                         </tbody>
@@ -175,7 +203,7 @@ export default {
         billStrings() {
             return this.bills.map((bill) => {
                 const { name, phoneNumber, ngayLap, MSDT } = bill;
-                return [name, phoneNumber, ngayLap, MSDT ].join("");
+                return [name, phoneNumber, ngayLap, MSDT].join("");
             });
         },
         filteredBills() {
@@ -252,7 +280,7 @@ i.donvi {
     font-size: small;
 }
 
-.bg-success{
+.bg-success {
     color: white;
     background-color: rgb(65 255 167) !important;
 }

@@ -54,6 +54,87 @@
           </div>
 
           <div class="mb-3 mt-3">
+            <strong>Dịch vụ đã sử dụng: </strong>
+            <div class="container-selected-medicine">
+              <div class="mb-3 mt-3">
+                <div class="row">
+                  <div class="col-12 col-md-5">
+                    <input name="service" list="service" class="form-control" v-model="selectedService"
+                      placeholder="Hãy nhập vào tên dịch vụ" required>
+                    <datalist id="service">
+                      <option v-for="service in services" :key="service._id" :value="service.tenDichVu"
+                        :disabled="isServiceSelected(service)"></option>
+                    </datalist>
+                    </input>
+                  </div>
+                  <div class="col-12 col-md-2">
+                    <button type="button" @click="addService" :disabled="!selectedService"
+                      class="btn btn-primary form-control"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div v-if="selectedServices != ''" class="table-responsive">
+                <table class="table table-bordered text-center">
+                  <thead class="table-success">
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên dịch vụ</th>
+                      <th>Số lượng</th>
+                      <th>ĐVT</th>
+                      <th>Giá</th>
+                      <th>Thành tiền</th>
+                      <th>Xóa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(service, index) in selectedServices" :key="index">
+                      <td> {{ index + 1 }} </td>
+                      <td> {{ service.tenDichVu }} </td>
+                      <td>
+                        <div class="d-flex justify-content-around align-items-center">
+                          <button type="button" class="btn btn-outline-secondary" @click="decreaseQuantity(service)"><i class="fa-solid fa-minus"></i></button>
+                          <input type="number" v-model="service.SoLuongBan" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
+                          <button type="button" class="btn btn-outline-secondary" @click="increaseQuantity(service)"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                      </td>
+                      <td> Lần
+                        <!-- {{ medicine.Donvi }}
+                        <input v-model="medicine.Donvi" hidden /> -->
+                      </td>
+                      <td> {{ formatToVND(service.Gia) }} </td>
+                      <td>
+                        {{ formatToVND(calculateTotalPrice(service)) }}
+                        <input type="number" :value="calculateTotalPrice(service)" hidden />
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger form-control" @click="removeService(index)"><i
+                            class="fa-solid fa-minus"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="5">
+                        <strong>Tổng tiền</strong>
+                      </td>
+                      <td>
+                        <strong>{{ formatToVND(calculateTotalService()) }}</strong>
+                        <input type="number" :value="calculateTotalService()" hidden />
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger form-control" @click="removeAllService()">Delete All</button>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div v-else>
+                <p class="text-danger"><i class="fas fa-exclamation-circle text-danger"></i> Không sử dụng dịch vụ</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 mt-3">
             <strong>Đơn thuốc: </strong>
             <div class="container-selected-medicine">
               <div class="mb-3 mt-3">
@@ -101,9 +182,9 @@
                         {{ medicine.Donvi }}
                         <input v-model="medicine.Donvi" hidden />
                       </td>
-                      <td> {{ medicine.Gia }} </td>
+                      <td> {{ formatToVND(medicine.Gia) }} </td>
                       <td>
-                        {{ calculateTotalPrice(medicine) }}
+                        {{ formatToVND(calculateTotalPrice(medicine)) }}
                         <input type="number" :value="calculateTotalPrice(medicine)" hidden />
                       </td>
                       <td>
@@ -118,8 +199,8 @@
                         <strong>Tổng tiền</strong>
                       </td>
                       <td>
-                        <strong>{{ calculateTotalBill() }}</strong>
-                        <input type="number" :value="calculateTotalBill()" hidden />
+                        <strong>{{ formatToVND(calculateTotalPrescription()) }}</strong>
+                        <input type="number" :value="calculateTotalPrescription()" hidden />
                       </td>
                       <td>
                         <button type="button" class="btn btn-danger form-control" @click="removeAllMedicine()">Delete All</button>
@@ -132,6 +213,10 @@
                 <p class="text-danger"><i class="fas fa-exclamation-circle text-danger"></i> Đơn thuốc rỗng</p>
               </div>
             </div>
+          </div>
+
+          <div class="mb-3 mt-3">
+            Tổng hóa đơn: {{ formatToVND(calculateTotalBill()) }}
           </div>
 
           <div class="mb-3 mt-3 d-flex justify-content-center">
@@ -156,6 +241,7 @@
 
 <script>
 import MedicalrecordService from "@/services/medicalrecord.service.js";
+import ServiceService from "@/services/service.service.js";
 import MedicineService from "@/services/medicine.service.js";
 import { ErrorMessage, Field, Form } from "vee-validate";
 import { toast } from 'vue3-toastify';
@@ -185,6 +271,9 @@ export default {
       record: null,
       selectedMedicine: null,
       selectedMedicines: [],
+      selectedService: null,
+      selectedServices: [],
+      services: [],
       medicines: [],
 
       billLocal: {
@@ -193,7 +282,10 @@ export default {
         ngayLap: this.getCurrentDate(),
         name: "",
         phoneNumber: "",
+        service: "",
+        total_service: "",
         prescription: "",
+        total_prescription: "",
         total_bill: "",
         nguoiLap: this.getStaff(),
       },
@@ -217,6 +309,23 @@ export default {
       return `${hours}:${minutes}, ${day}/${month}/${year}`;
     },
 
+    decreaseQuantity(object) {
+      if (object.SoLuongBan > 1) {
+        object.SoLuongBan--;
+      }
+    },
+
+    increaseQuantity(object) {
+      if (object.SoLuongBan < 999) {
+        object.SoLuongBan++;
+      }
+    },
+
+    formatToVND(number) {
+      let formattedNumber = number.toLocaleString('vi-VN');
+      return formattedNumber;
+    },
+
     async getRecordByMSDT(search) {
       try {
         const record = await MedicalrecordService.getRecordByMSDT(search);
@@ -225,6 +334,12 @@ export default {
           this.billLocal.name = record[0].name;
           this.billLocal.phoneNumber = record[0].phoneNumber;
           this.billLocal._id = record[0]._id;
+          this.selectedServices = record[0].service.map(service => ({
+            tenDichVu: service.tenDichVu,
+            SoLuongBan: service.SoLan,
+            Gia: service.Gia,
+            // Donvi: service.Donvi,
+          }));
           this.selectedMedicines = record[0].prescription.map(presc => ({
             _id: presc._id,
             tenThuoc: presc.tenThuoc,
@@ -245,7 +360,48 @@ export default {
         toast.info("Không tìm thấy mã đơn thuốc");
       }
     },
+    // -------------------- Service --------------------
+    async retrieveServices() {
+      try {
+        this.services = await ServiceService.getAll();
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
+    isServiceSelected(service) {
+      return this.selectedServices.some(selectedService => selectedService.tenDichVu === service.tenDichVu);
+    },
+
+    addService() {
+      if (this.selectedService) {
+        const selectedOption = this.services.find(service => service.tenDichVu === this.selectedService);
+        if (selectedOption && !this.selectedServices.some(ser => ser.tenDichVu === selectedOption.tenDichVu)) {
+          this.selectedServices.push({
+            ...selectedOption,
+            SoLuongBan: 1,
+          });
+          this.selectedService = '';
+        } else if (selectedOption && this.selectedServices.some(ser => ser.tenDichVu === selectedOption.tenDichVu)) {
+          this.selectedService = null;
+          toast.warn("Dịch vụ đã được thêm vào");
+
+        } else {
+          this.selectedService = null;
+          toast.error("Hãy điền đúng tên dịch vụ");
+        }
+      }
+    },
+
+    removeService(index) {
+      this.selectedServices.splice(index, 1);
+    },
+
+    removeAllService() {
+      this.selectedServices = [];
+    },
+
+    // -------------------- Medicine --------------------
     async retrieveMedicines() {
       try {
         this.medicines = await MedicineService.getIsActive();
@@ -278,18 +434,6 @@ export default {
       }
     },
 
-    decreaseQuantity(medicine) {
-      if (medicine.SoLuongBan > 1) {
-        medicine.SoLuongBan--;
-      }
-    },
-
-    increaseQuantity(medicine) {
-      if (medicine.SoLuongBan < 999) {
-        medicine.SoLuongBan++;
-      }
-    },
-
     removeMedicine(index) {
       this.selectedMedicines.splice(index, 1);
     },
@@ -299,23 +443,41 @@ export default {
     },
 
     // ------------------------ CALCULATE ------------------------
-    calculateTotalPrice(medicine) {
-      return (medicine.SoLuongBan || 0) * (medicine.Gia || 0);
+    calculateTotalPrice(object) {
+      return (object.SoLuongBan || 0) * (object.Gia || 0);
+    },
+
+    calculateTotalService() {
+      let total = 0;
+      this.selectedServices.forEach(service => {
+        total += this.calculateTotalPrice(service);
+      });
+      return total;
+    },
+
+    calculateTotalPrescription() {
+      let total = 0;
+      this.selectedMedicines.forEach(medicine => {
+        total += this.calculateTotalPrice(medicine);
+      });
+      return total;
     },
 
     calculateTotalBill() {
-      let totalBill = 0;
-      this.selectedMedicines.forEach(medicine => {
-        totalBill += this.calculateTotalPrice(medicine);
-      });
-      return totalBill;
+      return this.calculateTotalService() + this.calculateTotalPrescription();
     },
 
     // ------------------------ SUBMIT ------------------------
     submitBill() {
-      if (this.selectedMedicines.length === 0) {
-        toast.error("Đơn thuốc rỗng")
+      if (this.calculateTotalBill() <= 0) {
+        toast.info("Không phát sinh chi phí nào")
       } else {
+        this.billLocal.service = this.selectedServices.map(service => ({
+          tenDichVu: service.tenDichVu,
+          Gia: service.Gia,
+          // Donvi: medicine.Donvi,
+          SoLan: service.SoLuongBan,
+        }));
         this.billLocal.prescription = this.selectedMedicines.map(medicine => ({
           _id: medicine._id,
           tenThuoc: medicine.tenThuoc,
@@ -323,6 +485,8 @@ export default {
           Donvi: medicine.Donvi,
           SoLuongBan: medicine.SoLuongBan,
         }));
+        this.billLocal.total_service = this.calculateTotalService();
+        this.billLocal.total_prescription = this.calculateTotalPrescription();
         this.billLocal.total_bill = this.calculateTotalBill();
         this.$emit("submit:bill", this.billLocal);
       }
@@ -330,6 +494,7 @@ export default {
   },
 
   async created() {
+    await this.retrieveServices();
     await this.retrieveMedicines();
   },
 };
