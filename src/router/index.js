@@ -74,6 +74,7 @@ const routes = [
         name: "welcome",
         component: () => import("@/views/Admin/Welcome.vue"),
       },
+      // ----------------------------- Staff -----------------------------
       {
         path: "staff",
         name: "admin-staff",
@@ -90,6 +91,7 @@ const routes = [
         component: () => import("@/components/Manage_Staff/edit_staff.vue"),
         props: true,
       },
+      // ----------------------------- Medicine -----------------------------
       {
         path: "medicine",
         name: "admin-medicine",
@@ -106,6 +108,7 @@ const routes = [
         component: () => import("@/components/Manage_Medicine/edit_medicine.vue"),
         props: true,
       },
+      // ----------------------------- Disease -----------------------------
       {
         path: "disease",
         name: "admin-disease",
@@ -122,6 +125,24 @@ const routes = [
         component: () => import("@/components/Manage_Disease/edit_disease.vue"),
         props: true,
       },
+      // ----------------------------- Room -----------------------------
+      {
+        path: "room",
+        name: "admin-room",
+        component: () => import("@/components/Room/Room.vue"),
+      },
+      {
+        path: "add-room",
+        name: "add-room",
+        component: () => import("@/components/Room/add_room.vue"),
+      },
+      {
+        path: "edit-room/:id",
+        name: "edit-room",
+        component: () => import("@/components/Room/edit_room.vue"),
+        props: true,
+      },
+      // ----------------------------- Medical Record -----------------------------
       {
         path: "patient",
         name: "admin-patient",
@@ -150,6 +171,7 @@ const routes = [
         component: () => import("@/components/Medical_Record/Record/add_medicalrecord.vue"),
         props: true,
       },
+      // ----------------------------- Bill -----------------------------
       {
         path: "bill",
         name: "admin-bill",

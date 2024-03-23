@@ -71,7 +71,7 @@
                     v-if="filteredMedicalrecordsCount > 0" :medicalrecords="filteredMedicalrecords">
                     <thead class="table-success">
                         <tr>
-                            <th>Mã đơn thuốc</th>
+                            <th>Mã hồ sơ</th>
                             <th>Bác sĩ chuẩn đoán</th>
                             <th>Ngày khám</th>
                             <th>Triệu chứng</th>
@@ -198,7 +198,7 @@
                                 </span>
                             </td>
                             <td v-else class="justify-content-center">
-                                <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã bán</h3>
+                                <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã thanh toán</h3>
                             </td>
                         </tr>
                     </tbody>

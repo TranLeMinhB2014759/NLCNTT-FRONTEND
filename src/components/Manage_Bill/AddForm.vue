@@ -21,7 +21,7 @@
             <div class="col-10 col-md-5">
               <div class="mb-3 mt-3">
                 <Field name="search" type="text" class="form-control" v-model="billLocal.search" required
-                  placeholder="Nhập vào mã số đơn thuốc" autocomplete="off"/>
+                  placeholder="Nhập vào mã số hồ sơ" autocomplete="off"/>
                 <ErrorMessage name="MSDT" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -214,7 +214,7 @@ export default {
       const day = String(currentDate.getDate()).padStart(2, '0');
       const month = String(currentDate.getMonth() + 1).padStart(2, '0');
       const year = currentDate.getFullYear();
-      return `${hours}:${minutes} ${day}/${month}/${year}`;
+      return `${hours}:${minutes}, ${day}/${month}/${year}`;
     },
 
     async getRecordByMSDT(search) {

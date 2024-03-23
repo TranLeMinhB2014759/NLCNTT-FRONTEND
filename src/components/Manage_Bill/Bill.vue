@@ -51,7 +51,7 @@
                                                             <p><strong>I. Phần hành chính:</strong></p>
                                                             <p>Họ tên:</p>
                                                             <p>Số điện thoại:&nbsp</p>
-                                                            <p>Đơn thuốc:</p>
+                                                            <p>Mã hồ sơ:</p>
                                                             <p><strong>II. Phần chi phí khám chữa bệnh:</strong></p>
                                                         </div>
                                                         <div class="text-start">
@@ -142,7 +142,7 @@
                                     </span>
                                 </td>
                                 <td v-else>
-                                    <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã bán</h3>
+                                    <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã thanh toán</h3>
                                 </td>
                             </tr>
                         </tbody>
