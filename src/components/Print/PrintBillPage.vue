@@ -18,8 +18,8 @@
                     <p>{{ bill.MSBN }}</p>
                 </div>
                 <div class="text-end">
-                    <strong>MSDT</strong>
-                    <p>{{ bill.MSDT }}</p>
+                    <strong>MSHS</strong>
+                    <p>{{ bill.MSHS }}</p>
                 </div>
             </div> -->
         </div>

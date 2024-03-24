@@ -2,17 +2,14 @@
 import MedicineService from "@/services/medicine.service.js";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
   props: {
     medicines: { type: Array, default: [] },
     activeIndex: { type: Number, default: -1 },
+    refreshList: Function,
   },
-  // data() {
-  //   return {
-  //     localMedicines: this.medicines.slice(),
-  //   };
-  // },
   emits: ["update:activeIndex", "delete:medicine"],
   methods: {
     updateActiveIndex(index) {
@@ -24,28 +21,32 @@ export default {
       const sixty = new Date();
       sixty.setDate(sixty.getDate() + 60);
       const expiry = new Date(expiryDate);
-      if(expiry > thirty && expiry <= sixty){
+      if (expiry > thirty && expiry <= sixty) {
         return 60;
       } else if (expiry <= thirty) {
         return 30;
       } return 0;
     },
     async deleteMedicine(id) {
-      const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
-      if (confirmed) {
-        await MedicineService.delete(id);
-
-        // Cập nhật danh sách nhân viên mà không làm mới trang
-        // const deletedIndex = this.localMedicines.findIndex(medicine => medicine._id === id);
-        // if (deletedIndex !== -1) {
-        //   this.localMedicines.splice(deletedIndex, 1);
-        // }
-        this.$emit("delete:medicine", this.localMedicines);
-        toast.success("Delete Succesfully!");
-        // setTimeout(() => {
-          location.reload();
-        // }, 1500);
-      }
+      Swal.fire({
+        title: "Bạn chắc chắn muốn xóa thuốc này không?",
+        showCancelButton: true,
+        confirmButtonText: "Đồng ý",
+        customClass: {
+          confirmButton: "swal2-confirm-red"
+        }
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await MedicineService.delete(id);
+            this.$emit("delete:medicine", this.localMedicines);
+            this.refreshList();
+            toast.success("Delete Succesfully!");
+          } catch (error) {
+            toast.error("Đã có lỗi xảy ra khi xóa");
+          }
+        }
+      });
     },
   }
 };
@@ -73,7 +74,7 @@ export default {
   </ul>
 </template>
 
-<style scoped>
+<style>
 .list-group {
   max-height: 386px;
   overflow-y: scroll;
@@ -97,5 +98,9 @@ export default {
 
 ::-webkit-scrollbar-thumb:hover {
   background: gray;
+}
+
+.swal2-confirm-red {
+    background-color: red !important;
 }
 </style>

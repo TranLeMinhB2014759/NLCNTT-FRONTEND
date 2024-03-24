@@ -18,8 +18,8 @@
                     <p>{{ medicalrecord.MSBN }}</p>
                 </div>
                 <div class="text-end">
-                    <strong>MSDT</strong>
-                    <p>{{ medicalrecord.MSDT }}</p>
+                    <strong>MSHS</strong>
+                    <p>{{ medicalrecord.MSHS }}</p>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@
         <div class="row">
           <div class="mt-3 col-12 col-sm-4 products">
             <MedicineListAdmin v-if="filteredMedicinesCount > 0" :medicines="filteredMedicines"
-              v-model:activeIndex="activeIndex" />
+              v-model:activeIndex="activeIndex" :refreshList="refreshList"/>
             <p v-else>Không tìm thấy loại thuốc phù hợp.</p>
           </div>
           <div class="mt-3 col-12 col-sm-8">
@@ -68,14 +68,15 @@ export default {
   computed: {
     medicineStrings() {
       return this.medicines.map((medicine) => {
-        const { tenThuoc, Gia, Donvi, Mota, GhiChu, SoLuong, nhaCungCap } = medicine;
-        return [tenThuoc, Gia, Donvi, Mota, GhiChu, SoLuong, nhaCungCap].join("");
+        const { tenThuoc, Gia, nhaCungCap, status } = medicine;
+        return [ tenThuoc, Gia, nhaCungCap, status ].join("");
       });
     },
     filteredMedicines() {
-      if (!this.searchText) return this.medicines;
+      const searchTextLower = this.searchText.toLowerCase();
+      if (!searchTextLower) return this.medicines;
       return this.medicines.filter((_medicine, index) =>
-        this.medicineStrings[index].includes(this.searchText)
+        this.medicineStrings[index].toLowerCase().includes(searchTextLower)
       );
     },
     activeMedicine() {

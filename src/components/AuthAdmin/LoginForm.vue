@@ -65,11 +65,7 @@ export default {
     Form,
     ErrorMessage,
   },
-
-
   emits: ["submit:login"],
-
-
   data() {
     const loginFormSchema = yup.object().shape({
 

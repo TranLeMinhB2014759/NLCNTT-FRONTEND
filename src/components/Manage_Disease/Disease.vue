@@ -24,8 +24,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(disease, index) in sortedDiseases" :key="index"
-              :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
+              <tr v-for="(disease, index) in sortedDiseases" :key="index" :class="{ active: index === activeIndex }"
+                @click="updateActiveIndex(index)">
                 <td>{{ disease.code }}</td>
                 <td class="text-start">{{ disease.tenBenh }}</td>
                 <td>
@@ -51,12 +51,13 @@
   <div class="card mt-3">
     <div class="card-body">
       <p class="text-center">
-        <a
-          href="https://baohiemxahoidientu.vn/bhxh/cap-nhat-danh-muc-benh-dai-ngay-moi-nhat-theo-quy-dinh-cua-bo-y-te.html" target="_blank">[ Cập
+        <a href="https://baohiemxahoidientu.vn/bhxh/cap-nhat-danh-muc-benh-dai-ngay-moi-nhat-theo-quy-dinh-cua-bo-y-te.html"
+          target="_blank">[ Cập
           nhật ] Danh mục bệnh dài ngày mới nhất theo quy định của Bộ Y Tế</a>
       </p>
       <p class="text-center">
-        Ban hành kèm theo <a href="https://baohiemxahoidientu.vn/van-ban/chi-tiet/thong-tu-46-2016-tt-byt" target="_blank">Thông tư
+        Ban hành kèm theo <a href="https://baohiemxahoidientu.vn/van-ban/chi-tiet/thong-tu-46-2016-tt-byt"
+          target="_blank">Thông tư
           số 46/2016/TT-BYT</a> ngày 30 tháng 12 năm 2016 của Bộ trưởng Bộ Y tế
       </p>
 
@@ -69,6 +70,7 @@ import DiseaseService from "@/services/disease.service.js";
 import InputSearch from "@/components/InputSearch.vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
   components: {
@@ -89,19 +91,20 @@ export default {
       });
     },
     filteredDisease() {
-      if (!this.searchText) return this.disease;
+      const searchTextLower = this.searchText.toLowerCase();
+      if (!searchTextLower) return this.disease;
       return this.disease.filter((_disease, index) =>
-        this.diseaseStrings[index].includes(this.searchText)
+        this.diseaseStrings[index].toLowerCase().includes(searchTextLower)
       );
     },
     filteredDiseaseCount() {
       return this.filteredDisease.length;
     },
     sortedDiseases() {
-        return this.filteredDisease.slice().sort((a, b) => {
-          return a.code.localeCompare(b.code);
-        });
-      }
+      return this.filteredDisease.slice().sort((a, b) => {
+        return a.code.localeCompare(b.code);
+      });
+    }
   },
   methods: {
     async retrieveDisease() {
@@ -122,12 +125,24 @@ export default {
       this.activeIndex = index;
     },
     async deleteDisease(id) {
-      const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
-      if (confirmed) {
-        await DiseaseService.delete(id);
-        this.refreshList();
-        toast.success("Delete Succesfully!");
-      }
+      Swal.fire({
+        title: "Bạn chắc chắn muốn xóa loại bệnh này không?",
+        showCancelButton: true,
+        confirmButtonText: "Đồng ý",
+        customClass: {
+          confirmButton: "swal2-confirm-red"
+        }
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await DiseaseService.delete(id);
+            this.refreshList();
+            toast.success("Delete Succesfully!");
+          } catch (error) {
+            toast.error("Đã có lỗi xảy ra khi xóa");
+          }
+        }
+      });
     },
   },
   created() {
@@ -138,7 +153,7 @@ export default {
 
 <style>
 a {
- text-decoration: none;
+  text-decoration: none;
 }
 
 .badge {
@@ -152,5 +167,9 @@ a {
   font-family: 'Courier New', Courier, monospace;
   font-size: 20px;
   font-weight: 600;
+}
+
+.swal2-confirm-red {
+  background-color: red !important;
 }
 </style>

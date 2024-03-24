@@ -1,4 +1,5 @@
 <script>
+import Swal from 'sweetalert2'
 export default {
     data() {
         return {
@@ -65,12 +66,23 @@ export default {
             }
         },
         logout() {
-            const confirmed = window.confirm("Bạn có chắc muốn đăng xuất khỏi hệ thống?");
-            if (confirmed) {
-                window.localStorage.removeItem('staff');
-                this.isLoggedIn = false;
-                this.$router.push({ name: "login-admin" });
-            }
+            Swal.fire({
+                title: "Bạn chắc chắn muốn đăng xuất khỏi hệ thống?",
+                showCancelButton: true,
+                confirmButtonText: "Đồng ý",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    window.localStorage.removeItem('staff');
+                    this.isLoggedIn = false;
+                    Swal.fire({
+                        icon: "success",
+                        title: "Đăng xuất thành công",
+                        showConfirmButton: false,
+                        timer: 1800
+                    });
+                    this.$router.push({ name: "login-admin" });
+                }
+            });
         },
     },
     created() {

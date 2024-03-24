@@ -22,22 +22,22 @@
               <div class="mb-3 mt-3">
                 <Field name="search" type="text" class="form-control" v-model="billLocal.search" required
                   placeholder="Nhập vào mã số hồ sơ" autocomplete="off"/>
-                <ErrorMessage name="MSDT" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                <ErrorMessage name="MSHS" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-2 col-md-2">
               <div class="mb-3 mt-3">
-                <button type="button" class="btn btn-light" @click="getRecordByMSDT(billLocal.search)">
+                <button type="button" class="btn btn-light" @click="getRecordByMSHS(billLocal.search)">
                   <i class="fa-solid fa-rotate-right fa-2xl"></i>
                 </button>
               </div>
             </div>
           </div>
           <div class="mb-3 mt-3">
-            <label for="MSDT">Đơn thuốc:</label>
-            <Field name="MSDT" type="text" class="form-control" v-model="billLocal.MSDT" disabled/>
+            <label for="MSHS">Đơn thuốc:</label>
+            <Field name="MSHS" type="text" class="form-control" v-model="billLocal.MSHS" disabled/>
             <Field name="_id" type="text" v-model="billLocal._id" required hidden/>
-            <Field name="MSDT" type="text" v-model="billLocal.MSDT" required hidden/>
+            <Field name="MSHS" type="text" v-model="billLocal.MSHS" required hidden/>
           </div>
           <div class="mb-3 mt-3">
             <label for="name">Tên khách hàng:</label>
@@ -278,7 +278,7 @@ export default {
 
       billLocal: {
         search: "",
-        MSDT: "Bán lẻ",
+        MSHS: "Bán lẻ",
         ngayLap: this.getCurrentDate(),
         name: "",
         phoneNumber: "",
@@ -326,11 +326,11 @@ export default {
       return formattedNumber;
     },
 
-    async getRecordByMSDT(search) {
+    async getRecordByMSHS(search) {
       try {
-        const record = await MedicalrecordService.getRecordByMSDT(search);
+        const record = await MedicalrecordService.getRecordByMSHS(search);
         if(record && record[0].status === "unsold"){
-          this.billLocal.MSDT = record[0].MSDT;
+          this.billLocal.MSHS = record[0].MSHS;
           this.billLocal.name = record[0].name;
           this.billLocal.phoneNumber = record[0].phoneNumber;
           this.billLocal._id = record[0]._id;
@@ -353,7 +353,7 @@ export default {
           toast.info("Đơn thuốc đã được bán");
         }
       } catch (error) {
-        this.billLocal.MSDT = "Bán lẻ",
+        this.billLocal.MSHS = "Bán lẻ",
         this.billLocal.name = "",
         this.billLocal.phoneNumber = "",
         this.selectedMedicines = [],
@@ -363,7 +363,8 @@ export default {
     // -------------------- Service --------------------
     async retrieveServices() {
       try {
-        this.services = await ServiceService.getAll();
+        const dataService = await ServiceService.getAll();
+        this.services =  dataService.filter(item => item.status === "on" );
       } catch (error) {
         console.log(error);
       }
@@ -404,7 +405,8 @@ export default {
     // -------------------- Medicine --------------------
     async retrieveMedicines() {
       try {
-        this.medicines = await MedicineService.getIsActive();
+        const dataMedicine = await MedicineService.getAll()
+        this.medicines = dataMedicine.filter(item => item.status === "on" );
       } catch (error) {
         console.log(error);
       }

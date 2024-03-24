@@ -20,20 +20,23 @@
 
           <div class="mb-3 mt-3">
             <label for="code">Mã dịch vụ:</label>
-            <Field name="code" type="text" class="form-control" v-model="serviceLocal.code" required placeholder="Nhập vào mã dịch vụ"/>
+            <Field name="code" type="text" class="form-control" v-model="serviceLocal.code" required
+              placeholder="Nhập vào mã dịch vụ" />
             <ErrorMessage name="code" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
           <div class="mb-3 mt-3">
             <label for="tenDichVu">Tên dịch vụ:</label>
-            <Field name="tenDichVu" type="text" class="form-control" v-model="serviceLocal.tenDichVu" required placeholder="Nhập vào tên loại bệnh"/>
+            <Field name="tenDichVu" type="text" class="form-control" v-model="serviceLocal.tenDichVu" required
+              placeholder="Nhập vào tên loại bệnh" />
             <ErrorMessage name="tenDichVu" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
           <div class="mb-3 mt-3">
             <label for="Gia">Giá:</label>
-            <Field name="Gia" type="number" class="form-control" v-model="serviceLocal.Gia" required placeholder="Nhập vào giá của dịch vụ"/>
-            <ErrorMessage name="tenDichVu" class="error-feedback" style="color: rgb(238, 15, 15);" />
+            <Field name="Gia" type="number" class="form-control" v-model="serviceLocal.Gia" required
+              placeholder="Nhập vào giá của dịch vụ" />
+            <ErrorMessage name="Gia" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
           <div class="mb-3 mt-3 d-flex justify-content-center">
@@ -88,6 +91,7 @@ export default {
       serviceLocal: {
         code: "",
         tenDichVu: "",
+        status: "on",
       },
       serviceFormSchema,
 

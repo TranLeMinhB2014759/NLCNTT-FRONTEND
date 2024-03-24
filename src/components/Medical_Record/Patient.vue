@@ -4,7 +4,7 @@
       <div class="banner text-center">QUẢN LÝ BỆNH NHÂN</div>
       <div class="container">
         <button class="btn btn-sm text-success" @click="goToAddPatient()">
-            <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
+          <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
         </button>
         <div class="row">
           <div class="container col-12 col-sm-4">
@@ -30,7 +30,7 @@
             </thead>
             <tbody>
               <tr v-for="(patient, index) in filteredPatients" :key="index" :class="{ active: index === activeIndex }"
-              @click="updateActiveIndex(index)">
+                @click="updateActiveIndex(index)">
                 <td>{{ patient.MSBN }}</td>
                 <td class="text-start">{{ patient.name }}</td>
                 <td>{{ patient.year }} ( {{ calculateAge(patient.year) }} tuổi )</td>
@@ -71,6 +71,7 @@ import PatientService from "@/services/patient.service.js";
 import InputSearch from "@/components/InputSearch.vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
   components: {
@@ -87,13 +88,14 @@ export default {
     patientStrings() {
       return this.patients.map((patient) => {
         const { MSBN, name, phoneNumber } = patient;
-        return [ MSBN, name, phoneNumber ].join("");
+        return [MSBN, name, phoneNumber].join("");
       });
     },
     filteredPatients() {
-      if (!this.searchText) return this.patients;
+      const searchTextLower = this.searchText.toLowerCase();
+      if (!searchTextLower) return this.patients;
       return this.patients.filter((_patient, index) =>
-        this.patientStrings[index].includes(this.searchText)
+        this.patientStrings[index].toLowerCase().includes(searchTextLower)
       );
     },
     filteredPatientsCount() {
@@ -126,12 +128,24 @@ export default {
       this.activeIndex = index;
     },
     async deletePatient(id) {
-      const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
-      if (confirmed) {
-        await PatientService.delete(id);
-        this.refreshList();
-        toast.success("Delete Succesfully!");
-      }
+      Swal.fire({
+        title: "Bạn chắc chắn muốn xóa bệnh nhân này không?",
+        showCancelButton: true,
+        confirmButtonText: "Đồng ý",
+        customClass: {
+          confirmButton: "swal2-confirm-red"
+        }
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await PatientService.delete(id);
+            this.refreshList();
+            toast.success("Delete Succesfully!");
+          } catch (error) {
+            toast.error("Đã có lỗi xảy ra khi xóa");
+          }
+        }
+      });
     },
   },
   created() {
@@ -152,5 +166,9 @@ export default {
   font-family: 'Courier New', Courier, monospace;
   font-size: 20px;
   font-weight: 600;
+}
+
+.swal2-confirm-red {
+    background-color: red !important;
 }
 </style>

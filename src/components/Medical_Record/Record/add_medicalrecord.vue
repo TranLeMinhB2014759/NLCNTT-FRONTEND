@@ -37,14 +37,14 @@ export default {
         },
         async addMedicalrecord(data) {
             Swal.fire({
-                title: "Đơn thuốc khi đã lập là không thể sửa. Bạn chắc chắn muốn lập đơn thuốc này?",
+                title: "Hồ sơ khi đã lập là không thể sửa. Bạn chắc chắn muốn lập hồ sơ này?",
                 showCancelButton: true,
                 confirmButtonText: "Đồng ý",
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
                         await MedicalrecordService.create(data);
-                        this.message = "Tạo đơn thuốc thành công";
+                        this.message = "Tạo hồ sơ thành công";
                         Swal.fire({
                             icon: "success",
                             title: this.message,

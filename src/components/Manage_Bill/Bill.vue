@@ -61,7 +61,7 @@
                                                             <p>&nbsp;</p>
                                                             <p><strong>{{ bill.name }}</strong></p>
                                                             <p>{{ bill.phoneNumber }}</p>
-                                                            <p>{{ bill.MSDT }}</p>
+                                                            <p>{{ bill.MSHS }}</p>
                                                         </div>
                                                     </div>
                                                     <table class="table table-bordered">
@@ -156,7 +156,7 @@
                                     </button>
                                 </td> -->
 
-                                <td v-if="bill.MSDT === 'Bán lẻ'">
+                                <td v-if="bill.MSHS === 'Bán lẻ'">
                                     <span v-if="getCurrentStaff() === bill.nguoiLap">
                                         <button type="button" class="ml-2 btn btn-danger" @click="deleteBill(bill._id)">
                                             <i class="fa fa-trash"></i>
@@ -187,6 +187,7 @@ import BillService from "@/services/bill.service.js";
 import InputSearch from "@/components/InputSearch.vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -202,14 +203,15 @@ export default {
     computed: {
         billStrings() {
             return this.bills.map((bill) => {
-                const { name, phoneNumber, ngayLap, MSDT } = bill;
-                return [name, phoneNumber, ngayLap, MSDT].join("");
+                const { name, phoneNumber, ngayLap, nguoiLap, MSHS } = bill;
+                return [name, phoneNumber, ngayLap, nguoiLap, MSHS].join("");
             });
         },
         filteredBills() {
-            if (!this.searchText) return this.bills;
+            const searchTextLower = this.searchText.toLowerCase();
+            if (!searchTextLower) return this.bills;
             return this.bills.filter((_bill, index) =>
-                this.billStrings[index].includes(this.searchText)
+                this.billStrings[index].toLowerCase().includes(searchTextLower)
             );
         },
         filteredBillsCount() {
@@ -248,12 +250,24 @@ export default {
             this.activeIndex = index;
         },
         async deleteBill(id) {
-            const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
-            if (confirmed) {
-                await BillService.delete(id);
-                this.refreshList();
-                toast.success("Delete Succesfully!");
-            }
+            Swal.fire({
+                title: "Bạn chắc chắn muốn xóa hóa đơn này không?",
+                showCancelButton: true,
+                confirmButtonText: "Đồng ý",
+                customClass: {
+                    confirmButton: "swal2-confirm-red"
+                }
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await BillService.delete(id);
+                        this.refreshList();
+                        toast.success("Delete Succesfully!");
+                    } catch (error) {
+                        toast.error("Đã có lỗi xảy ra khi xóa");
+                    }
+                }
+            });
         },
     },
     created() {
@@ -283,5 +297,9 @@ i.donvi {
 .bg-success {
     color: white;
     background-color: rgb(65 255 167) !important;
+}
+
+.swal2-confirm-red {
+    background-color: red !important;
 }
 </style>

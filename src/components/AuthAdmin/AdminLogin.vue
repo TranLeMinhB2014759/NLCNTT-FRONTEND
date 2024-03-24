@@ -5,8 +5,7 @@
 <script>
 import FormLogin from "@/components/AuthAdmin/LoginForm.vue";
 import StaffService from "@/services/staff.service.js";
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -33,12 +32,22 @@ export default {
                 if (response && response.message === 'Đăng nhập thành công') {
                     // Check the staff's role
                     if (response.staff.role === 'admin') {
-                        this.message = "Đăng nhập thành công vào trang admin";
-                        toast.success(this.message);
+                        this.message = "Welcome Back, " + response.staff.name;
+                        Swal.fire({
+                            icon: "success",
+                            title: this.message,
+                            showConfirmButton: true,
+                            timer: 2000
+                        });
                         this.$router.push({ name: 'welcome' });
                     } else {
-                        this.message = "Đăng nhập thành công";
-                        toast.success(this.message);
+                        this.message = "Welcome Back, " + response.staff.name;
+                        Swal.fire({
+                            icon: "success",
+                            title: this.message,
+                            showConfirmButton: true,
+                            timer: 2000
+                        });
                         this.$router.push({ name: 'welcome' });
                     }
                 }

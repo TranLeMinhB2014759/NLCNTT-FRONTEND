@@ -24,7 +24,7 @@
           <div class="row">
             <Field name="MSBN" type="text" v-model="medicalrecordLocal.MSBN" required hidden />
             <Field name="status" type="text" v-model="medicalrecordLocal.status" required hidden />
-            <Field name="MSDT" type="text" class="form-control" v-model="formatMSDT" hidden />
+            <Field name="MSHS" type="text" class="form-control" v-model="formatMSHS" hidden />
             <div class="col-12 col-md-4">
               <div class="mb-3 mt-3">
                 <label for="name"><strong>Họ và tên: </strong>{{ medicalrecordLocal.name }}</label>
@@ -323,10 +323,11 @@ export default {
       selectedMedicine: null,
       selectedMedicines: [],
       diseases: [],
+      services: [],
       medicines: [],
       medicalrecordLocal: {
         MSBN: this.patient.MSBN,
-        MSDT: "",
+        MSHS: "",
         name: this.patient.name,
         year: this.patient.year,
         gender: this.patient.gender,
@@ -348,19 +349,19 @@ export default {
     };
   },
   computed: {
-    formatMSDT() {
+    formatMSHS() {
       let recordCount;
       if (this.medicalrecords.length > 0) {
         const latestRecord = this.medicalrecords[this.medicalrecords.length - 1];
-        const lastSection = latestRecord.MSDT.split('.').pop();
+        const lastSection = latestRecord.MSHS.split('.').pop();
         const latestCount = parseInt(lastSection) + 1;
         recordCount = String(latestCount).padStart(4, '0');
       } else {
         recordCount = '0001';
       }
-      const MSDT = `${this.patient.MSBN.split('.').pop()}.${recordCount}`;
-      this.medicalrecordLocal.MSDT = MSDT;
-      return MSDT;
+      const MSHS = `${this.patient.MSBN.split('.').pop()}.${recordCount}`;
+      this.medicalrecordLocal.MSHS = MSHS;
+      return MSHS;
     }
   },
   methods: {
@@ -438,7 +439,8 @@ export default {
     // --------------- selectedService -----------------------
     async retrieveServices() {
       try {
-        this.services = await ServiceService.getAll();
+        const dataService = await ServiceService.getAll();
+        this.services =  dataService.filter(item => item.status === "on" );
       } catch (error) {
         console.log(error);
       }
@@ -475,7 +477,8 @@ export default {
     // --------------- selectedMedicine -----------------------
     async retrieveMedicines() {
       try {
-        this.medicines = await MedicineService.getIsActive();
+        const dataMedicine = await MedicineService.getAll()
+        this.medicines = dataMedicine.filter(item => item.status === "on" );
       } catch (error) {
         console.log(error);
       }

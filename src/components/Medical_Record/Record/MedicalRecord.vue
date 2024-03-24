@@ -34,7 +34,8 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-6 col-md-2"><strong>Tuổi:</strong> {{ calculateAge(patient.year) }} ({{ patient.year }})</div>
+                        <div class="col-6 col-md-2"><strong>Tuổi:</strong> {{ calculateAge(patient.year) }} ({{
+            patient.year }})</div>
                         <div class="col-6 col-md-2"><strong>Giới tính:</strong> {{ patient.gender }}</div>
                         <div class="col-12 col-md-3"><strong>Số điện thoại:</strong> {{ patient.phoneNumber }}</div>
                         <div class="col-12 col-md-5"><strong>Địa chỉ:</strong> {{ patient.address }}</div>
@@ -81,12 +82,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  v-for="(medicalrecord, index) in filteredMedicalrecords.slice().reverse()" :key="index"
-                        :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
+                        <tr v-for="(medicalrecord, index) in filteredMedicalrecords.slice().reverse()" :key="index"
+                            :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
                             <td>
-                                {{ medicalrecord.MSDT }} 
-                                <button type="button" class="btn btn-sm btn-secondary" @click="copy( medicalrecord.MSDT )"> 
-                                    <i class="fas fa-copy"></i> 
+                                {{ medicalrecord.MSHS }}
+                                <button type="button" class="btn btn-sm btn-secondary"
+                                    @click="copy(medicalrecord.MSHS)">
+                                    <i class="fas fa-copy"></i>
                                 </button>
                             </td>
                             <td>{{ medicalrecord.bacsi }}</td>
@@ -123,12 +125,16 @@
                                                     </div>
                                                     <div class="text-start">
                                                         <p><strong>{{ medicalrecord.name }}</strong></p>
-                                                        <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{ medicalrecord.year }})</p>
+                                                        <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{
+            medicalrecord.year }})</p>
                                                         <p>{{ medicalrecord.address }}</p>
                                                         <p>{{ medicalrecord.symptom }}</p>
                                                         <p>
-                                                            <span v-for="(medicalrecord, idx) in medicalrecord.diagnosis" :key="idx">
-                                                                ({{ medicalrecord.code }}) {{ medicalrecord.tenBenh }}<br>
+                                                            <span
+                                                                v-for="(medicalrecord, idx) in medicalrecord.diagnosis"
+                                                                :key="idx">
+                                                                ({{ medicalrecord.code }}) {{ medicalrecord.tenBenh
+                                                                }}<br>
                                                             </span>
                                                         </p>
                                                     </div>
@@ -160,7 +166,8 @@
                                                 <div class="d-flex">
                                                     <div class="text-start justify-content-start">
                                                         <p>Tái khám nhớ mang theo đơn thuốc này!</p>
-                                                        <img v-if="medicalrecord.status === 'sold'" class="soldout" :src="'/src/assets/images/soldout.jpg'" alt="SoldOut">
+                                                        <img v-if="medicalrecord.status === 'sold'" class="soldout"
+                                                            :src="'/src/assets/images/soldout.jpg'" alt="SoldOut">
                                                     </div>
                                                     <div class="justify-content-end">
                                                         <p>Cần Thơ, {{ medicalrecord.ngayKham }}</p>
@@ -198,7 +205,8 @@
                                 </span>
                             </td>
                             <td v-else class="justify-content-center">
-                                <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã thanh toán</h3>
+                                <h3 class="badge bg-success"><i class="fa-solid fa-circle fa-2xs"></i> Đã thanh toán
+                                </h3>
                             </td>
                         </tr>
                     </tbody>
@@ -215,6 +223,7 @@ import MedicalrecordService from "@/services/medicalrecord.service";
 import InputSearch from "@/components/InputSearch.vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -242,9 +251,10 @@ export default {
             });
         },
         filteredMedicalrecords() {
-            if (!this.searchText) return this.medicalrecords;
+            const searchTextLower = this.searchText.toLowerCase();
+            if (!searchTextLower) return this.medicalrecords;
             return this.medicalrecords.filter((_medicalrecord, index) =>
-                this.medicalrecordStrings[index].includes(this.searchText)
+                this.medicalrecordStrings[index].toLowerCase().includes(searchTextLower)
             );
         },
         filteredMedicalrecordsCount() {
@@ -281,7 +291,7 @@ export default {
             try {
                 const phoneNumber = this.patient.phoneNumber;
                 this.medicalrecords = await MedicalrecordService.getRecord(phoneNumber);
-            } catch(error) {
+            } catch (error) {
                 // if (error.response && error.response.status === 404 && error.response.data.message === "No medical records found for the provided phone number") {
                 //     toast.info("Chưa có hồ sơ nào");
                 // } else {
@@ -301,21 +311,33 @@ export default {
         },
 
         async deleteMedicalrecord(id) {
-            const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
-            if (confirmed) {
-                await MedicalrecordService.delete(id);
-                this.medicalrecords = [];
-                this.refreshList();
-                toast.success("Delete Succesfully!");
-            }
+            Swal.fire({
+                title: "Bạn chắc chắn muốn xóa hồ sơ này không?",
+                showCancelButton: true,
+                confirmButtonText: "Đồng ý",
+                customClass: {
+                    confirmButton: "swal2-confirm-red"
+                }
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await MedicalrecordService.delete(id);
+                        this.medicalrecords = [];
+                        this.refreshList();
+                        toast.success("Delete Succesfully!");
+                    } catch (error) {
+                        toast.error("Đã có lỗi xảy ra khi xóa");
+                    }
+                }
+            });
         },
         goToAddRecord(patientId) {
             this.$router.push({ name: 'add-medicalrecord', params: { id: patientId } });
         },
 
-        async copy(msdt){
-            try{
-                await navigator.clipboard.writeText(msdt);
+        async copy(MSHS) {
+            try {
+                await navigator.clipboard.writeText(MSHS);
                 toast.success('Sao chép thành công');
             } catch (error) {
                 toast.error('Sao chép thất bại');
@@ -331,8 +353,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.bg-success{
+<style>
+.bg-success {
     background-color: rgb(65 255 167) !important;
 }
 
@@ -345,9 +367,13 @@ a {
     color: black;
 }
 
-.soldout{
+.soldout {
     max-width: 100px;
     max-height: 100px;
+}
+
+.swal2-confirm-red {
+    background-color: red !important;
 }
 
 /* ----------------------- BUTTON BACK --------------------------- */

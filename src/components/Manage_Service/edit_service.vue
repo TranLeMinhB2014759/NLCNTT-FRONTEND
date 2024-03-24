@@ -49,10 +49,12 @@ export default {
             if (data.code === this.service.code) {
               newData.tenDichVu = data.tenDichVu;
               newData.Gia = data.Gia;
+              newData.status = data.status;
             } else {
               newData.code = data.code;
               newData.tenDichVu = data.tenDichVu;
               newData.Gia = data.Gia;
+              newData.status = data.status;
             }
             await ServiceService.update(this.service ? this.service._id : null, newData);
             Swal.fire({

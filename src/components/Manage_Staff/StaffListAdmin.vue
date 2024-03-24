@@ -2,38 +2,40 @@
 import StaffService from "@/services/staff.service.js";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import Swal from 'sweetalert2'
 
 export default {
   props: {
     staffs: { type: Array, default: [] },
     activeIndex: { type: Number, default: -1 },
+    refreshList: Function,
   },
-  // data() {
-  //   return {
-  //     localStaffs: this.staffs.slice(),
-  //   };
-  // },
   emits: ["update:activeIndex", "delete:staff"],
   methods: {
     updateActiveIndex(index) {
       this.$emit("update:activeIndex", index);
     },
     async deleteStaff(id) {
-      const confirmed = window.confirm("Bạn có chắc muốn xóa tài khoản này không?");
-      if (confirmed) {
-        await StaffService.delete(id);
-
-        // Cập nhật danh sách nhân viên mà không làm mới trang
-        // const deletedIndex = this.localStaffs.findIndex(staff => staff._id === id);
-        // if (deletedIndex !== -1) {
-        //   this.localStaffs.splice(deletedIndex, 1);
-        // }
-        this.$emit("delete:staff", this.localStaffs);
-        toast.success("Delete Succesfully!");
-        // setTimeout(() => {
-          location.reload();
-        // }, 1500);
-      }
+      Swal.fire({
+        title: "Bạn chắc chắn muốn xóa tài khoản này không?",
+        showCancelButton: true,
+        confirmButtonText: "Đồng ý",
+        customClass: {
+          confirmButton: "swal2-confirm-red"
+        }
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await StaffService.delete(id);
+            this.$emit("delete:staff", this.localStaffs);
+            this.refreshList();
+            toast.success("Delete Succesfully!");
+          } catch (error) {
+            console.log(error)
+            toast.error("Đã có lỗi xảy ra khi xóa");
+          }
+        }
+      });
     },
   }
 };
@@ -51,7 +53,7 @@ export default {
   </ul>
 </template>
 
-<style scoped>
+<style>
 .list-group {
   max-height: 386px;
   overflow-y: scroll;
@@ -75,5 +77,9 @@ export default {
 
 ::-webkit-scrollbar-thumb:hover {
   background: gray;
+}
+
+.swal2-confirm-red {
+    background-color: red !important;
 }
 </style>

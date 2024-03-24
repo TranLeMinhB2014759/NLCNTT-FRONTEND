@@ -51,7 +51,7 @@ export default {
                 const SoLuongConLai = SoLuongHienTai - medicine.SoLuongBan;
                 await MedicineService.update(medicine._id, { SoLuong: SoLuongConLai });
               }
-              if (data.MSDT != "Bán lẻ") {
+              if (data.MSHS != "Bán lẻ") {
                 const updatedStatus = 'sold';
                 await MedicalrecordService.update(data._id, { status: updatedStatus });
               }

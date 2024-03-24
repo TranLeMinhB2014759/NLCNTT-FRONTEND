@@ -143,9 +143,7 @@ export default {
         ),
       password: yup
         .string()
-        .required("Mật khẩu phải có giá trị.")
-        .min(5, "Mật khẩu phải ít nhất 5 ký tự.")
-        .max(10, "Mật khẩu có nhiều nhất 10 ký tự."),
+        .required("Mật khẩu phải có giá trị."),
 
       role: yup
         .string()
