@@ -25,8 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(room, index) in sortedRooms" :key="index" :class="{ active: index === activeIndex }"
-                @click="updateActiveIndex(index)">
+              <tr v-for="(room, index) in sortedRooms" :key="index" @click="updateActiveIndex(index)">
                 <td>{{ room.floor }}</td>
                 <td>{{ room.maPhong }}</td>
 

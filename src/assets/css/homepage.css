@@ -131,26 +131,20 @@ a:hover {
 
 .col-sm-3:hover {
     transform: scale(1.05);
-    /* Increase the size by 5% */
     transition: transform 0.3s ease;
-    /* Add a smooth transition effect */
 }
 
 .imgsp:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Add a subtle box shadow on hover */
     transition: box-shadow 0.3s ease;
-    /* Add a smooth transition effect */
 }
 
 .tcs:hover {
     background-color: #f0f0f0;
-    /* Change the background color on hover */
     transition: background-color 0.3s ease;
-    /* Add a smooth transition effect */
 }
 
-/* ----------------------Bệnh---------------------- */
+/* ---------------------- Card ---------------------- */
 
 .diseases {
     padding: 35px;
@@ -229,6 +223,69 @@ figure{
     font-weight: bold;
     cursor: pointer;
     transform: translateX(22px);
+}
+
+/* ---------------------- Features ---------------------- */
+.main-features-wrapper {
+    margin-bottom: 2.5rem;
+}
+
+.main-features-item {
+    -webkit-box-shadow: 0 0 5px 0 rgba(0,0,0,.15);
+    -moz-box-shadow: 0 0 5px 0 rgba(0,0,0,.15);
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.15);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border-bottom: 8px solid #fff;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-features-item:hover {
+    transform: translateY(-20px);
+    -webkit-transform: translateY(-20px);
+    -moz-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    -o-transform: translateY(-20px);
+}
+
+.main-features-item__img {
+    width: 60px;
+    height: 60px;
+    margin: 15px auto;
+    object-fit: contain;
+}
+
+.main-features-item__text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #443f3f;
+    margin: 3px auto 8px;
+    text-align: center;
+}
+
+.main-features-item:nth-child(1) {
+    background: #43b1d2;
+}
+
+.main-features-item:nth-child(2) {
+    background: #3eb6c6;
+}
+
+.main-features-item:nth-child(3) {
+    background: #3dbbba;
+}
+
+.main-features-item:nth-child(4) {
+    background: #37c3a8;
 }
 
 @media only screen and (max-width: 575px) {

@@ -29,6 +29,32 @@
     </div>
   </div>
   <div class="container mt-3">
+    <div class="row text-center main-features-wrapper">
+      <div class="col-6 col-md-3 main-features-item">
+        <a href="#">
+          <img src="/src/assets/images/icon1.webp" alt="" class="main-features-item__img">
+          <h3 class="main-features-item__text">Khám chữa bệnh</h3>
+        </a>
+      </div>
+      <div class="col-6 col-md-3 main-features-item">
+        <router-link :to="{ name: 'service' }">
+          <img src="/src/assets/images/icon2.webp" alt="" class="main-features-item__img">
+          <h3 class="main-features-item__text">Báo giá dịch vụ</h3>
+        </router-link>
+      </div>
+      <div class="col-6 col-md-3 main-features-item">
+        <router-link :to="{ name: 'doctor' }">
+          <img src="/src/assets/images/icon3.webp" alt="" class="main-features-item__img">
+          <h3 class="main-features-item__text">Thông tin bác sĩ</h3>
+        </router-link>
+      </div>
+      <div class="col-6 col-md-3 main-features-item">
+        <a href="#">
+          <img src="/src/assets/images/icon4.webp" alt="" class="main-features-item__img">
+          <h3 class="main-features-item__text">Đặt lịch online</h3>
+        </a>
+      </div>
+    </div>
     <div class="row intro">
       <div class="col-sm-6">
         <div class="img-banner">

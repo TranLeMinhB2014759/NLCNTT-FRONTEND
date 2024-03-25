@@ -26,8 +26,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(service, index) in sortedServices" :key="index" :class="{ active: index === activeIndex }"
-                @click="updateActiveIndex(index)">
+              <tr v-for="(service, index) in sortedServices" :key="index" @click="updateActiveIndex(index)">
                 <td>{{ service.code }}</td>
                 <td class="text-start">{{ service.tenDichVu }}</td>
                 <td>{{ formatToVND(service.Gia) }}</td>

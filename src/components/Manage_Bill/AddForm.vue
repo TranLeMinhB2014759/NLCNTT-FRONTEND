@@ -59,11 +59,11 @@
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
-                    <input name="service" list="service" class="form-control" v-model="selectedService"
+                    <input name="service" :list="selectedService ? 'service' : null" class="form-control" v-model="selectedService"
                       placeholder="Hãy nhập vào tên dịch vụ" required>
-                    <datalist id="service">
+                    <datalist id="service" v-if="selectedService !== ''">
                       <option v-for="service in services" :key="service._id" :value="service.tenDichVu"
-                        :disabled="isServiceSelected(service)"></option>
+                        :disabled="isServiceSelected(service)">{{ service.code }}</option>
                     </datalist>
                     </input>
                   </div>
@@ -140,9 +140,9 @@
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
-                    <input name="prescription" list="prescription" class="form-control" v-model="selectedMedicine"
+                    <input name="prescription" :list="selectedMedicine ? 'prescription' : null" class="form-control" v-model="selectedMedicine"
                       placeholder="Hãy nhập vào tên thuốc" required>
-                    <datalist id="prescription">
+                    <datalist id="prescription" v-if="selectedMedicine != ''">
                       <option v-for="medicine in medicines" :key="medicine._id" :value="medicine.tenThuoc"
                         :disabled="isMedicineSelected(medicine)"></option>
                     </datalist>

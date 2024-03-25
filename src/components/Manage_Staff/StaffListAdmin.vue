@@ -53,7 +53,7 @@ export default {
   </ul>
 </template>
 
-<style>
+<style scoped>
 .list-group {
   max-height: 386px;
   overflow-y: scroll;
@@ -77,9 +77,5 @@ export default {
 
 ::-webkit-scrollbar-thumb:hover {
   background: gray;
-}
-
-.swal2-confirm-red {
-    background-color: red !important;
 }
 </style>

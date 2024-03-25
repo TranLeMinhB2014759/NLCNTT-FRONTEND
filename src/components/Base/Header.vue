@@ -111,52 +111,36 @@ export default {
     },
 
     mounted() {
-        // Khai báo biến intervalId bằng let hoặc const
         let intervalId;
-
-        // Gọi đoạn code mỗi 5 giây và lưu giá trị được trả về bởi setInterval
         intervalId = setInterval(() => {
             const userJs = window.localStorage.getItem('user');
             const user = JSON.parse(userJs);
-
-
             if (user) {
-                // console.log('user', user);
                 this.isLoggedIn = true;
             }
-        }, 100); // Gọi mỗi 0,1 giây 
-
-        // Để dừng việc gọi đoạn code sau một thời gian hoặc khi điều kiện nào đó được thỏa mãn, bạn có thể sử dụng clearInterval(intervalId)
-
-        // Ví dụ: Dừng việc gọi đoạn code sau 300 giây
+        }, 100);
         setTimeout(() => {
             clearInterval(intervalId);
         }, 3000000);
     },
-
     methods: {
         logout() {
             const confirmed = window.confirm("Bạn có chắc muốn đăng xuất tài khoản?");
             if (confirmed) {
                 window.localStorage.removeItem('user');
                 this.isLoggedIn = false;
-
-
                 this.$router.push({ name: "trangchu" });
             }
         },
         loginUser() {
-
             this.$router.push({ name: "login" });
         },
         signupUser() {
-
             this.$router.push({ name: "signup" });
         },
         openModal() {
             this.AModalVisible = false;
         },
-
     }
 };
 </script>

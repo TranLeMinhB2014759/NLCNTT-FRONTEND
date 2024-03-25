@@ -16,9 +16,9 @@ export default {
 <style scoped>
 .welcome {
     margin: 10px;
-    background-image: url('https://vtiacademy.edu.vn/upload/images/z4506213156065-80b8258e006dd4635065d8e7c7d1480a.jpg');
-    height: 78vh;
-    background-size: cover;
+    background-image: url('https://www.velvetech.com/wp-content/uploads/2022/05/hospital-management-system-fb.png');
+    height: 68vh;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
 }

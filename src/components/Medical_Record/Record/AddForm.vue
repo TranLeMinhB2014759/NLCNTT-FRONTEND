@@ -88,8 +88,8 @@
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
-                    <input name="diagnosis" list="diagnosis" class="form-control" v-model="selectedDisease" placeholder="Hãy nhập vào mã ICD 10 hoặc tên bệnh " required autocomplete="off">
-                      <datalist id="diagnosis">
+                    <input name="diagnosis" :list="selectedDisease ? 'diagnosis' : null" class="form-control" v-model="selectedDisease" placeholder="Hãy nhập vào mã ICD 10 hoặc tên bệnh " required autocomplete="off">
+                      <datalist id="diagnosis" v-if="selectedDisease !== ''">
                         <option v-for="disease in diseases" :key="disease._id" :value="disease.tenBenh" :disabled="isDiseaseSelected(disease)">{{ disease.code }}</option>
                       </datalist>
                     </input>
@@ -136,8 +136,8 @@
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
-                    <input name="services" list="services" class="form-control" v-model="selectedService" placeholder="Hãy nhập vào mã hoặc tên dịch vụ " required autocomplete="off">
-                      <datalist id="services">
+                    <input name="services" :list="selectedService ? 'services' : null" class="form-control" v-model="selectedService" placeholder="Hãy nhập vào mã hoặc tên dịch vụ " required autocomplete="off">
+                      <datalist id="services" v-if="selectedService !== ''">
                         <option v-for="service in services" :key="service._id" :value="service.tenDichVu" :disabled="isServiceSelected(service)">{{ service.code }}</option>
                       </datalist>
                     </input>
@@ -190,8 +190,8 @@
               <div class="mb-3 mt-3">
                 <div class="row">
                   <div class="col-12 col-md-5">
-                    <input name="prescription" list="prescription" class="form-control" v-model="selectedMedicine" placeholder="Hãy nhập vào tên thuốc" required autocomplete="off">
-                      <datalist id="prescription">
+                    <input name="prescription" :list="selectedMedicine ? 'prescription' : null" class="form-control" v-model="selectedMedicine" placeholder="Hãy nhập vào tên thuốc" required autocomplete="off">
+                      <datalist id="prescription" v-if="selectedMedicine !== ''">
                         <option v-for="medicine in medicines" :key="medicine._id" :value="medicine.tenThuoc" :disabled="isMedicineSelected(medicine)"></option>
                       </datalist>
                     </input>

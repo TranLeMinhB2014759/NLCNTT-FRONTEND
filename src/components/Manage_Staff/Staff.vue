@@ -129,6 +129,9 @@ export default {
   font-weight: 600;
 }
 
+.swal2-confirm-red {
+    background-color: red !important;
+}
 /* -------------------------- Button ---------------------  */
 a {
   text-decoration: none;

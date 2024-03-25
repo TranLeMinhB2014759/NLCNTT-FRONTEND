@@ -24,8 +24,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(disease, index) in sortedDiseases" :key="index" :class="{ active: index === activeIndex }"
-                @click="updateActiveIndex(index)">
+              <tr v-for="(disease, index) in sortedDiseases" :key="index" @click="updateActiveIndex(index)">
                 <td>{{ disease.code }}</td>
                 <td class="text-start">{{ disease.tenBenh }}</td>
                 <td>

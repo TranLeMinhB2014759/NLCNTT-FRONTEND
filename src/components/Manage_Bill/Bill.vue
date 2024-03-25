@@ -26,8 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(bill, index) in filteredBills.slice().reverse()" :key="index"
-                                :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
+                            <tr v-for="(bill, index) in filteredBills.slice().reverse()" :key="index" @click="updateActiveIndex(index)">
                                 <td>{{ bill.name }}</td>
                                 <td>{{ bill.phoneNumber }}</td>
                                 <td>{{ bill.ngayLap }}</td>

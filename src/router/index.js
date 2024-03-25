@@ -10,7 +10,17 @@ const routes = [
       {
         path: "",
         name: "trangchu",
-        component: () => import("@/views/Homepage.vue"),
+        component: () => import("@/views/Base/Homepage.vue"),
+      },
+      {
+        path: "/service",
+        name: "service",
+        component: () => import("@/views/Base/Service.vue"),
+      },
+      {
+        path: "/doctor",
+        name: "doctor",
+        component: () => import("@/views/Base/Doctor.vue"),
       },
       {
         path: "/:pathMatch(.*)*",

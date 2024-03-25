@@ -29,8 +29,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(patient, index) in filteredPatients" :key="index" :class="{ active: index === activeIndex }"
-                @click="updateActiveIndex(index)">
+              <tr v-for="(patient, index) in filteredPatients" :key="index" @click="updateActiveIndex(index)">
                 <td>{{ patient.MSBN }}</td>
                 <td class="text-start">{{ patient.name }}</td>
                 <td>{{ patient.year }} ( {{ calculateAge(patient.year) }} tuổi )</td>

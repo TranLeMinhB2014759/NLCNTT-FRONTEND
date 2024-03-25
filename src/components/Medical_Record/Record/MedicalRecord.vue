@@ -82,8 +82,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(medicalrecord, index) in filteredMedicalrecords.slice().reverse()" :key="index"
-                            :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
+                        <tr v-for="(medicalrecord, index) in filteredMedicalrecords.slice().reverse()" :key="index" @click="updateActiveIndex(index)">
                             <td>
                                 {{ medicalrecord.MSHS }}
                                 <button type="button" class="btn btn-sm btn-secondary"
@@ -125,8 +124,7 @@
                                                     </div>
                                                     <div class="text-start">
                                                         <p><strong>{{ medicalrecord.name }}</strong></p>
-                                                        <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{
-            medicalrecord.year }})</p>
+                                                        <p>{{ calculateAge(medicalrecord.year) }} Tuổi ({{ medicalrecord.year }})</p>
                                                         <p>{{ medicalrecord.address }}</p>
                                                         <p>{{ medicalrecord.symptom }}</p>
                                                         <p>
