@@ -13,13 +13,13 @@ const routes = [
         component: () => import("@/views/Base/Homepage.vue"),
       },
       {
-        path: "/service",
-        name: "service",
+        path: "bao-gia-dich-vu",
+        name: "bao-gia-dich-vu",
         component: () => import("@/views/Base/Service.vue"),
       },
       {
-        path: "/doctor",
-        name: "doctor",
+        path: "doi-ngu-bac-si",
+        name: "doi-ngu-bac-si",
         component: () => import("@/views/Base/Doctor.vue"),
       },
       {
@@ -101,6 +101,23 @@ const routes = [
         component: () => import("@/components/Manage_Staff/edit_staff.vue"),
         props: true,
       },
+      // ----------------------------- Doctor -----------------------------
+      {
+        path: "doctor",
+        name: "admin-doctor",
+        component: () => import("@/components/Manage_Doctor/Doctor.vue"),
+      },
+      {
+        path: "add-doctor",
+        name: "add-doctor",
+        component: () => import("@/components/Manage_Doctor/add_doctor.vue"),
+      },
+      {
+        path: "edit-doctor/:id",
+        name: "edit-doctor",
+        component: () => import("@/components/Manage_Doctor/edit_doctor.vue"),
+        props: true,
+      },
       // ----------------------------- Medicine -----------------------------
       {
         path: "medicine",
@@ -135,23 +152,23 @@ const routes = [
         component: () => import("@/components/Manage_Disease/edit_disease.vue"),
         props: true,
       },
-            // ----------------------------- Service -----------------------------
-            {
-              path: "service",
-              name: "admin-service",
-              component: () => import("@/components/Manage_Service/Service.vue"),
-            },
-            {
-              path: "add-service",
-              name: "add-service",
-              component: () => import("@/components/Manage_Service/add_service.vue"),
-            },
-            {
-              path: "edit-service/:id",
-              name: "edit-service",
-              component: () => import("@/components/Manage_Service/edit_service.vue"),
-              props: true,
-            },
+      // ----------------------------- Service -----------------------------
+      {
+        path: "service",
+        name: "admin-service",
+        component: () => import("@/components/Manage_Service/Service.vue"),
+      },
+      {
+        path: "add-service",
+        name: "add-service",
+        component: () => import("@/components/Manage_Service/add_service.vue"),
+      },
+      {
+        path: "edit-service/:id",
+        name: "edit-service",
+        component: () => import("@/components/Manage_Service/edit_service.vue"),
+        props: true,
+      },
       // ----------------------------- Room -----------------------------
       {
         path: "room",
@@ -225,7 +242,7 @@ const routes = [
     component: () => import("@/components/Print/PrintBillPage.vue"),
     props: true,
   },
-  
+
   // ----------------------------- NOT FOUND -----------------------------
   {
     path: "/:pathMatch(.*)*",

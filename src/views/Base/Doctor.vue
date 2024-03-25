@@ -33,15 +33,18 @@
         </div>
         <div class="row" v-if="filteredDoctorsCount > 0" :doctors="filteredDoctors">
             <div class="col-12 col-md-6 col-lg-3 text-center" v-for="(doctor, index) in sortedDoctors" :key="index" @click="updateActiveIndex(index)">
-                <img class="imgURL" :src="doctor.imgURL" alt="">
-                <div>{{ doctor.name }}</div>
+                <img class="imgURL" :src="doctor.imgURL" alt="Doctor Image">
+                <div> {{ doctor.name }} </div>
+                <div> {{ doctor.hocVi }} </div>
+                <div> Thâm niên: {{ doctor.thamNien }} </div>
+                <div> {{ doctor.chuyenMon }} </div>
             </div>
         </div>
         <p v-else>Không tìm thấy bác sĩ phù hợp.</p>
     </div>
 </template>
 <script>
-import StaffService from "@/services/staff.service.js";
+import DoctorService from "@/services/doctor.service.js";
 import InputSearch from "@/components/InputSearch.vue";
 export default {
     components: {
@@ -80,12 +83,18 @@ export default {
         filteredDoctorsCount() {
             return this.sortedDoctors.length;
         },
+        // hocViAbbreviation(hocVi) {
+        //     const words = hocVi.split(' ');
+        //     const abbreviation = words.map(word => {
+        //         return word.charAt(0);
+        //     }).join('');
+        //     return abbreviation.toUpperCase();
+        // }
     },
     methods: {
         async retrieveDoctors() {
             try {
-                const staff = await StaffService.getAll();
-                this.doctors = staff.filter(item => item.role === "doctor");
+                this.doctors = await DoctorService.getAll();
             } catch (error) {
                 console.log(error);
             }

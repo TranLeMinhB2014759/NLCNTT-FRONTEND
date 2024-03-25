@@ -37,15 +37,15 @@
         </a>
       </div>
       <div class="col-6 col-md-3 main-features-item">
-        <router-link :to="{ name: 'service' }">
+        <router-link :to="{ name: 'bao-gia-dich-vu' }">
           <img src="/src/assets/images/icon2.webp" alt="" class="main-features-item__img">
           <h3 class="main-features-item__text">Báo giá dịch vụ</h3>
         </router-link>
       </div>
       <div class="col-6 col-md-3 main-features-item">
-        <router-link :to="{ name: 'doctor' }">
+        <router-link :to="{ name: 'doi-ngu-bac-si' }">
           <img src="/src/assets/images/icon3.webp" alt="" class="main-features-item__img">
-          <h3 class="main-features-item__text">Thông tin bác sĩ</h3>
+          <h3 class="main-features-item__text">Đội ngũ bác sĩ</h3>
         </router-link>
       </div>
       <div class="col-6 col-md-3 main-features-item">
@@ -148,7 +148,7 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class= "book_diseases img-fluid" src="https://i.ex-cdn.com/dalieu.vn/files/images/2022/06/15/%E1%BA%A2nh-b%C3%A1o.jpg">
+              <img class= "book_diseases img-fluid" loading="lazy" src="https://i.ex-cdn.com/dalieu.vn/files/images/2022/06/15/%E1%BA%A2nh-b%C3%A1o.jpg">
             </figure>
             <figcaption>
               Viêm Da
@@ -158,7 +158,7 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid" src="https://vinmec-prod.s3.amazonaws.com/images/20190828_075530_670528_benh-me-day.max-800x800.jpg">
+              <img class="book_diseases img-fluid" loading="lazy" src="https://vinmec-prod.s3.amazonaws.com/images/20190828_075530_670528_benh-me-day.max-800x800.jpg">
             </figure>
             <figcaption>
               Mề Đay
@@ -168,7 +168,7 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid" src="https://cdn.tgdd.vn/2023/06/content/phat-ban1-800x450.jpg">
+              <img class="book_diseases img-fluid" loading="lazy" src="https://cdn.tgdd.vn/2023/06/content/phat-ban1-800x450.jpg">
             </figure>
             <figcaption>
               Phát Ban

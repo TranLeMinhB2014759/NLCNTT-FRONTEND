@@ -30,24 +30,28 @@ export default {
                 case 'edit-staff':
                     this.activeTab = 2;
                     break;
+                case 'admin-doctor':
+                    this.activeTab = 3;
+                    break;
                 case 'admin-medicine':
                 case 'add-medicine':
                 case 'edit-medicine':
-                    this.activeTab = 3;
+                    this.activeTab = 4;
                     break;
                 case 'admin-disease':
                 case 'add-disease':
                 case 'edit-disease':
-                    this.activeTab = 4;
+                    this.activeTab = 5;
+                    break;
                 case 'admin-service':
                 case 'add-service':
                 case 'edit-service':
-                    this.activeTab = 5;
+                    this.activeTab = 6;
                     break;
                 case 'admin-room':
                 case 'add-room':
                 case 'edit-room':
-                    this.activeTab = 6;
+                    this.activeTab = 7;
                     break;
                 case 'admin-patient':
                 case 'add-patient':
@@ -55,11 +59,11 @@ export default {
                 case 'medicalrecord':
                 case 'add-medicalrecord':
                 case 'edit-medicalrecord':
-                    this.activeTab = 7;
+                    this.activeTab = 8;
                     break;
                 case 'admin-bill':
                 case 'add-bill':
-                    this.activeTab = 8;
+                    this.activeTab = 9;
                     break;
                 default:
                     this.activeTab = 1;
@@ -120,40 +124,47 @@ export default {
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item tab-3" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
+                    <li class="sidebar-item tab-2" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
+                        <router-link :to="{ name: 'admin-doctor' }" class="sidebar-link">
+                            <i class="fa-solid fa-user-doctor"></i> <span class="align-middle">Doctor
+                                Management</span>
+                        </router-link>
+                    </li>
+
+                    <li class="sidebar-item tab-3" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
                         <router-link :to="{ name: 'admin-medicine' }" class="sidebar-link">
                             <i class="fa-solid fa-capsules fa-2xs"></i> <span class="align-middle">Medication
                                 Management</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item tab-3" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
+                    <li class="sidebar-item tab-3" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
                         <router-link :to="{ name: 'admin-disease' }" class="sidebar-link">
                             <i class="fa-solid fa-square-virus"></i> <span class="align-middle">Disease
                                 Management</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)">
                         <router-link :to="{ name: 'admin-service' }" class="sidebar-link">
                             <i class="fa-solid fa-stethoscope"></i> <span class="align-middle">Service Management</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 7 }" @click="setActiveTab(7)">
                         <router-link :to="{ name: 'admin-room' }" class="sidebar-link">
                             <i class="fa-solid fa-house"></i> <span class="align-middle">Room Management</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 7 }" @click="setActiveTab(7)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 8 }" @click="setActiveTab(8)">
                         <router-link :to="{ name: 'admin-patient' }" class="sidebar-link">
                             <i class="fa-solid fa-clipboard-user"></i> <span class="align-middle">Medical
                                 Record</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 8 }" @click="setActiveTab(8)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 9 }" @click="setActiveTab(9)">
                         <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
                             <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
                                 management</span>

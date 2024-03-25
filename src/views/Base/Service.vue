@@ -35,7 +35,7 @@
                 <div>Cần Thơ, ngày 20 tháng 3 năm 2024</div>
             </div>
         </div>
-        <h4 class="text-center">THÔNG BÁO DANH MỤC KHÁM GIÁ KHÁM BỆNH</h4>
+        <h4 class="text-center">THÔNG BÁO DANH MỤC GIÁ KHÁM BỆNH</h4>
         <div class="table-responsive">
             <table class="table table-hover table-bordered text-center">
                 <thead>
