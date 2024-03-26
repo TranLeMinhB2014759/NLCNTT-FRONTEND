@@ -68,9 +68,9 @@ export default {
                     catch (error) {
                         console.error(error);
                         if (error.response && error.response.status === 400 && error.response.data.message === "Ma Phong already exists") {
-                            toast.error("Mã phòng đã được tạo");
+                            toast.error("Mã phòng đã tồn tại");
                         } else {
-                            toast.error("Đã có lỗi xảy ra khi thêm");
+                            toast.error("Đã có lỗi xảy ra");
                         }
                     }
                 } else if (result.isDenied) {

@@ -89,7 +89,7 @@
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import RoomService from "@/services/room.service.js";
-import StaffService from "@/services/staff.service.js";
+import DoctorService from "@/services/doctor.service.js";
 import * as yup from "yup";
 export default {
   components: {
@@ -130,8 +130,8 @@ export default {
   methods: {
     async retrieveDoctor() {
       try {
-        const doctorData = await StaffService.getAll();
-        this.doctor = doctorData.filter(item => item.role === "doctor").map(item => item.name);
+        const doctorData = await DoctorService.getAll();
+        this.doctor = doctorData.map(item => item.name);
         const doctorDataSelected = await RoomService.getAll();
         this.doctorselected = doctorDataSelected.map(item => item.bacSiChinh !== "" ? item.bacSiChinh : null).filter(Boolean);
         this.doctors = this.doctor.filter(doctor => !this.doctorselected.includes(doctor));

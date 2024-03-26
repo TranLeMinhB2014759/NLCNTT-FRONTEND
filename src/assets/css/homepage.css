@@ -6,10 +6,6 @@
     margin-bottom: 25px;
 }
 
-.col-sm-6 {
-    margin-top: 16px;
-}
-
 .img-banner {
     background-image: url(@/assets/images/img-introduce.jpg);
     background-position: center center;
@@ -225,6 +221,12 @@ figure{
     transform: translateX(22px);
 }
 
+@media only screen and (max-width: 575px) {
+    .card img {
+        object-fit: cover;
+        border-radius: 2px;
+    }
+}
 /* ---------------------- Features ---------------------- */
 .main-features-wrapper {
     margin-bottom: 2.5rem;
@@ -286,12 +288,4 @@ figure{
 
 .main-features-item:nth-child(4) {
     background: #37c3a8;
-}
-
-@media only screen and (max-width: 575px) {
-    .card img {
-        height: 135px;
-        object-fit: cover;
-        border-radius: 2px;
-    }
 }

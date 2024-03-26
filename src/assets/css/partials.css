@@ -1,3 +1,8 @@
+.hotline {
+    font-weight: bold;
+    font-size: medium;
+}
+
 /* ----------------------- BUTTON BACK --------------------------- */
 .back {
     display: inline-block;
@@ -118,17 +123,12 @@
     margin-left: 10px;
 }
 
-.navi {
+.nav {
     background-color: #2f5bfd;
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-radius: 1px;
 }
 
 .nav-item {
     cursor: pointer;
-    margin: 0 10px;
     position: relative;
 }
 
@@ -147,32 +147,6 @@
 
 .nav-item:hover::after {
     transform: scaleX(1);
-}
-
-.login {
-    text-decoration: none;
-    color: black;
-}
-
-.register {
-    text-decoration: none;
-    color: black;
-}
-
-/* .login:hover {
-    text-decoration: none;
-    color: rgb(4, 215, 0);
-
-}
-
-.register:hover {
-    text-decoration: none;
-    color: rgb(4, 215, 0);
-
-} */
-
-.dropdown-menu {
-    margin-left: -100px;
 }
 
 .slogan{

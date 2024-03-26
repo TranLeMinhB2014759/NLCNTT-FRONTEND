@@ -5,6 +5,8 @@
 <script>
 import FormLogin from "@/components/AuthAdmin/LoginForm.vue";
 import StaffService from "@/services/staff.service.js";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import Swal from 'sweetalert2'
 
 export default {
@@ -30,7 +32,6 @@ export default {
                 localStorage.setItem('staff', JSON.stringify(staffDataToSave));
 
                 if (response && response.message === 'Đăng nhập thành công') {
-                    // Check the staff's role
                     if (response.staff.role === 'admin') {
                         this.message = "Welcome Back, " + response.staff.name;
                         Swal.fire({

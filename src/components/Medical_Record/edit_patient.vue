@@ -74,7 +74,7 @@ export default {
                         if (error.response && error.response.status === 400 && error.response.data.message === "phoneNumber already exists") {
                             toast.error("Số điện thoại đã tồn tại");
                         } else {
-                            toast.error("Đã có lỗi xảy ra khi thêm");
+                            toast.error("Đã có lỗi xảy ra");
                         }
                     }
                 } else if (result.isDenied) {

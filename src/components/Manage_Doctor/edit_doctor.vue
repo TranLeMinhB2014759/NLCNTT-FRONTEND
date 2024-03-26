@@ -35,7 +35,7 @@ export default {
         },
         async editDoctor(data) {
             Swal.fire({
-                title: "Bạn muốn cập nhật tài khoản này?",
+                title: "Bạn muốn cập nhật bác sĩ này?",
                 showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonText: "Save",
@@ -54,7 +54,7 @@ export default {
                     }
                     catch (error) {
                         console.error(error);
-                        toast.error("Đã có lỗi xảy ra khi thêm");
+                        toast.error("Đã có lỗi xảy ra");
                     }
                 } else if (result.isDenied) {
                     Swal.fire({

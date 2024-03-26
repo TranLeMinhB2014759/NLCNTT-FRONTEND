@@ -37,7 +37,7 @@
         </div>
         <h4 class="text-center">THÔNG BÁO DANH MỤC GIÁ KHÁM BỆNH</h4>
         <div class="table-responsive">
-            <table class="table table-hover table-bordered text-center">
+            <table class="table table-bordered text-center">
                 <thead>
                     <tr class="table-success">
                         <td>STT</td>
@@ -109,6 +109,7 @@ export default {
 <style scoped>
 .container{
     margin-bottom: 50px;
+    min-height: 100vh;
 }
 
 h4 {

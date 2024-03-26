@@ -103,7 +103,7 @@ export default {
         <nav id="sidebar" :class="{ 'collapsed': isSidebarCollapsed }" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <router-link :to="{ name: 'welcome' }" class="sidebar-brand">
-                    <span class="align-middle">BỆNH VIỆN DA LIỄU</span>
+                    <span class="align-middle">PHÒNG KHÁM DA LIỄU</span>
                 </router-link>
 
                 <ul class="sidebar-nav">
@@ -193,6 +193,7 @@ export default {
                                 <img :src="staff.imgURL" class="avatar img-fluid rounded me-1" alt="Charles Hall" />
                                 <span class="text-dark">{{ staff.name ? staff.name : 'Guest' }}</span>
                             </a>
+                            
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"></i>
                                     Profile</a>

@@ -32,7 +32,7 @@ export default {
         if (result.isConfirmed) {
           try {
             await ServiceService.create(data);
-            this.message = "Thêm bệnh mới thành công";
+            this.message = "Thêm dịch vụ mới thành công";
             Swal.fire({
               icon: "success",
               title: this.message,
@@ -43,7 +43,7 @@ export default {
           } catch (error) {
             console.log(error);
             if (error.response && error.response.status === 400 && error.response.data.message === "Code already exists") {
-              toast.error("Mã bệnh đã tồn tại");
+              toast.error("Mã dịch vụ đã tồn tại");
             } else {
               toast.error("Đã có lỗi xảy ra khi thêm");
             }

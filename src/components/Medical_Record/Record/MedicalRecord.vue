@@ -73,10 +73,11 @@
                     <thead class="table-success">
                         <tr>
                             <th>Mã hồ sơ</th>
-                            <th>Bác sĩ chuẩn đoán</th>
+                            <th>Bác sĩ chẩn đoán</th>
                             <th>Ngày khám</th>
                             <th>Triệu chứng</th>
                             <th>Chẩn đoán</th>
+                            <th>Dịch vụ</th>
                             <th>Toa thuốc</th>
                             <th>Xóa</th>
                         </tr>
@@ -100,10 +101,51 @@
                             </td>
                             <td>
                                 <button type="button" class="ml-2 btn btn-info" data-bs-toggle="modal"
-                                    :data-bs-target="'#modalMediaRecord_' + index">
+                                    :data-bs-target="'#modalService_' + index">
                                     <i class="fa-solid fa-eye"></i>
                                 </button>
-                                <div class="modal fade" :id="'modalMediaRecord_' + index">
+                                <div class="modal fade" :id="'modalService_' + index">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Chi tiết</h4>
+                                                <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" style="padding-bottom: 10px;">DỊCH VỤ ĐÃ SỬ DỤNG</h4>
+                                                <table class="table table-bordered">
+                                                    <thead class="table-success">
+                                                        <tr>
+                                                            <th>STT</th>
+                                                            <th>Mã dịch vụ</th>
+                                                            <th>Dịch vụ</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(medicalrecord, idx) in medicalrecord.service" :key="idx">
+                                                            <td rowspan="2">{{ idx + 1 }}</td>
+                                                            <td>{{ medicalrecord.code }}</td>
+                                                            <td>{{ medicalrecord.tenDichVu }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="ml-2 btn btn-info" data-bs-toggle="modal"
+                                    :data-bs-target="'#modalPrescription_' + index">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                                <div class="modal fade" :id="'modalPrescription_' + index">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -188,7 +230,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </td>
+                            </td>                 
                             <td v-if="medicalrecord.status === 'unsold'">
                                 <span v-if="getCurrentDoctor() === medicalrecord.bacsi">
                                     <button type="button" class="ml-2 btn btn-danger"

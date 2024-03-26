@@ -34,7 +34,7 @@ export default {
             await DoctorService.create(data);
             Swal.fire({
               icon: "success",
-              title: "Thêm tài bác sĩ thành công",
+              title: "Thêm bác sĩ thành công",
               showConfirmButton: true,
               timer: 2000
             });
@@ -52,6 +52,4 @@ export default {
     },
   },
 };
-
-
 </script>

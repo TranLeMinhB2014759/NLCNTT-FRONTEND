@@ -41,7 +41,7 @@
 
     <!-- Copyright -->
     <div class="text-center copyright p-4">
-      <p class="copyright-text">Copyright &copy; 2023 All Rights Reserved by
+      <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by
         <a href="#">Master Minh</a>.
       </p>
     </div>

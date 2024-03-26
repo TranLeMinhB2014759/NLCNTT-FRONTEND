@@ -66,7 +66,7 @@ export default {
             if (error.response && error.response.status === 400 && error.response.data.message === "Code already exists") {
               toast.error("Mã bệnh đã tồn tại");
             } else {
-              toast.error("Đã có lỗi xảy ra khi thêm");
+              toast.error("Đã có lỗi xảy ra");
             }
           }
         } else if (result.isDenied) {
