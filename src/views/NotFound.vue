@@ -12,7 +12,7 @@
                     </h3>
                     <p>Oops! It seems that this page dose not exist</p>
                     <router-link :to="{ name: 'trangchu' }" class="link_404">
-                        Trở về trang Chủ
+                        Trở về Trang Chủ
                     </router-link>
                 </div>
             </div>

@@ -1,13 +1,13 @@
 <template>
     <nav class="navbar navbar-expand-sm bg-banner">
         <div class="row container-fluid">
-            <div class="col-3 navbar-brand">
+            <div class="col-12 col-lg-3 navbar-brand">
                 <router-link :to="{ name: 'trangchu' }" class="nav-link">
                     <img src="@/assets/images/logo.png" alt="" class="logo-img mr-2">
                     <span class="logo-text">PHÒNG KHÁM DA LIỄU</span>
                 </router-link>
             </div>
-            <div class="col-6 slogan">
+            <div class="col-12 col-lg-6 slogan">
                 <div class="stage">
                     <div class="wrapper">
                         <div class="slash"></div>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-12 col-lg-3">
                 <div class="hotline">HOTLINE: (+84) 939111333</div>
             </div>
         </div>

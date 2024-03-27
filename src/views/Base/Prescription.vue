@@ -24,26 +24,45 @@
             Trang chủ
         </div>
         <div class="row main-content">
-            <div class="col-12 col-md-3 guide">
+            <div class="col-12 col-lg-4 guide">
+                <h3 class="text-center">Hướng dẫn tìm mã đơn thuốc</h3>
                 <img src="/src/assets/images/huong-dan-lay-ma-ho-so.png" alt="Hướng dẫn lấy mã hồ sơ">
             </div>
-            <div class="col-12 col-md-9">
+            <div class="col-12 col-lg-8">
                 <h1 class="text-center">Tra cứu đơn thuốc</h1>
                 <div class="form__search">
                     <div class="form__top">
                         <form @submit.prevent="onSubmit">
-                            <div class="row">
-                                <div class="col">
-                                    <input type="text" class="form-control" v-model.trim="MSHSInput"
-                                        placeholder="Nhập vào mã số hồ sơ" name="MSHS">
-                                </div>
-                                <div class="col">
-                                    <input type="text" class="form-control" v-model.trim="phoneNumberInput"
-                                        placeholder="Nhập vào số điện thoại" name="phoneNumber">
+                            <div class="mt-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model.trim="MSHSInput"
+                                            @input="formatNumber" placeholder="Nhập vào mã số đơn thuốc" name="MSHS">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" v-model.trim="phoneNumberInput"
+                                            placeholder="Nhập vào số điện thoại" name="phoneNumber">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="btn-submit text-center">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="mt-3">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <input type="text" class="form-control" v-model.trim="captchaInput"
+                                            placeholder="Nhập mã bảo vệ" name="captcha">
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="d-flex">
+                                            <img :src="captchaImage" alt="Captcha">
+                                            <button type="button" class="btn btn-light" @click="refreshCaptcha"><i
+                                                    class="fa-solid fa-rotate"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-submit d-flex justify-content-center">
+                                    <button type="submit" class="btn-search"><i
+                                            class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -52,6 +71,25 @@
                     <span class="loader"></span>
                 </div>
                 <div class="prescription" v-else-if="medicalrecord.length > 0">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="text-start">
+                                <strong>PHÒNG KHÁM DA LIỄU</strong>
+                                <p>Thới Bình 1, Thuận An, Thốt Nốt, Cần Thơ.</p>
+                                <p>SĐT: 0939 111 333</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-end">
+                                <strong>MSBN</strong>
+                                <p>{{ medicalrecord[0].MSBN }}</p>
+                            </div>
+                            <div class="text-end">
+                                <strong>MSHS</strong>
+                                <p>{{ medicalrecord[0].MSHS }}</p>
+                            </div>
+                        </div>
+                    </div>
                     <h4 class="text-center">ĐƠN THUỐC</h4>
                     <div class="row">
                         <div class="col-3">
@@ -96,18 +134,18 @@
                         <div class="col-3">
                             <p>Triệu chứng:</p>
                         </div>
-                        <div class="col-9">{{ medicalrecord[0].symptom }}</div>
+                        <p class="col-9">{{ medicalrecord[0].symptom }}</p>
                     </div>
 
                     <div class="row">
                         <div class="col-3">
                             <p>Chẩn đoán:</p>
                         </div>
-                        <div class="col-9">
+                        <p class="col-9">
                             <span v-for="(record, index) in medicalrecord[0].diagnosis" :key="index">
                                 ({{ record.code }}) {{ record.tenBenh }}.
                             </span>
-                        </div>
+                        </p>
                     </div>
 
                     <p>Thuốc điều trị:</p>
@@ -167,22 +205,39 @@ export default {
             MSHSInput: '',
             phoneNumberInput: '',
             isLoading: false,
+            captchaInput: '',
+            captchaCode: '',
+            captchaImage: ''
         }
     },
     methods: {
+        formatNumber() {
+            // Nếu vị trí đầu là khác 0 thì bỏ qua
+            if (this.MSHSInput.length === 5 && this.MSHSInput[0] === '0') {
+                //Nếu vị trí thứ 5 nhập vào không phải là dấu "." thì thêm dấu chấm vào vị trí thứ 5
+                if (!this.MSHSInput.includes('.') && this.MSHSInput[4] !== '.') {
+                    this.MSHSInput = this.MSHSInput.slice(0, 4) + '.' + this.MSHSInput.slice(4);
+                }
+            }
+        },
+
         async retrieveRecordByMSHS() {
             try {
                 this.isLoading = true;
                 const data = await MedicalrecordService.getRecordByMSHS(this.MSHSInput);
                 if (data.length <= 0) {
                     this.medicalrecord = [];
-                    toast.warn("Không tìm thấy mã đơn thuốc");
+                    toast.warn("Không tìm thấy mã đơn thuốc. Lưu ý: bao gồm cả dấu chấm");
                 } else if (data.length > 0 && data[0].phoneNumber != this.phoneNumberInput) {
                     this.medicalrecord = [];
                     toast.warn("Số điện thoại không khớp");
                 } else {
                     this.medicalrecord = data;
                     toast.success("Đã tìm thấy đơn thuốc");
+                    window.scrollTo({
+                        top: window.scrollY + 550,
+                        behavior: 'smooth',
+                    });
                 }
             } catch (error) {
                 console.log(error);
@@ -192,17 +247,40 @@ export default {
             }
         },
         onSubmit() {
-            if (this.MSHSInput && this.phoneNumberInput) {
-                this.retrieveRecordByMSHS();
+            if (this.MSHSInput && this.phoneNumberInput && this.captchaInput) {
+                if (this.captchaInput.toLowerCase() === this.captchaCode.toLowerCase()) {
+                    this.retrieveRecordByMSHS();
+                    this.refreshCaptcha();
+                } else {
+                    this.refreshCaptcha();
+                    toast.warn("Mã bảo vệ không đúng.");
+                }
             } else {
-                toast.warn("Vui lòng nhập số điện thoại và mã số hồ sơ.");
+                this.refreshCaptcha();
+                toast.warn("Vui lòng nhập đầy đủ thông tin");
             }
         },
         calculateAge(year) {
             const currentYear = new Date().getFullYear();
             return currentYear - year;
         },
+        refreshCaptcha() {
+            const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += chars[Math.floor(Math.random() * chars.length)];
+            }
+            this.captchaCode = captcha;
+            this.captchaImage = `https://via.placeholder.com/150x40?text=${captcha}`;
+        },
     },
+    created() {
+        this.refreshCaptcha();
+
+        setInterval(() => {
+            this.refreshCaptcha();
+        }, 60000);
+    }
 }
 </script>
 
@@ -222,16 +300,26 @@ export default {
     padding: 20px 0 50px 0;
 }
 
+p {
+    font-size: 15px;
+    margin-bottom: 5px !important;
+}
+
+table {
+    font-size: 15px;
+}
+
 h1 {
+    margin-top: 30px;
     font-family: ui-monospace;
+}
+
+h4 {
+    padding: 10px 0;
 }
 
 a {
     text-decoration: none;
-}
-
-.guide {
-    border-right: 1px solid;
 }
 
 .guide img {
@@ -242,7 +330,7 @@ a {
 
 .prescription {
     margin: 20px 0;
-    padding: 50px 80px;
+    padding: 50px 100px;
     border: 1px solid;
     border-radius: 8px;
     min-height: 100vh;
@@ -260,8 +348,29 @@ a {
     max-height: 100px;
 }
 
+@media screen and (max-width: 575px) {
+    .prescription {
+        margin: 20px 0;
+        padding: 50px 60px;
+        border: 1px solid;
+        border-radius: 8px;
+        min-height: 100vh;
+    }
+
+    strong,
+    p,
+    table {
+        font-size: x-small;
+    }
+
+    h4 {
+        font-size: medium;
+    }
+}
+
 /* ----------------- LOADING -------------------- */
 .loader {
+    margin: 30px 0;
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -309,5 +418,30 @@ a {
     100% {
         transform: rotate(-360deg);
     }
+}
+
+/* ----------------------- BTN ----------------------------- */
+.btn-search {
+    outline: none;
+    cursor: pointer;
+    width: 150px;
+    height: 50px;
+    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+    border-radius: 30px;
+    border: 1px solid #8F9092;
+    transition: all 0.2s ease;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #606060;
+    text-shadow: 0 1px #fff;
+}
+
+.btn-search:hover {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+}
+
+.btn-search:active {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
 }
 </style>

@@ -188,7 +188,7 @@ a {
         opacity: 1;
     }
 
-    15% {
+    65% {
         transform: translateY(1rem);
         opacity: 0;
     }
