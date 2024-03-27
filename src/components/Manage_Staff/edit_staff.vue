@@ -70,12 +70,7 @@ export default {
                         this.$router.push({ name: 'admin-staff' });
                     }
                     catch (error) {
-                        console.error(error);
-                        if (error.response && error.response.status === 400 && error.response.data.message === "Email already exists") {
-                            toast.error("Email đã tồn tại");
-                        } else {
-                            toast.error("Đã có lỗi xảy ra");
-                        }
+                        this.handleError(error);
                     }
                 } else if (result.isDenied) {
                     Swal.fire({
@@ -87,6 +82,15 @@ export default {
                     this.$router.push({ name: 'admin-staff' });
                 }
             });
+        },
+        handleError(error) {
+            console.log(error);
+            console.error(error);
+            if (error.response && error.response.status === 400 && error.response.data.message === "Email already exists") {
+                toast.error("Email đã tồn tại");
+            } else {
+                toast.error("Đã có lỗi xảy ra");
+            }
         },
     },
     created() {

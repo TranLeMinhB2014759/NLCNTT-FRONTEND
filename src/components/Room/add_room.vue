@@ -41,15 +41,18 @@ export default {
             });
             this.$router.push({ name: 'admin-room' });
           } catch (error) {
-            console.log(error);
-            if (error.response && error.response.status === 400 && error.response.data.message === "Ma phong already exists") {
-              toast.error("Mã phòng đã được tạo");
-            } else {
-              toast.error("Đã có lỗi xảy ra khi thêm");
-            }
+            this.handleError(error);
           }
         }
       });
+    },
+    handleError(error) {
+      console.log(error);
+      if (error.response && error.response.status === 400 && error.response.data.message === "Ma phong already exists") {
+        toast.error("Mã phòng đã được tạo");
+      } else {
+        toast.error("Đã có lỗi xảy ra khi thêm");
+      }
     },
   },
 };

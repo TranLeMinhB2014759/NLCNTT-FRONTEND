@@ -41,11 +41,11 @@ export default {
             this.$router.push({ name: 'admin-doctor' });
           } catch (error) {
             console.log(error);
-            if (error.response && error.response.status === 400 && error.response.data.message === "Name already exists") {
-              toast.error("Bác sĩ đã được tạo");
-            } else {
-              toast.error("Đã có lỗi xảy ra khi thêm");
-            }
+            // if (error.response && error.response.status === 400 && error.response.data.message === "Name already exists") {
+            //   toast.error("Bác sĩ đã được tạo");
+            // } else {
+            //   toast.error("Đã có lỗi xảy ra khi thêm");
+            // }
           }
         }
       });

@@ -40,18 +40,19 @@ export default {
             });
             this.$router.push({ name: 'admin-staff' });
           } catch (error) {
-            console.log(error);
-            if (error.response && error.response.status === 400 && error.response.data.message === "Email already exists") {
-              toast.error("Email đã tồn tại");
-            } else {
-              toast.error("Đã có lỗi xảy ra khi thêm tài khoản");
-            }
+            this.handleError(error);
           }
         }
       });
     },
+    handleError(error) {
+      console.log(error);
+      if (error.response && error.response.status === 400 && error.response.data.message === "Email already exists") {
+        toast.error("Email đã tồn tại");
+      } else {
+        toast.error("Đã có lỗi xảy ra khi thêm tài khoản");
+      }
+    },
   },
 };
-
-
 </script>

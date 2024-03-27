@@ -62,12 +62,7 @@ export default {
             this.$router.push({ name: 'admin-disease' });
           }
           catch (error) {
-            console.log(error);
-            if (error.response && error.response.status === 400 && error.response.data.message === "Code already exists") {
-              toast.error("Mã bệnh đã tồn tại");
-            } else {
-              toast.error("Đã có lỗi xảy ra");
-            }
+            this.handleError(error);
           }
         } else if (result.isDenied) {
           Swal.fire({
@@ -80,7 +75,14 @@ export default {
         }
       });
     },
-
+    handleError(error) {
+      console.log(error);
+      if (error.response && error.response.status === 400 && error.response.data.message === "Code already exists") {
+        toast.error("Mã bệnh đã tồn tại");
+      } else {
+        toast.error("Đã có lỗi xảy ra");
+      }
+    },
   },
   created() {
     this.getDisease(this.id);

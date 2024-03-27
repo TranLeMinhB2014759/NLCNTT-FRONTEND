@@ -70,12 +70,7 @@ export default {
                         });
                         this.$router.push({ name: 'admin-patient' });
                     } catch (error) {
-                        console.error(error);
-                        if (error.response && error.response.status === 400 && error.response.data.message === "phoneNumber already exists") {
-                            toast.error("Số điện thoại đã tồn tại");
-                        } else {
-                            toast.error("Đã có lỗi xảy ra");
-                        }
+                        this.handleError(error);
                     }
                 } else if (result.isDenied) {
                     Swal.fire({
@@ -87,6 +82,14 @@ export default {
                     this.$router.push({ name: 'admin-patient' });
                 }
             });
+        },
+        handleError(error) {
+            console.log(error);
+            if (error.response && error.response.status === 400 && error.response.data.message === "phoneNumber already exists") {
+                toast.error("Số điện thoại đã tồn tại");
+            } else {
+                toast.error("Đã có lỗi xảy ra thêm bệnh nhân");
+            }
         },
     },
     created() {

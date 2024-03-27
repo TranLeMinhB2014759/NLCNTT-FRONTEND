@@ -41,15 +41,18 @@ export default {
             });
             this.$router.push({ name: 'admin-disease' });
           } catch (error) {
-            console.log(error);
-            if (error.response && error.response.status === 400 && error.response.data.message === "Code already exists") {
-              toast.error("Mã bệnh đã tồn tại");
-            } else {
-              toast.error("Đã có lỗi xảy ra khi thêm");
-            }
+            this.handleError(error);
           }
         }
       });
+    },
+    handleError(error) {
+      console.log(error);
+      if (error.response && error.response.status === 400 && error.response.data.message === "Code already exists") {
+        toast.error("Mã bệnh đã tồn tại");
+      } else {
+        toast.error("Đã có lỗi xảy ra");
+      }
     },
   },
 };

@@ -66,12 +66,7 @@ export default {
                         this.$router.push({ name: 'admin-room' });
                     }
                     catch (error) {
-                        console.error(error);
-                        if (error.response && error.response.status === 400 && error.response.data.message === "Ma Phong already exists") {
-                            toast.error("Mã phòng đã tồn tại");
-                        } else {
-                            toast.error("Đã có lỗi xảy ra");
-                        }
+                        this.handleError(error);
                     }
                 } else if (result.isDenied) {
                     Swal.fire({
@@ -83,6 +78,14 @@ export default {
                     this.$router.push({ name: 'admin-room' });
                 }
             });
+        },
+        handleError(error) {
+            console.log(error);
+            if (error.response && error.response.status === 400 && error.response.data.message === "Ma phong already exists") {
+                toast.error("Mã phòng đã được tạo");
+            } else {
+                toast.error("Đã có lỗi xảy ra khi thêm");
+            }
         },
     },
     created() {

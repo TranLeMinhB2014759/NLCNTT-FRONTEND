@@ -32,45 +32,67 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            let allMedicinesSufficient = true;
-            for (const medicine of data.prescription) {
-              const getMedicineByID = await MedicineService.get(medicine._id);
-              const SoLuongHienTai = getMedicineByID.SoLuong;
-              const SoLuongConLai = SoLuongHienTai - medicine.SoLuongBan;
+            const status = await this.checkSaleStatusOfPrescription(data);
+            if (!status) return;
 
-              if (SoLuongConLai < 0) {
-                allMedicinesSufficient = false;
-                toast.error("Số thuốc còn lại không đủ");
-                break;
-              }
-            }
-            if (allMedicinesSufficient) {
-              for (const medicine of data.prescription) {
-                const getMedicineByID = await MedicineService.get(medicine._id);
-                const SoLuongHienTai = getMedicineByID.SoLuong;
-                const SoLuongConLai = SoLuongHienTai - medicine.SoLuongBan;
-                await MedicineService.update(medicine._id, { SoLuong: SoLuongConLai });
-              }
-              if (data.MSHS != "Bán lẻ") {
-                const updatedStatus = 'sold';
-                await MedicalrecordService.update(data._id, { status: updatedStatus });
-              }
-              await BillService.create(data);
-              this.message = "Lập bảng kê khai thành công";
-              Swal.fire({
-                icon: "success",
-                title: this.message,
-                showConfirmButton: true,
-                timer: 2000
-              });
-              this.$router.push({ name: 'admin-bill' });
+            const sufficient = await this.checkMedicineAvailability(data);
+            if (!sufficient) return;
 
-            }
+            await this.updateMedicineQuantities(data);
+            await this.updateMedicalRecordStatus(data);
+            await this.createBillRecord(data);
+
+            this.message = "Lập bảng kê khai thành công";
+            Swal.fire({
+              icon: "success",
+              title: this.message,
+              showConfirmButton: true,
+              timer: 2000
+            });
+            this.$router.push({ name: 'admin-bill' });
           } catch (error) {
-            console.log(error);
+            console.error("Error creating bill:", error);
           }
         }
       });
+    },
+    async checkSaleStatusOfPrescription(data) {
+      if (data.MSHS !== "Bán lẻ") {
+        const record = await MedicalrecordService.getRecordByMSHS(data.MSHS);
+        if (record && record[0].status === "sold") {
+          toast.info("Đơn thuốc đã được bán");
+          return false;
+        }
+        return true;
+      }
+      return true;
+    },
+
+    async checkMedicineAvailability(data) {
+      for (const medicine of data.prescription) {
+        const medicineData = await MedicineService.get(medicine._id);
+        const remainingQuantity = medicineData.SoLuong - medicine.SoLuongBan;
+        if (remainingQuantity < 0) {
+          toast.error("Số thuốc còn lại không đủ");
+          return false;
+        }
+      }
+      return true;
+    },
+    async updateMedicineQuantities(data) {
+      for (const medicine of data.prescription) {
+        const medicineData = await MedicineService.get(medicine._id);
+        const remainingQuantity = medicineData.SoLuong - medicine.SoLuongBan;
+        await MedicineService.update(medicine._id, { SoLuong: remainingQuantity });
+      }
+    },
+    async updateMedicalRecordStatus(data) {
+      if (data.MSHS !== "Bán lẻ") {
+        await MedicalrecordService.update(data._id, { status: 'sold' });
+      }
+    },
+    async createBillRecord(data) {
+      await BillService.create(data);
     },
   },
 };
