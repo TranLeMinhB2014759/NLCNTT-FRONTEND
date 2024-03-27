@@ -53,7 +53,10 @@
                                     <!-- <a class="hotnews__item--decs" href="#" tabindex="0">...</a> -->
                                 </span>
                             </div>
-                        </div> <a href="#" class="doctors__item--more" tabindex="0"><span>Đặt lịch khám</span></a>
+                        </div>
+                        <router-link :to="{ name: 'dat-lich-kham-benh' }" class="doctors__item--more" tabindex="0">
+                            <span>Đặt lịch khám</span>
+                        </router-link>
                     </div>
                 </div>
             </div>

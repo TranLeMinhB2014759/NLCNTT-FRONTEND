@@ -31,10 +31,10 @@
   <div class="container mt-3">
     <div class="row text-center main-features-wrapper">
       <div class="col-6 col-md-3 main-features-item">
-        <a href="#">
+        <router-link :to="{ name: 'tra-cuu-don-thuoc' }">
           <img src="/src/assets/images/icon1.webp" alt="" class="main-features-item__img">
-          <h3 class="main-features-item__text">Khám chữa bệnh</h3>
-        </a>
+          <h3 class="main-features-item__text">Tra cứu đơn thuốc</h3>
+        </router-link>
       </div>
       <div class="col-6 col-md-3 main-features-item">
         <router-link :to="{ name: 'bao-gia-dich-vu' }">
@@ -49,10 +49,10 @@
         </router-link>
       </div>
       <div class="col-6 col-md-3 main-features-item">
-        <a href="#">
+        <router-link :to="{ name: 'dat-lich-kham-benh' }">
           <img src="/src/assets/images/icon4.webp" alt="" class="main-features-item__img">
           <h3 class="main-features-item__text">Đặt lịch online</h3>
-        </a>
+        </router-link>
       </div>
     </div>
     <div class="row intro">
@@ -71,18 +71,22 @@
             <div class="carousel-item active">
               <ul>
                 <h3>DERMATOLOGY CLINIC</h3>
-                <li>Với lịch sử gần 5 năm, <b>Dermatology Clinic</b> tự hào là bệnh viện da liễu tư nhân lớn nhất khu vực
+                <li>Với lịch sử gần 5 năm, <b>Dermatology Clinic</b> tự hào là bệnh viện da liễu tư nhân lớn nhất khu
+                  vực
                   với các dịch vụ khám chữa bệnh dưới sự hỗ
-                  trợ trang thiết bị, máy móc công nghệ hiện đại và nhà thuốc đạt tiêu chuẩn có thể đáp ứng tối đa mọi nhu
+                  trợ trang thiết bị, máy móc công nghệ hiện đại và nhà thuốc đạt tiêu chuẩn có thể đáp ứng tối đa mọi
+                  nhu
                   cầu đa dạng của khách hàng tại Cần Thơ.
                 </li>
                 <br>
                 <li>
-                  Mục tiêu của <b>Phòng khám da liễu Dermatology Clinic</b> là trở thành một trong những địa chỉ khám chữa
+                  Mục tiêu của <b>Phòng khám da liễu Dermatology Clinic</b> là trở thành một trong những địa chỉ khám
+                  chữa
                   bệnh tin cậy cho người dân tại Cần Thơ và
                   các vùng lân cận. Chúng tôi chú trọng vào việc đầu tư trang bị y tế hiện đại, nhà thuốc đạt chuẩn kết
                   hợp với kiến thức của đội ngũ bác sỹ giỏi nhằm
-                  đưa đến kết quả khám bệnh chính xác nhất và điều trị bệnh tốt nhất cho người dân. Đồng thời, tạo một môi
+                  đưa đến kết quả khám bệnh chính xác nhất và điều trị bệnh tốt nhất cho người dân. Đồng thời, tạo một
+                  môi
                   trường y tế an toàn, thân thiện, chất lượng
                   cao hơn cho tất cả mọi người.
                 </li>
@@ -103,7 +107,8 @@
               <ul>
                 <h3>TẠI SAO NÊN CHỌN CHÚNG TÔI?</h3>
                 <li><b>Đội ngũ bác sĩ tay nghề cao</b></li>
-                <li>Với các Tiến sĩ, Thạc sỹ, Bác sĩ chuyên khoa Da liễu. Đầy đủ chứng chỉ hành nghề và được đào tạo liên
+                <li>Với các Tiến sĩ, Thạc sỹ, Bác sĩ chuyên khoa Da liễu. Đầy đủ chứng chỉ hành nghề và được đào tạo
+                  liên
                   tục hàng năm cập nhật các kiến thức
                   Da liễu - Thẫm mỹ mới nhất.
                 </li>
@@ -118,7 +123,8 @@
                 <br>
                 <li><b>Ứng dụng công nghệ mới nhất</b></li>
                 <li>
-                  Chúng tôi tiên phong đi đầu trong việc ứng dụng các công nghệ mới nhất trong chăm sóc da, laser thẫm mỹ.
+                  Chúng tôi tiên phong đi đầu trong việc ứng dụng các công nghệ mới nhất trong chăm sóc da, laser thẫm
+                  mỹ.
                 </li>
                 <li>
                   Ứng dụng các kĩ thuật mới trong xét nghiệm để góp phần chẩn đoán chính xác bệnh và theo dõi quá trình
@@ -148,7 +154,8 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class= "book_diseases img-fluid" loading="lazy" src="https://i.ex-cdn.com/dalieu.vn/files/images/2022/06/15/%E1%BA%A2nh-b%C3%A1o.jpg">
+              <img class="book_diseases img-fluid" loading="lazy"
+                src="https://i.ex-cdn.com/dalieu.vn/files/images/2022/06/15/%E1%BA%A2nh-b%C3%A1o.jpg">
             </figure>
             <figcaption>
               Viêm Da
@@ -158,7 +165,8 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid" loading="lazy" src="https://vinmec-prod.s3.amazonaws.com/images/20190828_075530_670528_benh-me-day.max-800x800.jpg">
+              <img class="book_diseases img-fluid" loading="lazy"
+                src="https://vinmec-prod.s3.amazonaws.com/images/20190828_075530_670528_benh-me-day.max-800x800.jpg">
             </figure>
             <figcaption>
               Mề Đay
@@ -168,7 +176,8 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid" loading="lazy" src="https://cdn.tgdd.vn/2023/06/content/phat-ban1-800x450.jpg">
+              <img class="book_diseases img-fluid" loading="lazy"
+                src="https://cdn.tgdd.vn/2023/06/content/phat-ban1-800x450.jpg">
             </figure>
             <figcaption>
               Phát Ban
@@ -178,7 +187,8 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid" src="https://medlatec.vn/ImagePath/images/20230609/20230609_mun-trung-ca-la-gi-1.jpg">
+              <img class="book_diseases img-fluid"
+                src="https://medlatec.vn/ImagePath/images/20230609/20230609_mun-trung-ca-la-gi-1.jpg">
             </figure>
             <figcaption>
               Mụn Trứng Cá
@@ -190,4 +200,6 @@
   </div>
 </template>
 
-<style scoped>@import "@/assets/css/homepage.css";</style>
+<style scoped>
+@import "@/assets/css/homepage.css";
+</style>

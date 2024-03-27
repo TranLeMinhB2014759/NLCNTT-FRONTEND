@@ -13,6 +13,11 @@ const routes = [
         component: () => import("@/views/Base/Homepage.vue"),
       },
       {
+        path: "tra-cuu-don-thuoc",
+        name: "tra-cuu-don-thuoc",
+        component: () => import("@/views/Base/Prescription.vue"),
+      },
+      {
         path: "bao-gia-dich-vu",
         name: "bao-gia-dich-vu",
         component: () => import("@/views/Base/Service.vue"),
@@ -21,6 +26,11 @@ const routes = [
         path: "doi-ngu-bac-si",
         name: "doi-ngu-bac-si",
         component: () => import("@/views/Base/Doctor.vue"),
+      },
+      {
+        path: "dat-lich-kham-benh",
+        name: "dat-lich-kham-benh",
+        component: () => import("@/views/Base/Appointment.vue"),
       },
       {
         path: "/:pathMatch(.*)*",

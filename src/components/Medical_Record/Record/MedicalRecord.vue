@@ -73,7 +73,7 @@
                     <thead class="table-success">
                         <tr>
                             <th>Mã hồ sơ</th>
-                            <th>Bác sĩ chẩn đoán</th>
+                            <th>Bác sĩ điều trị</th>
                             <th>Ngày khám</th>
                             <th>Triệu chứng</th>
                             <th>Chẩn đoán</th>
@@ -91,7 +91,7 @@
                                     <i class="fas fa-copy"></i>
                                 </button>
                             </td>
-                            <td>{{ medicalrecord.bacsi }}</td>
+                            <td>BS. {{ medicalrecord.bacsi }}</td>
                             <td>{{ medicalrecord.ngayKham }}</td>
                             <td>{{ medicalrecord.symptom }}</td>
                             <td>
@@ -212,7 +212,7 @@
                                                     <div class="justify-content-end">
                                                         <p>Cần Thơ, {{ medicalrecord.ngayKham }}</p>
                                                         <p>Bác sĩ điều trị</p>
-                                                        <strong>{{ medicalrecord.bacsi }}</strong>
+                                                        <strong>BS. {{ medicalrecord.bacsi }}</strong>
                                                     </div>
                                                 </div>
                                             </div>

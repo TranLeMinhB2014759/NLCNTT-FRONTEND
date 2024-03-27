@@ -113,7 +113,7 @@
             <div class="text-center">
                 <p>Cần Thơ, {{ medicalrecord.ngayKham }}</p>
                 <p>Bác sĩ điều trị</p>
-                <strong>{{ medicalrecord.bacsi }}</strong>
+                <strong>BS. {{ medicalrecord.bacsi }}</strong>
             </div>
         </div>
         <div class="footer d-flex justify-content-center">
