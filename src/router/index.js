@@ -236,6 +236,12 @@ const routes = [
         name: "add-bill",
         component: () => import("@/components/Manage_Bill/add_bill.vue"),
       },
+      // ----------------------------- Statistic -----------------------------
+      {
+        path: "statistic",
+        name: "admin-statistic",
+        component: () => import("@/components/Statistics/Statistic.vue"),
+      },
     ],
   },
 

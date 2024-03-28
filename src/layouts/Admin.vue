@@ -65,6 +65,9 @@ export default {
                 case 'add-bill':
                     this.activeTab = 9;
                     break;
+                case 'admin-statistic':
+                    this.activeTab = 10;
+                    break
                 default:
                     this.activeTab = 1;
             }
@@ -168,6 +171,12 @@ export default {
                         <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
                             <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
                                 management</span>
+                        </router-link>
+                    </li>
+
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 10 }" @click="setActiveTab(10)">
+                        <router-link :to="{ name: 'admin-statistic' }" class="sidebar-link">
+                            <i class="fa-solid fa-chart-column"></i> <span class="align-middle">Statistic</span>
                         </router-link>
                     </li>
                 </ul>
