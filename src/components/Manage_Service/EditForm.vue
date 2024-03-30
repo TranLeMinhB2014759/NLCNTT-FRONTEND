@@ -177,7 +177,7 @@ img {
 }
 
 .button-submit:hover svg {
-  transform: translateX(1.1em) scale(1.1);
+  transform: translateX(1.65em) scale(1.1);
   fill: #fff;
 }
 

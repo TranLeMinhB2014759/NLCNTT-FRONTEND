@@ -91,7 +91,7 @@
                   </svg>
                 </div>
               </div>
-              <span>Save</span>
+              <span>Update</span>
             </button>
           </div>
         </Form>
