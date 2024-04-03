@@ -148,13 +148,13 @@
   <div class="container">
     <h3><strong>Một số bệnh da liễu thường gặp</strong></h3>
   </div>
-  <div class="container-fulid">
+  <div class="container">
     <div class="diseases">
       <div class="gallery">
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid" loading="lazy"
+              <img class="img_diseases img-fluid" loading="lazy"
                 src="https://i.ex-cdn.com/dalieu.vn/files/images/2022/06/15/%E1%BA%A2nh-b%C3%A1o.jpg">
             </figure>
             <figcaption>
@@ -165,7 +165,7 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid" loading="lazy"
+              <img class="img_diseases img-fluid" loading="lazy"
                 src="https://vinmec-prod.s3.amazonaws.com/images/20190828_075530_670528_benh-me-day.max-800x800.jpg">
             </figure>
             <figcaption>
@@ -176,7 +176,7 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid" loading="lazy"
+              <img class="img_diseases img-fluid" loading="lazy"
                 src="https://cdn.tgdd.vn/2023/06/content/phat-ban1-800x450.jpg">
             </figure>
             <figcaption>
@@ -187,11 +187,33 @@
         <div class="card">
           <a href="#">
             <figure>
-              <img class="book_diseases img-fluid"
+              <img class="img_diseases img-fluid"
                 src="https://medlatec.vn/ImagePath/images/20230609/20230609_mun-trung-ca-la-gi-1.jpg">
             </figure>
             <figcaption>
               Mụn Trứng Cá
+            </figcaption>
+          </a>
+        </div>
+        <div class="card">
+          <a href="#">
+            <figure>
+              <img class="img_diseases img-fluid"
+                src="https://thuocdantoc.vn/wp-content/uploads/2023/06/hong-ban-nut-3.jpg">
+            </figure>
+            <figcaption>
+              Hồng ban nút
+            </figcaption>
+          </a>
+        </div>
+        <div class="card">
+          <a href="#">
+            <figure>
+              <img class="img_diseases img-fluid"
+                src="https://pacificcross.com.vn/wp-content/uploads/2023/03/viem-da-co-dia-1.jpg">
+            </figure>
+            <figcaption>
+              Viêm da cơ địa
             </figcaption>
           </a>
         </div>

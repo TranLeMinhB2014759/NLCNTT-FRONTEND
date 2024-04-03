@@ -251,8 +251,11 @@ export default {
                 if (this.captchaInput.toLowerCase() === this.captchaCode.toLowerCase()) {
                     this.retrieveRecordByMSHS();
                     this.refreshCaptcha();
+                    this.captchaInput = "";
                 } else {
                     this.refreshCaptcha();
+                    this.captchaInput = "";
+                        this.appointmentLocal = "";
                     toast.warn("Mã bảo vệ không đúng.");
                 }
             } else {

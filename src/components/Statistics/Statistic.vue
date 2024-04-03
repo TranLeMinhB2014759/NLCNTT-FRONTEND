@@ -94,7 +94,7 @@
                         </div>
                         <div class="mb-0 text-center">
                             <button class="btn btn-light" @click="goToMedicineList">
-                                <span class="text-center">Xem danh sách chi tiết <i
+                                <span class="text-center">Xem biểu đồ tồn kho <i
                                         class="fa-solid fa-circle-chevron-right"></i></span>
                             </button>
                         </div>
@@ -199,7 +199,7 @@
                         <div class="p-1"
                             v-for="(medicine, index) in this.dataMedicines.filter(medicine => isExpiringSoon(medicine.HSD) > 0)"
                             :key="index">
-                            {{ medicine.tenThuoc }}
+                            <strong>{{ medicine.tenThuoc }}:</strong> {{ medicine.SoLuong }} {{ medicine.Donvi }}
                             <span v-if="isExpiringSoon(medicine.HSD) > 0">
                                 (Còn {{ isExpiringSoon(medicine.HSD) }} ngày)
                             </span>
@@ -258,7 +258,10 @@ export default {
         },
 
         goToMedicineList() {
-            this.$router.push({ name: 'admin-medicine' });
+            window.scrollTo({
+                top: window.scrollY + 10000,
+                behavior: 'smooth',
+            });
         },
 
         goToTotalBillChart() {

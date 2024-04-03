@@ -25,33 +25,36 @@ export default {
                 case 'welcome':
                     this.activeTab = 1;
                     break;
-                case 'admin-staff':
-                case 'add-staff':
-                case 'edit-staff':
-                    this.activeTab = 2;
-                    break;
                 case 'admin-doctor':
-                    this.activeTab = 3;
-                    break;
-                case 'admin-medicine':
-                case 'add-medicine':
-                case 'edit-medicine':
-                    this.activeTab = 4;
+                    this.activeTab = 2;
                     break;
                 case 'admin-disease':
                 case 'add-disease':
                 case 'edit-disease':
-                    this.activeTab = 5;
+                    this.activeTab = 3;
                     break;
                 case 'admin-service':
                 case 'add-service':
                 case 'edit-service':
-                    this.activeTab = 6;
+                    this.activeTab = 4;
                     break;
                 case 'admin-room':
                 case 'add-room':
                 case 'edit-room':
+                    this.activeTab = 5;
+                    break;
+                case 'admin-staff':
+                case 'add-staff':
+                case 'edit-staff':
+                    this.activeTab = 6;
+                    break;
+                case 'admin-medicine':
+                case 'add-medicine':
+                case 'edit-medicine':
                     this.activeTab = 7;
+                    break;
+                case 'admin-appointment':
+                    this.activeTab = 8;
                     break;
                 case 'admin-patient':
                 case 'add-patient':
@@ -59,14 +62,14 @@ export default {
                 case 'medicalrecord':
                 case 'add-medicalrecord':
                 case 'edit-medicalrecord':
-                    this.activeTab = 8;
+                    this.activeTab = 9;
                     break;
                 case 'admin-bill':
                 case 'add-bill':
-                    this.activeTab = 9;
+                    this.activeTab = 10;
                     break;
                 case 'admin-statistic':
-                    this.activeTab = 10;
+                    this.activeTab = 11;
                     break
                 default:
                     this.activeTab = 1;
@@ -110,71 +113,76 @@ export default {
                 </router-link>
 
                 <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        Quản lý
-                    </li>
-
-                    <li class="sidebar-item tab-1" :class="{ 'active': activeTab === 1 }" @click="setActiveTab(1)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 1 }" @click="setActiveTab(1)">
                         <router-link :to="{ name: 'welcome' }" class="sidebar-link">
                             <i class="align-middle"></i> <span class="align-middle">Dashboard</span>
                         </router-link>
                     </li>
 
-                    <li class="sidebar-item tab-2" :class="{ 'active': activeTab === 2 }" @click="setActiveTab(2)">
-                        <router-link :to="{ name: 'admin-staff' }" class="sidebar-link">
-                            <i class="fa-solid fa-hospital-user"></i> <span class="align-middle">Personnel
-                                Management</span>
-                        </router-link>
+                    <li class="sidebar-header">
+                        Cơ sở dữ liệu
                     </li>
-
-                    <li class="sidebar-item tab-2" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 2 }" @click="setActiveTab(2)">
                         <router-link :to="{ name: 'admin-doctor' }" class="sidebar-link">
                             <i class="fa-solid fa-user-doctor"></i> <span class="align-middle">Doctor
                                 Management</span>
                         </router-link>
                     </li>
-
-                    <li class="sidebar-item tab-3" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
-                        <router-link :to="{ name: 'admin-medicine' }" class="sidebar-link">
-                            <i class="fa-solid fa-capsules fa-2xs"></i> <span class="align-middle">Medication
-                                Management</span>
-                        </router-link>
-                    </li>
-
-                    <li class="sidebar-item tab-3" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
                         <router-link :to="{ name: 'admin-disease' }" class="sidebar-link">
                             <i class="fa-solid fa-square-virus"></i> <span class="align-middle">Disease
                                 Management</span>
                         </router-link>
                     </li>
-
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
                         <router-link :to="{ name: 'admin-service' }" class="sidebar-link">
                             <i class="fa-solid fa-stethoscope"></i> <span class="align-middle">Service Management</span>
                         </router-link>
                     </li>
-
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 7 }" @click="setActiveTab(7)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
                         <router-link :to="{ name: 'admin-room' }" class="sidebar-link">
                             <i class="fa-solid fa-house"></i> <span class="align-middle">Room Management</span>
                         </router-link>
                     </li>
-
+                    <li class="sidebar-header">
+                        Quản lý
+                    </li>
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)">
+                        <router-link :to="{ name: 'admin-staff' }" class="sidebar-link">
+                            <i class="fa-solid fa-hospital-user"></i> <span class="align-middle">Personnel
+                                Management</span>
+                        </router-link>
+                    </li>
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 7 }" @click="setActiveTab(7)">
+                        <router-link :to="{ name: 'admin-medicine' }" class="sidebar-link">
+                            <i class="fa-solid fa-capsules fa-2xs"></i> <span class="align-middle">Medication
+                                Management</span>
+                        </router-link>
+                    </li>
+                    <li class="sidebar-header">
+                        Hoạt động
+                    </li>
                     <li class="sidebar-item" :class="{ 'active': activeTab === 8 }" @click="setActiveTab(8)">
+                        <router-link :to="{ name: 'admin-appointment' }" class="sidebar-link">
+                            <i class="fa-regular fa-calendar-days"></i> <span class="align-middle">Appointment</span>
+                        </router-link>
+                    </li>
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 9 }" @click="setActiveTab(9)">
                         <router-link :to="{ name: 'admin-patient' }" class="sidebar-link">
                             <i class="fa-solid fa-clipboard-user"></i> <span class="align-middle">Medical
                                 Record</span>
                         </router-link>
                     </li>
-
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 9 }" @click="setActiveTab(9)">
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 10 }" @click="setActiveTab(10)">
                         <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
                             <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
                                 management</span>
                         </router-link>
                     </li>
-
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 10 }" @click="setActiveTab(10)">
+                    <li class="sidebar-header">
+                        Thống kê
+                    </li>
+                    <li class="sidebar-item" :class="{ 'active': activeTab === 11 }" @click="setActiveTab(11)">
                         <router-link :to="{ name: 'admin-statistic' }" class="sidebar-link">
                             <i class="fa-solid fa-chart-column"></i> <span class="align-middle">Statistic</span>
                         </router-link>

@@ -196,6 +196,12 @@ const routes = [
         component: () => import("@/components/Room/edit_room.vue"),
         props: true,
       },
+      // ----------------------------- Appointment -----------------------------
+      {
+        path: "appointment",
+        name: "admin-appointment",
+        component: () => import("@/components/Manage_Appointment/Appointment.vue"),
+      },
       // ----------------------------- Medical Record -----------------------------
       {
         path: "patient",
