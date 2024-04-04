@@ -355,7 +355,7 @@ export default {
         disabledRaido(time) {
             const disabledMap = {};
             this.appointmentDatas.forEach(app => {
-                if (app.day === this.appointmentLocal.day && app.doctor === this.appointmentLocal.doctor) {
+                if (app.confirm !== "cancel" && app.day === this.appointmentLocal.day && app.doctor === this.appointmentLocal.doctor) {
                     disabledMap[app.time] = true;
                 }
             });

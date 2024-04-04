@@ -10,6 +10,10 @@ class MedicineService {
   async create(data) {
     return (await this.api.post("/", data)).data;
   }
+  async deleteAll() {
+    return (await this.api.delete("/")).data;
+  }
+
   async get(id) {
     return (await this.api.get(`/${id}`)).data;
   }
@@ -19,9 +23,10 @@ class MedicineService {
   async delete(id, data) {
     return (await this.api.delete(`/${id}`, data)).data;
   }
-  // async getIsActive() {
-  //   return (await this.api.get("/active")).data;
-  // }
+  
+  async getIsActive() {
+    return (await this.api.get("/active")).data;
+  }
 }
 
 export default new MedicineService();
