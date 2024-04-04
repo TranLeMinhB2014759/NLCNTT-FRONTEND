@@ -108,8 +108,138 @@
 
                             <div class="mb-3 mt-3">
                                 <label for="day">Chọn ngày: <span class="text-danger">(Yêu cầu)</span></label>
-                                <Field name="day" type="date" class="form-control" v-model="appointmentLocal.day" required placeholder="Hãy chọn bác sĩ" />
+                                <Field name="day" type="date" class="form-control" v-model="appointmentLocal.day" required placeholder="Hãy chọn ngày khám" />
                                 <ErrorMessage name="day" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                            </div>
+
+                            <div class="mb-3 mt-3">
+                                <div class="d-flex justify-content-evenly">
+                                    <div>
+                                        <div class="radio-wrapper-16">
+                                            <input type="radio" class="radio-input" id="8:00" name="time" value="8:00" v-model="appointmentLocal.time" :disabled="disabledRaido('8:00')" required>
+                                            <label class="radio-tile" for="8:00">
+                                                <span class="radio-label">8:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="8:30" name="time" value="8:30" v-model="appointmentLocal.time" :disabled="disabledRaido('8:30')" required>
+                                            <label class="radio-tile" for="8:30">
+                                                <span class="radio-label">8:30</span>
+                                            </label>
+                                        </div> 
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="9:00" name="time" value="9:00" v-model="appointmentLocal.time" :disabled="disabledRaido('9:00')" required>
+                                            <label class="radio-tile" for="9:00">
+                                                <span class="radio-label">9:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="9:30" name="time" value="9:30" v-model="appointmentLocal.time" :disabled="disabledRaido('9:30')" required>
+                                            <label class="radio-tile" for="9:30">
+                                                <span class="radio-label">9:30</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="radio-wrapper-16">
+                                            <input type="radio" class="radio-input" id="10:00" name="time" value="10:00" v-model="appointmentLocal.time" :disabled="disabledRaido('10:00')" required>
+                                            <label class="radio-tile" for="10:00">
+                                                <span class="radio-label">10:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="10:30" name="time" value="10:30" v-model="appointmentLocal.time" :disabled="disabledRaido('10:30')" required>
+                                            <label class="radio-tile" for="10:30">
+                                                <span class="radio-label">10:30</span>
+                                            </label>
+                                        </div> 
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="11:00" name="time" value="11:00" v-model="appointmentLocal.time" :disabled="disabledRaido('11:00')" required>
+                                            <label class="radio-tile" for="11:00">
+                                                <span class="radio-label">11:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="11:30" name="time" value="11:30" v-model="appointmentLocal.time" :disabled="disabledRaido('11:30')" required>
+                                            <label class="radio-tile" for="11:30">
+                                                <span class="radio-label">11:30</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="radio-wrapper-16">
+                                            <input type="radio" class="radio-input" id="12:00" name="time" value="12:00" v-model="appointmentLocal.time" :disabled="disabledRaido('12:00')" required>
+                                            <label class="radio-tile" for="12:00">
+                                                <span class="radio-label">12:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="12:30" name="time" value="12:30" v-model="appointmentLocal.time" :disabled="disabledRaido('12:30')" required>
+                                            <label class="radio-tile" for="12:30">
+                                                <span class="radio-label">12:30</span>
+                                            </label>
+                                        </div> 
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="13:00" name="time" value="13:00" v-model="appointmentLocal.time" :disabled="disabledRaido('13:00')" required>
+                                            <label class="radio-tile" for="13:00">
+                                                <span class="radio-label">13:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="13:30" name="time" value="13:30" v-model="appointmentLocal.time" :disabled="disabledRaido('13:30')" required>
+                                            <label class="radio-tile" for="13:30">
+                                                <span class="radio-label">13:30</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="radio-wrapper-16">
+                                            <input type="radio" class="radio-input" id="14:00" name="time" value="14:00" v-model="appointmentLocal.time" :disabled="disabledRaido('14:00')" required>
+                                            <label class="radio-tile" for="14:00">
+                                                <span class="radio-label">14:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="14:30" name="time" value="14:30" v-model="appointmentLocal.time" :disabled="disabledRaido('14:30')" required>
+                                            <label class="radio-tile" for="14:30">
+                                                <span class="radio-label">14:30</span>
+                                            </label>
+                                        </div> 
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="15:00" name="time" value="15:00" v-model="appointmentLocal.time" :disabled="disabledRaido('15:00')" required>
+                                            <label class="radio-tile" for="15:00">
+                                                <span class="radio-label">15:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="15:30" name="time" value="15:30" v-model="appointmentLocal.time" :disabled="disabledRaido('15:30')" required>
+                                            <label class="radio-tile" for="15:30">
+                                                <span class="radio-label">15:30</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="radio-wrapper-16">
+                                            <input type="radio" class="radio-input" id="16:00" name="time" value="16:00" v-model="appointmentLocal.time" :disabled="disabledRaido('16:00')" required>
+                                            <label class="radio-tile" for="16:00">
+                                                <span class="radio-label">16:00</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="16:30" name="time" value="16:30" v-model="appointmentLocal.time" :disabled="disabledRaido('16:30')" required>
+                                            <label class="radio-tile" for="16:30">
+                                                <span class="radio-label">16:30</span>
+                                            </label>
+                                        </div> 
+                                        <div class="radio-wrapper-16 mt-2">
+                                            <input type="radio" class="radio-input" id="17:00" name="time" value="17:00" v-model="appointmentLocal.time" :disabled="disabledRaido('17:00')" required>
+                                            <label class="radio-tile" for="17:00">
+                                                <span class="radio-label">17:00</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ErrorMessage name="time" class="error-feedback" style="color: rgb(238, 15, 15);" />
                             </div>
 
                             <div class="mt-3 mt-3">
@@ -192,6 +322,7 @@ export default {
             captchaImage: '',
             rooms: [],
             doctorsByService: [],
+            appointmentDatas: [],
             appointmentLocal: {
                 name: "",
                 phoneNumber: "",
@@ -221,6 +352,23 @@ export default {
 
     },
     methods: {
+        disabledRaido(time) {
+            const disabledMap = {};
+            this.appointmentDatas.forEach(app => {
+                if (app.day === this.appointmentLocal.day && app.doctor === this.appointmentLocal.doctor) {
+                    disabledMap[app.time] = true;
+                }
+            });
+            return disabledMap[time] || false;
+        },
+
+        async retrieveAppointment() {
+            try {
+                this.appointmentDatas = await AppointmentService.getAll();
+            } catch (error) {
+                console.log(error);
+            }
+        },
         getLastUpdated() {
             const currentDate = new Date();
             const hours = String(currentDate.getHours()).padStart(2, '0');
@@ -291,13 +439,19 @@ export default {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        await AppointmentService.create(data);
-                        Swal.fire({
-                            icon: "success",
-                            title: "Đặt lịch khám thành công. Chúng tôi sẽ gọi lại để xác nhận sau!",
-                            showConfirmButton: true,
-                            timer: 2000
-                        });
+                        if(data.time != '') {
+                            await AppointmentService.create(data);
+                            Swal.fire({
+                                icon: "success",
+                                title: "Đặt lịch khám thành công. Chúng tôi sẽ gọi lại để xác nhận sau!",
+                                showConfirmButton: true,
+                                timer: 2000
+                            });
+                            this.$router.push({ name: 'trangchu' });
+                        } else {
+                            toast.warn("Vui lòng chọn giờ cụ thể")
+                        }
+
                     } catch (error) {
                         console.log(error);
                     }
@@ -306,6 +460,7 @@ export default {
         },
     },
     created() {
+        this.retrieveAppointment();
         this.retrieveRoom();
         this.refreshCaptcha();
 
@@ -473,5 +628,129 @@ a {
 
 .btn-search:active {
     box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+}
+
+/* ------------------------ RADIO ------------------------  */
+.radio-wrapper-16 *,
+  .radio-wrapper-16 *:after,
+  .radio-wrapper-16 *:before {
+  box-sizing: border-box;
+}
+
+.radio-wrapper-16 .radio-input {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(100%);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.radio-wrapper-16 .radio-input:checked + .radio-tile {
+  border-color: #2260ff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  color: #2260ff;
+}
+
+.radio-wrapper-16 .radio-input:checked + .radio-tile:before {
+  transform: scale(1);
+  opacity: 1;
+  background-color: #2260ff;
+  border-color: #2260ff;
+  color: #fff;
+  content: "✓";
+}
+
+.radio-wrapper-16 .radio-input:checked + .radio-tile
+  .radio-wrapper-16 .radio-input:checked + .radio-tile .radio-label {
+  color: #2260ff;
+}
+
+.radio-wrapper-16 .radio-input:focus + .radio-tile {
+  border-color: #2260ff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+}
+
+.radio-wrapper-16 .radio-input:focus + .radio-tile:before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.radio-wrapper-16 .radio-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  min-height: 4rem;
+  border-radius: 0.5rem;
+  border: 2px solid #b5bfd9;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.15s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.radio-wrapper-16 .radio-tile:before {
+  content: "";
+  font-size: 12px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #b5bfd9;
+  border-radius: 50%;
+  top: 0.25rem;
+  left: 0.25rem;
+  opacity: 0;
+  transform: scale(0);
+  transition: 0.25s ease;
+}
+
+.radio-wrapper-16 .radio-tile:hover {
+  border-color: #2260ff;
+}
+
+.radio-wrapper-16 .radio-tile:hover:before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.radio-wrapper-16 .radio-label {
+  color: #707070;
+  transition: 0.375s ease;
+  text-align: center;
+}
+
+.radio-wrapper-16 .radio-input:disabled + .radio-tile {
+  cursor: not-allowed;
+  background-color: #f0f0f0;
+  border-color: #b5bfd9;
+  color: #a0a0a0;
+}
+
+.radio-wrapper-16 .radio-input:disabled + .radio-tile .radio-label {
+  color: #a0a0a0;
+}
+
+.radio-wrapper-16 .radio-input:disabled + .radio-tile:hover {
+  border-color: #b5bfd9;
+  background-color: #f0f0f0;
+}
+
+.radio-wrapper-16 .radio-input:disabled + .radio-tile:hover:before {
+  opacity: 0;
+}
+
+@media screen and (max-width: 450px) { 
+    .radio-wrapper-16 .radio-tile {
+        width: 3.2rem !important;
+        min-height: 3.2rem !important;
+    }
 }
 </style>

@@ -12,7 +12,7 @@
                                 <th>Số điện thoại</th>
                                 <th>Thời gian</th>
                                 <th>Người thực hiện</th>
-                                <th>Sửa đổi lần cuôi</th>
+                                <th>Sửa đổi lần cuối</th>
                                 <th colspan="2">Hành động</th>
                             </tr>
                         </thead>
@@ -21,7 +21,7 @@
                                 <!-- <td> {{ index + 1 }} </td> -->
                                 <td class="text-start"> {{ appointment.name }} </td>
                                 <td> {{ appointment.phoneNumber }} </td>
-                                <td> {{ appointment.day }} </td>
+                                <td> {{ formatTime(appointment.time, appointment.day) }} </td>
                                 <td>
                                     <span v-if="appointment.confirmer === ''" class="text-danger">
                                         Chưa xác nhận
@@ -50,7 +50,7 @@
                                                 </div>
 
                                                 <!-- Modal body -->
-                                                <div class="modal-body">
+                                                <div class="modal-body text-start">
                                                     <Form :validation-schema="appointmentFormSchema">
                                                         <h5>Thông tin bệnh nhân</h5>
                                                         <div class="row">
@@ -134,8 +134,8 @@
                                                             <div class="col-12 col-md-6">
                                                                 <div class="mb-3 mt-3">
                                                                     <label for="room">Phòng:</label>
-                                                                    <Field name="room" class="form-control"
-                                                                        v-model="appointmentLocal.room" required
+                                                                    <input class="form-control"
+                                                                        :value="appointmentLocal.room"
                                                                         placeholder="Hãy chọn bác sĩ" disabled />
                                                                     <Field name="room" v-model="appointmentLocal.room"
                                                                         required hidden />
@@ -146,13 +146,16 @@
                                                         </div>
 
                                                         <div class="mb-3 mt-3">
-                                                            <label for="day">Chọn ngày: <span class="text-danger">(Yêu
-                                                                    cầu)</span></label>
-                                                            <Field name="day" type="date" class="form-control"
-                                                                v-model="appointmentLocal.day" required
-                                                                placeholder="Hãy chọn bác sĩ" />
-                                                            <ErrorMessage name="day" class="error-feedback"
-                                                                style="color: rgb(238, 15, 15);" />
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <label for="time">Giờ khám:</label>
+                                                                    <input class="form-control" :value="appointmentLocal.time" disabled />
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <label for="day">Ngày khám:</label>
+                                                                    <input type="date" class="form-control" :value="appointmentLocal.day" disabled />
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </Form>
                                                 </div>
@@ -235,14 +238,6 @@ export default {
             doctor: yup
                 .string()
                 .required("Vui lòng chọn bác sĩ."),
-            day: yup
-                .string()
-                .required("Vui lòng chọn ngày khám bệnh")
-                .test('is-future-date', 'Vui lòng đăng kí trước ít nhất 1 ngày ', function (value) {
-                    const selectedDate = new Date(value);
-                    const currentDate = new Date();
-                    return selectedDate > currentDate;
-                }),
         });
         return {
             appointments: [],
@@ -277,6 +272,11 @@ export default {
         },
     },
     methods: {
+        formatTime(inputTime, inputDay){
+            const [hour, minute] = inputTime.split(':');
+            const [year, month, day] = inputDay.split('-');
+            return `${hour}:${minute}, ${day}/${month}/${year}`;
+        },
         openModal(appointment) {
             this.appointmentLocal = { ...appointment };
         },
