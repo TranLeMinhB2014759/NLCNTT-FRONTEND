@@ -13,8 +13,7 @@
           <div class="col-sm-8"></div>
         </div>
         <div class="container mt-3 table-responsive">
-          <table class="table table-bordered table-hover text-center" v-if="filteredPatientsCount > 0"
-            :patients="filteredPatients">
+          <table class="table table-bordered table-hover text-center" v-if="filteredPatientsCount > 0">
             <thead class="table-success">
               <tr>
                 <th>MSBN</th>
@@ -29,7 +28,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(patient, index) in filteredPatients" :key="index" @click="updateActiveIndex(index)">
+              <tr v-for="(patient, index) in paginatedPatients" :key="index" @click="updateActiveIndex(index)">
                 <td>{{ patient.MSBN }}</td>
                 <td class="text-start">{{ patient.name }}</td>
                 <td>{{ patient.year }} ( {{ calculateAge(patient.year) }} tuổi )</td>
@@ -60,6 +59,17 @@
           </table>
           <p v-else>Không tìm thấy bệnh nhân phù hợp.</p>
         </div>
+        <!-- Pagination -->
+        <ul class="pagination d-flex justify-content-center" v-if="filteredPatientsCount > 0">
+          <li class="page-item"><a class="page-link" @click="firstPage" :class="{ 'disabled': currentPage === 1 }"><<</a></li>
+          <li class="page-item"><a class="page-link" @click="prevPage" :class="{ 'disabled': currentPage === 1 }"><</a></li>
+          <li class="page-item" v-for="page in paginatedPages" :key="page">
+            <a class="page-link" @click="changePage(page)" :class="{ 'active': page === currentPage }">{{ page }}</a>
+          </li>
+          <li class="page-item"><a class="page-link" @click="nextPage" :class="{ 'disabled': currentPage === totalPages }">></a></li>
+          <li class="page-item"><a class="page-link" @click="lastPage" :class="{ 'disabled': currentPage === totalPages }">>></a></li>
+        </ul>
+        <!-- End Pagination -->
       </div>
     </div>
   </div>
@@ -81,6 +91,8 @@ export default {
       patients: [],
       activeIndex: -1,
       searchText: "",
+      currentPage: 1,
+      patientsPerPage: 10,
     };
   },
   computed: {
@@ -99,6 +111,24 @@ export default {
     },
     filteredPatientsCount() {
       return this.filteredPatients.length;
+    },
+    // ------------------------- Pagination -------------------------
+    paginatedPatients() {
+      const startIndex = (this.currentPage - 1) * this.patientsPerPage;
+      const endIndex = startIndex + this.patientsPerPage;
+      return this.filteredPatients.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredPatients.length / this.patientsPerPage);
+    },
+    paginatedPages() {
+      const visiblePages = 5;
+      let startPage = this.currentPage - Math.floor(visiblePages / 2);
+      startPage = Math.max(startPage, 1);
+      let endPage = startPage + visiblePages - 1;
+      endPage = Math.min(endPage, this.totalPages);
+      startPage = Math.max(endPage - visiblePages + 1, 1);
+      return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
     },
     patientAges() {
       return this.patients.map((patient) => this.calculateAge(patient.year));
@@ -145,6 +175,26 @@ export default {
           }
         }
       });
+    },
+    // ------------------------- Pagination -------------------------
+    changePage(page) {
+      this.currentPage = page;
+    },
+    firstPage() {
+      this.currentPage = 1;
+    },
+    lastPage() {
+      this.currentPage = this.totalPages;
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
     },
   },
   created() {

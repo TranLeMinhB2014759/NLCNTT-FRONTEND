@@ -3,8 +3,14 @@
         <div class="card-body">
             <div class="banner text-center">QUẢN LÝ ĐẶT LỊCH KHÁM ONLINE</div>
             <div class="container">
+                <div class="row">
+                    <div class="container col-12 col-sm-4">
+                        <InputSearch v-model="searchText" />
+                    </div>
+                    <div class="col-sm-8"></div>
+                </div>
                 <div class="container mt-3 table-responsive">
-                    <table class="table table-bordered table-hover text-center" v-if="appointments.length > 0">
+                    <table class="table table-bordered table-hover text-center" v-if="filteredAppointmentsCount > 0">
                         <thead class="table-success">
                             <tr>
                                 <!-- <th>STT</th> -->
@@ -17,7 +23,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(appointment, index) in appointments.slice().reverse()" :key="index">
+                            <tr v-for="(appointment, index) in paginatedAppointments" :key="index" @click="updateActiveIndex(index)">
                                 <!-- <td> {{ index + 1 }} </td> -->
                                 <td class="text-start"> {{ appointment.name }} </td>
                                 <td> {{ appointment.phoneNumber }} </td>
@@ -149,11 +155,13 @@
                                                             <div class="row">
                                                                 <div class="col-4">
                                                                     <label for="time">Giờ khám:</label>
-                                                                    <input class="form-control" :value="appointmentLocal.time" disabled />
+                                                                    <input class="form-control"
+                                                                        :value="appointmentLocal.time" disabled />
                                                                 </div>
                                                                 <div class="col-8">
                                                                     <label for="day">Ngày khám:</label>
-                                                                    <input type="date" class="form-control" :value="appointmentLocal.day" disabled />
+                                                                    <input type="date" class="form-control"
+                                                                        :value="appointmentLocal.day" disabled />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -182,9 +190,113 @@
                                     </button>
                                 </td>
                                 <td v-else-if="appointment.confirm === 'yes'" colspan="2">
-                                    <span class="text-success">
-                                        Đã xác nhận
-                                    </span>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        :data-bs-target="'#ModalAppointment_' + index" @click="openModal(appointment)">
+                                        Infomation
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal fade" :id="'ModalAppointment_' + index">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Thông tin lịch hẹn</h4>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body text-start">
+                                                    <Form :validation-schema="appointmentFormSchema">
+                                                        <h5>Thông tin bệnh nhân</h5>
+                                                        <div class="row">
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Họ và tên:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.name" disabled />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Số điện thoại:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.phoneNumber"
+                                                                        disabled />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h5>Thông tin cuộc hẹn</h5>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Mã tiếp nhận:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.MSTN" disabled />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Dịch vụ:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.service" disabled />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Loại khám:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.type" disabled />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Bác sĩ:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.doctor" disabled />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Phòng:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.room" disabled />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-3 mt-3">
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <label for="time">Giờ khám:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.time" disabled />
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <label for="day">Ngày khám:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.day" disabled />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </Form>
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td v-else colspan="2">
                                     <span class="text-danger">
@@ -196,6 +308,22 @@
                     </table>
                     <p v-else>Không tìm thấy cuộc hẹn nào.</p>
                 </div>
+                <ul class="pagination d-flex justify-content-center" v-if="filteredAppointmentsCount > 0">
+                    <li class="page-item"><a class="page-link" @click="firstPage"
+                            :class="{ 'disabled': currentPage === 1 }" href="#"><<</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" @click="prevPage"
+                            :class="{ 'disabled': currentPage === 1 }" href="#"><</a>
+                    </li>
+                    <li class="page-item" v-for="page in paginatedPages" :key="page">
+                        <a class="page-link" @click="changePage(page)" :class="{ 'active': page === currentPage }"
+                            href="#">{{ page }}</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" @click="nextPage"
+                            :class="{ 'disabled': currentPage === totalPages }" href="#">></a></li>
+                    <li class="page-item"><a class="page-link" @click="lastPage"
+                            :class="{ 'disabled': currentPage === totalPages }">>></a></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -203,17 +331,17 @@
 
 <script>
 import { ErrorMessage, Field, Form } from "vee-validate";
+import InputSearch from "@/components/InputSearch.vue";
 import * as yup from "yup";
 import AppointmentService from "@/services/appointment.service";
 import RoomService from "@/services/room.service";
 import Swal from 'sweetalert2'
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
 export default {
     components: {
         Form,
         Field,
         ErrorMessage,
+        InputSearch,
     },
     data() {
         const appointmentFormSchema = yup.object().shape({
@@ -240,10 +368,15 @@ export default {
                 .required("Vui lòng chọn bác sĩ."),
         });
         return {
+            searchText: "",
+            activeIndex: -1,
+            currentPage: 1,
+            appointmentsPerPage: 10,
             appointments: [],
             doctorsByService: [],
             rooms: [],
             appointmentLocal: {
+                MSTN: "",
                 name: "",
                 phoneNumber: "",
                 service: "",
@@ -261,6 +394,41 @@ export default {
         };
     },
     computed: {
+        appointmentStrings() {
+            return this.appointments.map((appointment) => {
+                const { MSTN, name, phoneNumber, doctor } = appointment;
+                return [MSTN, name, phoneNumber, doctor].join("");
+            });
+        },
+        filteredAppointments() {
+            const searchTextLower = this.searchText.toLowerCase();
+            if (!searchTextLower) return this.appointments;
+            return this.appointments.filter((_appointment, index) =>
+                this.appointmentStrings[index].toLowerCase().includes(searchTextLower)
+            );
+        },
+        filteredAppointmentsCount() {
+            return this.filteredAppointments.length;
+        },
+        // ------------------------- Pagination -------------------------
+        totalPages() {
+            return Math.ceil(this.filteredAppointments.length / this.appointmentsPerPage);
+        },
+        paginatedAppointments() {
+            const startIndex = (this.currentPage - 1) * this.appointmentsPerPage;
+            const endIndex = startIndex + this.appointmentsPerPage;
+            const reversedAppointments = this.filteredAppointments.slice().reverse();
+            return reversedAppointments.slice(startIndex, endIndex);
+        },
+        paginatedPages() {
+            const visiblePages = 5;
+            let startPage = this.currentPage - Math.floor(visiblePages / 2);
+            startPage = Math.max(startPage, 1);
+            let endPage = startPage + visiblePages - 1;
+            endPage = Math.min(endPage, this.totalPages);
+            startPage = Math.max(endPage - visiblePages + 1, 1);
+            return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+        },
         filteredServices() {
             if (this.rooms.length > 0) {
                 const dataRoom = this.rooms.filter(item => item.dichVu != '' && item.doctor != '');
@@ -272,13 +440,50 @@ export default {
         },
     },
     methods: {
-        formatTime(inputTime, inputDay){
+        // ------------------------- Pagination -------------------------
+        changePage(page) {
+            this.currentPage = page;
+        },
+        firstPage() {
+            this.currentPage = 1;
+        },
+        lastPage() {
+            this.currentPage = this.totalPages;
+        },
+        prevPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        },
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
+        },
+        refreshList() {
+            this.activeIndex = -1;
+        },
+        updateActiveIndex(index) {
+            this.activeIndex = index;
+        },
+        // ------------------------- FORMAT -------------------------
+        formatMSTN() {
+            const [year, month, day] = this.appointmentLocal.day.split('-');
+
+            const appointmentsThatday = this.appointments.filter(appointment => {
+                const [appointmentYear, appointmentMonth, appointmentDay] = appointment.day.split('-');
+                return appointmentYear === year && appointmentMonth === month && appointmentDay === day && appointment.confirm === "yes";
+            });
+
+            const MSTNCount = String(appointmentsThatday.length + 1).padStart(4, '0');
+
+            const MSTN = `${day}${month}${year}.${MSTNCount}`;
+            return MSTN;
+        },
+        formatTime(inputTime, inputDay) {
             const [hour, minute] = inputTime.split(':');
             const [year, month, day] = inputDay.split('-');
             return `${hour}:${minute}, ${day}/${month}/${year}`;
-        },
-        openModal(appointment) {
-            this.appointmentLocal = { ...appointment };
         },
         getLastUpdated() {
             const currentDate = new Date();
@@ -288,6 +493,10 @@ export default {
             const month = String(currentDate.getMonth() + 1).padStart(2, '0');
             const year = currentDate.getFullYear();
             return `${hours}:${minutes}, ${day}/${month}/${year}`;
+        },
+
+        openModal(appointment) {
+            this.appointmentLocal = { ...appointment };
         },
         async retrieveRoom() {
             try {
@@ -311,7 +520,7 @@ export default {
             this.appointmentLocal.room = "";
             this.getDoctorsByService(this.appointmentLocal.service);
         },
-        
+
         async retrieveAppointment() {
             try {
                 this.appointments = await AppointmentService.getAll();
@@ -331,6 +540,7 @@ export default {
                         try {
                             const staffJs = window.localStorage.getItem("staff");
                             const staff = JSON.parse(staffJs);
+                            this.appointmentLocal.MSTN = this.formatMSTN();
                             this.appointmentLocal.confirmer = staff.name;
                             this.appointmentLocal.confirm = "yes";
                             this.appointmentLocal.lastUpdated = this.getLastUpdated();

@@ -324,6 +324,7 @@ export default {
             doctorsByService: [],
             appointmentDatas: [],
             appointmentLocal: {
+                MSTN: "",
                 name: "",
                 phoneNumber: "",
                 service: "",

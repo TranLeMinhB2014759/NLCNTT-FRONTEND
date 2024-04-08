@@ -13,8 +13,7 @@
                     <div class="col-sm-8"></div>
                 </div>
                 <div class="container mt-3 table-responsive">
-                    <table class="table table-bordered table-hover text-center" v-if="filteredBillsCount > 0"
-                        :bills="filteredBills">
+                    <table class="table table-bordered table-hover text-center" v-if="filteredBillsCount > 0">
                         <thead class="table-success">
                             <tr>
                                 <th>Họ và tên</th>
@@ -26,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(bill, index) in filteredBills.slice().reverse()" :key="index" @click="updateActiveIndex(index)">
+                            <tr v-for="(bill, index) in paginatedBills" :key="index" @click="updateActiveIndex(index)">
                                 <td>{{ bill.name }}</td>
                                 <td>{{ bill.phoneNumber }}</td>
                                 <td>{{ bill.ngayLap }}</td>
@@ -174,8 +173,26 @@
                             </tr>
                         </tbody>
                     </table>
-                    <p v-else>Không tìm thấy hóa phù hợp.</p>
+                    <p v-else>Không tìm thấy hóa đơn phù hợp.</p>
                 </div>
+                <!-- Pagination -->
+                <ul class="pagination d-flex justify-content-center" v-if="filteredBillsCount > 0">
+                    <li class="page-item"><a class="page-link" @click="firstPage"
+                            :class="{ 'disabled': currentPage === 1 }"><<</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" @click="prevPage"
+                            :class="{ 'disabled': currentPage === 1 }"><</a>
+                    </li>
+                    <li class="page-item" v-for="page in paginatedPages" :key="page">
+                        <a class="page-link" @click="changePage(page)" :class="{ 'active': page === currentPage }">{{
+                            page }}</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" @click="nextPage"
+                            :class="{ 'disabled': currentPage === totalPages }">></a></li>
+                    <li class="page-item"><a class="page-link" @click="lastPage"
+                            :class="{ 'disabled': currentPage === totalPages }">>></a></li>
+                </ul>
+                <!-- End Pagination -->
             </div>
         </div>
     </div>
@@ -197,6 +214,8 @@ export default {
             bills: [],
             activeIndex: -1,
             searchText: "",
+            currentPage: 1,
+            billsPerPage: 10,
         };
     },
     computed: {
@@ -216,8 +235,23 @@ export default {
         filteredBillsCount() {
             return this.filteredBills.length;
         },
-        billAges() {
-            return this.bills.map((bill) => this.calculateAge(bill.year));
+        paginatedBills() {
+            const startIndex = (this.currentPage - 1) * this.billsPerPage;
+            const endIndex = startIndex + this.billsPerPage;
+            const reversedBills = this.filteredBills.slice().reverse();
+            return reversedBills.slice(startIndex, endIndex);
+        },
+        totalPages() {
+            return Math.ceil(this.filteredBills.length / this.billsPerPage);
+        },
+        paginatedPages() {
+            const visiblePages = 5;
+            let startPage = this.currentPage - Math.floor(visiblePages / 2);
+            startPage = Math.max(startPage, 1);
+            let endPage = startPage + visiblePages - 1;
+            endPage = Math.min(endPage, this.totalPages);
+            startPage = Math.max(endPage - visiblePages + 1, 1);
+            return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
         },
     },
     methods: {
@@ -267,6 +301,26 @@ export default {
                     }
                 }
             });
+        },
+        // ------------------------- Pagination -------------------------
+        changePage(page) {
+            this.currentPage = page;
+        },
+        firstPage() {
+            this.currentPage = 1;
+        },
+        lastPage() {
+            this.currentPage = this.totalPages;
+        },
+        prevPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        },
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
         },
     },
     created() {
