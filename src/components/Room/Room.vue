@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(room, index) in sortedRooms" :key="index" @click="updateActiveIndex(index)">
+              <tr v-for="(room, index) in sortedRooms" :key="index">
                 <td>{{ room.floor }}</td>
                 <td>{{ room.maPhong }}</td>
 
@@ -68,7 +68,6 @@ export default {
   data() {
     return {
       room: [],
-      activeIndex: -1,
       searchText: "",
     };
   },
@@ -105,16 +104,12 @@ export default {
     },
     refreshList() {
       this.retrieveRoom();
-      this.activeIndex = -1;
     },
     goToAddRoom() {
       this.$router.push({ name: 'add-room' });
     },
     goToEditRoom(id) {
       this.$router.push({ name: 'edit-room', params: { id } });
-    },
-    updateActiveIndex(index) {
-      this.activeIndex = index;
     },
     async deleteRoom(id) {
       Swal.fire({

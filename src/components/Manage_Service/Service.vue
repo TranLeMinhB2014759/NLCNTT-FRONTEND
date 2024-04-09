@@ -26,7 +26,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(service, index) in sortedServices" :key="index" @click="updateActiveIndex(index)">
+              <tr v-for="(service, index) in sortedServices" :key="index">
                 <td>{{ service.code }}</td>
                 <td class="text-start">{{ service.tenDichVu }}</td>
                 <td>{{ formatToVND(service.Gia) }}</td>
@@ -70,7 +70,6 @@ export default {
   data() {
     return {
       service: [],
-      activeIndex: -1,
       searchText: "",
     };
   },
@@ -112,16 +111,12 @@ export default {
     },
     refreshList() {
       this.retrieveService();
-      this.activeIndex = -1;
     },
     goToAddService() {
       this.$router.push({ name: 'add-service' });
     },
     goToEditService(id) {
       this.$router.push({ name: 'edit-service', params: { id } });
-    },
-    updateActiveIndex(index) {
-      this.activeIndex = index;
     },
     async deleteService(id) {
       Swal.fire({

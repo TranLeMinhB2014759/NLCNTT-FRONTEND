@@ -2,7 +2,10 @@
   <div class="card">
     <div class="card-body">
       <div class="banner text-center">QUẢN LÝ BỆNH NHÂN</div>
-      <div class="container">
+      <div class="container d-flex justify-content-center p-5 m-5 mx-auto" v-if="loadingPatients">
+                <div class="loader"></div> 
+            </div>
+      <div class="container" v-else>
         <button class="btn btn-sm text-success" @click="goToAddPatient()">
           <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
         </button>
@@ -28,7 +31,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(patient, index) in paginatedPatients" :key="index" @click="updateActiveIndex(index)">
+              <tr v-for="(patient, index) in paginatedPatients" :key="index">
                 <td>{{ patient.MSBN }}</td>
                 <td class="text-start">{{ patient.name }}</td>
                 <td>{{ patient.year }} ( {{ calculateAge(patient.year) }} tuổi )</td>
@@ -88,12 +91,19 @@ export default {
   },
   data() {
     return {
+      loadingPatients: false,
       patients: [],
-      activeIndex: -1,
       searchText: "",
       currentPage: 1,
       patientsPerPage: 10,
     };
+  },
+  watch: {
+    searchText(newValue, oldValue) {
+          if (newValue !== oldValue) {
+              this.changePage(1);
+          }
+      }
   },
   computed: {
     patientStrings() {
@@ -146,15 +156,11 @@ export default {
       const currentYear = new Date().getFullYear();
       return currentYear - yearOfBirth;
     },
-    refreshList() {
-      this.retrievePatients();
-      this.activeIndex = -1;
+    async refreshList() {
+      await this.retrievePatients();
     },
     goToAddPatient() {
       this.$router.push({ name: 'add-patient' });
-    },
-    updateActiveIndex(index) {
-      this.activeIndex = index;
     },
     async deletePatient(id) {
       Swal.fire({
@@ -197,13 +203,46 @@ export default {
       }
     },
   },
-  created() {
-    this.refreshList();
+  async created() {
+    this.loadingPatients = true;
+    try {
+      await this.refreshList();
+    } catch (error) {
+        console.log(error);
+    } finally {
+        this.loadingPatients = false;
+    }
   },
 };
 </script>
 
 <style>
+/* ---------------------------- LOADER ---------------------------- */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #514b82;
+  animation:
+    l20-1 0.8s infinite linear alternate,
+    l20-2 1.6s infinite linear;
+}
+@keyframes l20-1{
+   0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+   12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+   25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+   50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+   62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+   75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+   100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+}
+@keyframes l20-2{ 
+  0%    {transform:scaleY(1)  rotate(0deg)}
+  49.99%{transform:scaleY(1)  rotate(135deg)}
+  50%   {transform:scaleY(-1) rotate(0deg)}
+  100%  {transform:scaleY(-1) rotate(-135deg)}
+}
+
 .badge {
   --bs-badge-color: black !important;
 }

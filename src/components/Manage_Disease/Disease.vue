@@ -24,7 +24,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(disease, index) in sortedDiseases" :key="index" @click="updateActiveIndex(index)">
+              <tr v-for="(disease, index) in sortedDiseases" :key="index">
                 <td>{{ disease.code }}</td>
                 <td class="text-start">{{ disease.tenBenh }}</td>
                 <td>
@@ -78,7 +78,6 @@ export default {
   data() {
     return {
       disease: [],
-      activeIndex: -1,
       searchText: "",
     };
   },
@@ -115,13 +114,9 @@ export default {
     },
     refreshList() {
       this.retrieveDisease();
-      this.activeIndex = -1;
     },
     goToAddDisease() {
       this.$router.push({ name: 'add-disease' });
-    },
-    updateActiveIndex(index) {
-      this.activeIndex = index;
     },
     async deleteDisease(id) {
       Swal.fire({

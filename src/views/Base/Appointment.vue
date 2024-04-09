@@ -112,7 +112,11 @@
                                 <ErrorMessage name="day" class="error-feedback" style="color: rgb(238, 15, 15);" />
                             </div>
 
-                            <div class="mb-3 mt-3">
+                            <div class="mb-3 mt-3 d-flex justify-content-center" v-if="loading">
+                                <span class="loader"></span>
+                            </div>
+
+                            <div class="mb-3 mt-3" v-else>
                                 <div class="d-flex justify-content-evenly">
                                     <div>
                                         <div class="radio-wrapper-16">
@@ -317,6 +321,7 @@ export default {
                 }),
         });
         return {
+            loading: false,
             captchaInput: '',
             captchaCode: '',
             captchaImage: '',
@@ -460,9 +465,21 @@ export default {
             });
         },
     },
-    created() {
-        this.retrieveAppointment();
-        this.retrieveRoom();
+    async created() {
+        this.loading = true;
+        try {
+            await this.retrieveAppointment();
+            await this.retrieveRoom();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            this.loading = false
+        };
+
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const doctor = urlParams.has('doctor') ? urlParams.get('doctor') : null;
+        // console.log(doctor);
+
         this.refreshCaptcha();
 
         setInterval(() => {

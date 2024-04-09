@@ -47,7 +47,7 @@
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link :to="{ name: 'products' }" class="nav-link" style="color: #ffffff;">
+                    <router-link :to="{ name: 'san-pham' }" class="nav-link" style="color: #ffffff;">
                         Thông tin sản phẩm
                     </router-link>
                 </li>

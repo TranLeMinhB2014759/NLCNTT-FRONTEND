@@ -83,7 +83,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(medicalrecord, index) in filteredMedicalrecords.slice().reverse()" :key="index" @click="updateActiveIndex(index)">
+                        <tr v-for="(medicalrecord, index) in filteredMedicalrecords.slice().reverse()" :key="index">
                             <td>
                                 {{ medicalrecord.MSHS }}
                                 <button type="button" class="btn btn-sm btn-secondary"
@@ -278,7 +278,6 @@ export default {
             patient: [],
             medicalrecords: [],
             message: "",
-            activeIndex: -1,
             searchText: "",
         };
     },
@@ -341,13 +340,8 @@ export default {
             }
         },
 
-        updateActiveIndex(index) {
-            this.activeIndex = index;
-        },
-
         refreshList() {
-            this.retrieveMedicalrecords();
-            this.activeIndex = -1;
+            this.retrieveMedicalrecords();;
         },
 
         async deleteMedicalrecord(id) {

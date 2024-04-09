@@ -2,7 +2,10 @@
     <div class="card">
         <div class="card-body">
             <div class="banner text-center">QUẢN LÝ ĐẶT LỊCH KHÁM ONLINE</div>
-            <div class="container">
+            <div class="container d-flex justify-content-center p-5 m-5 mx-auto" v-if="loadingAppointments">
+                <div class="loader"></div> 
+            </div>
+            <div class="container" v-else>
                 <div class="row">
                     <div class="container col-12 col-sm-4">
                         <InputSearch v-model="searchText" />
@@ -23,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(appointment, index) in paginatedAppointments" :key="index" @click="updateActiveIndex(index)">
+                            <tr v-for="(appointment, index) in paginatedAppointments" :key="index">
                                 <!-- <td> {{ index + 1 }} </td> -->
                                 <td class="text-start"> {{ appointment.name }} </td>
                                 <td> {{ appointment.phoneNumber }} </td>
@@ -368,8 +371,8 @@ export default {
                 .required("Vui lòng chọn bác sĩ."),
         });
         return {
+            loadingAppointments: false,
             searchText: "",
-            activeIndex: -1,
             currentPage: 1,
             appointmentsPerPage: 10,
             appointments: [],
@@ -392,6 +395,13 @@ export default {
             appointmentFormSchema,
 
         };
+    },
+    watch: {
+        searchText(newValue, oldValue) {
+            if (newValue !== oldValue) {
+                this.changePage(1);
+            }
+        }
     },
     computed: {
         appointmentStrings() {
@@ -459,12 +469,6 @@ export default {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
             }
-        },
-        refreshList() {
-            this.activeIndex = -1;
-        },
-        updateActiveIndex(index) {
-            this.activeIndex = index;
         },
         // ------------------------- FORMAT -------------------------
         formatMSTN() {
@@ -593,13 +597,46 @@ export default {
         },
     },
     async created() {
-        this.retrieveAppointment();
-        this.retrieveRoom();
+        this.loadingAppointments = true;
+        try {
+            await this.retrieveAppointment();
+            await this.retrieveRoom();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            this.loadingAppointments = false;
+        }
     }
 }
 </script>
 
 <style scoped>
+/* ---------------------------- LOADER ---------------------------- */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #514b82;
+  animation:
+    l20-1 0.8s infinite linear alternate,
+    l20-2 1.6s infinite linear;
+}
+@keyframes l20-1{
+   0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+   12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+   25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+   50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+   62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+   75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+   100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+}
+@keyframes l20-2{ 
+  0%    {transform:scaleY(1)  rotate(0deg)}
+  49.99%{transform:scaleY(1)  rotate(135deg)}
+  50%   {transform:scaleY(-1) rotate(0deg)}
+  100%  {transform:scaleY(-1) rotate(-135deg)}
+}
+
 .badge {
     --bs-badge-color: black !important;
 }

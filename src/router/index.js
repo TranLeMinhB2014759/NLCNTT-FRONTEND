@@ -39,9 +39,15 @@ const routes = [
       },
 
       {
-        path: "/products",
-        name: "products",
-        component: () => import("@/views/Products.vue"),
+        path: "/san-pham",
+        name: "san-pham",
+        component: () => import("@/views/Base/Products.vue"),
+      },
+      {
+        path: "/chi-tiet-san-pham/:tenThuoc",
+        name: "chi-tiet-san-pham",
+        component: () => import("@/views/Base/Product.vue"),
+        props: true,
       },
     ],
   },

@@ -27,6 +27,10 @@ class MedicineService {
   async getIsActive() {
     return (await this.api.get("/active")).data;
   }
+
+  async findByTenThuoc(tenThuoc) {
+    return (await this.api.get(`/search/${tenThuoc}`)).data;
+  }
 }
 
 export default new MedicineService();
