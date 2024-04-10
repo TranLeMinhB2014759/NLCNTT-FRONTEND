@@ -6,6 +6,26 @@
                 <div class="loader"></div> 
             </div>
             <div class="container" v-else>
+                <div>
+                    <div class="radio-inputs">
+                        <label class="radio">
+                            <input type="radio" v-model="selectedOption" value="all">
+                            <span class="name">Tất cả</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" v-model="selectedOption" value="wait">
+                            <span class="name">Chờ xác nhận</span><span class="indicator">{{ countUnconfirmed() }}</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" v-model="selectedOption" value="confirmed">
+                            <span class="name">Đã xác nhận</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" v-model="selectedOption" value="cancelled">
+                            <span class="name">Đã hủy</span>
+                        </label>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="container col-12 col-sm-4">
                         <InputSearch v-model="searchText" />
@@ -372,6 +392,7 @@ export default {
         });
         return {
             loadingAppointments: false,
+            selectedOption: 'all',
             searchText: "",
             currentPage: 1,
             appointmentsPerPage: 10,
@@ -401,19 +422,25 @@ export default {
             if (newValue !== oldValue) {
                 this.changePage(1);
             }
+        },
+        selectedOption(newValue, oldValue) {
+            if (newValue !== oldValue) {
+                this.changePage(1);
+            }
         }
     },
     computed: {
         appointmentStrings() {
-            return this.appointments.map((appointment) => {
+            const appointmentData = this.filterAppointmentsByOption(this.selectedOption);
+            return appointmentData.map((appointment) => {
                 const { MSTN, name, phoneNumber, doctor } = appointment;
                 return [MSTN, name, phoneNumber, doctor].join("");
             });
         },
         filteredAppointments() {
             const searchTextLower = this.searchText.toLowerCase();
-            if (!searchTextLower) return this.appointments;
-            return this.appointments.filter((_appointment, index) =>
+            if (!searchTextLower) return this.filterAppointmentsByOption(this.selectedOption);
+            return this.filterAppointmentsByOption(this.selectedOption).filter((_appointment, index) =>
                 this.appointmentStrings[index].toLowerCase().includes(searchTextLower)
             );
         },
@@ -450,6 +477,24 @@ export default {
         },
     },
     methods: {
+        countUnconfirmed(){
+            const unConfirmed = this.appointments.filter(appointment => appointment.confirm === 'no');
+            return unConfirmed.length;
+        },
+        filterAppointmentsByOption(option) {
+            switch (option) {
+                case 'all':
+                    return this.appointments;
+                case 'wait':
+                    return this.appointments.filter(appointment => appointment.confirm === 'no');
+                case 'confirmed':
+                    return this.appointments.filter(appointment => appointment.confirm === 'yes');
+                case 'cancelled':
+                    return this.appointments.filter(appointment => appointment.confirm === 'cancel');
+                default:
+                    return this.appointments;
+            }
+        },
         // ------------------------- Pagination -------------------------
         changePage(page) {
             this.currentPage = page;
@@ -612,4 +657,59 @@ export default {
 
 <style>
 @import "@/assets/css/interface2.css";
+.radio-inputs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 300px;
+    font-size: 14px;
+}
+
+.radio-inputs .radio {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.radio-inputs .radio input {
+    display: none;
+}
+
+.radio-inputs .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: .5rem 0;
+    color: rgba(51, 65, 85, 1);
+    transition: all .15s ease-in-out;
+}
+
+.radio-inputs .radio input:checked+.name {
+    background-color: #fff;
+    font-weight: 600;
+}
+
+.indicator{
+    background: #3b7ddd;
+    border-radius: 50%;
+    box-shadow: 0 .1rem .2rem rgba(0, 0, 0, .05);
+    color: #fff;
+    display: block;
+    font-size: .675rem;
+    height: 20px;
+    padding: 1px;
+    position: absolute;
+    text-align: center;
+    top: -10%;
+    right: 48%;
+    transition: top .1s ease-out;
+    width: 25px
+}
 </style>

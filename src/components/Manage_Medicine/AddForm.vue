@@ -57,8 +57,8 @@
 
           <div class="mb-3 mt-3">
             <label for="HSD">Hạn sử dụng:</label>
-            <Field type="date" name="HSD" class="form-control" v-model="medicineLocal.HDSD" required/>
-            <ErrorMessage name="HDSD" class="error-feedback" style="color: rgb(238, 15, 15);" />
+            <Field type="date" name="HSD" class="form-control" v-model="medicineLocal.HSD" required/>
+            <ErrorMessage name="HSD" class="error-feedback" style="color: rgb(238, 15, 15);" />
           </div>
 
           <div class="mb-3 mt-3">
