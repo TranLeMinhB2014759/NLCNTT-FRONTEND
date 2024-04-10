@@ -32,14 +32,18 @@
         <div class="product-details">
           <div class="product-header">
             <h1 style="color: #0077B6">{{ product[0].tenThuoc }}</h1>
-            <div class="product-price">
-              <strong v-if="product[0].status === 'off'" class="status-off">SẢN PHẨM NGỪNG KINH DOANH</strong>
-              <span v-else class="price">{{ formatToVND(product[0].Gia) }} / {{ product[0].Donvi }}</span>
-            </div>
             <div class="product-rating">
               <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
             </div>
           </div>
+          <div class="product-price">
+            <strong v-if="product[0].status === 'off'" class="status-off">SẢN PHẨM NGỪNG KINH DOANH</strong>
+            <div v-else>
+              <span class="price">{{ formatToVND(product[0].Gia) }} / {{ product[0].Donvi }}</span>
+              <p class="attention"><i class="fa-solid fa-circle-exclamation"></i> Sản phẩm chỉ bạn tại quầy thuốc của phòng khám</p>
+            </div>
+          </div>
+
           <div class="product-info">
             <p><b>Hạn Sử Dụng: </b>12 tháng</p>
             <p><b>Mô tả sản phẩm: </b> {{ product[0].MoTa }}</p>
@@ -74,7 +78,7 @@ export default {
     async retrieveProduct() {
       try {
         this.product = await ProductService.findByTenThuoc(this.tenThuoc);
-        if(this.product.length === 0){
+        if (this.product.length === 0) {
           this.$router.push({ name: 'notfound' });
         }
       } catch (error) {
@@ -90,4 +94,8 @@ export default {
 
 <style scoped>
 @import "@/assets/css/product.css";
+
+.container {
+  margin-bottom: 50px;
+}
 </style>

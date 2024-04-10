@@ -4,7 +4,7 @@
       <div class="container" style="padding: 20px 70px;">
         <div class="row">
           <div class="col-10">
-            <h1 class="d-flex justify-content-center">Chỉnh sửa</h1>
+            <h1 class="d-flex justify-content-center">Chỉnh Sửa</h1>
           </div>
           <div class="col-2">
             <router-link :to="{ name: 'admin-disease' }">
@@ -92,105 +92,5 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 24px;
-  color: #333;
-}
-
-img {
-  border: 1px solid;
-}
-
-/* ------------------- Button ----------------------- */
-.button-submit {
-  font-family: inherit;
-  font-size: 20px;
-  background: #212121;
-  color: white;
-  fill: rgb(155, 153, 153);
-  padding: 0.7em 1em;
-  padding-left: 0.9em;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  border: none;
-  border-radius: 15px;
-  font-weight: 1000;
-}
-
-.button-submit span {
-  display: block;
-  margin-left: 0.3em;
-  transition: all 0.3s ease-in-out;
-}
-
-.button-submit svg {
-  display: block;
-  transform-origin: center center;
-  transition: transform 0.3s ease-in-out;
-}
-
-.button-submit:hover {
-  background: #000;
-}
-
-.button-submit:hover .svg-wrapper {
-  transform: scale(1.25);
-  transition: 0.5s linear;
-}
-
-.button-submit:hover svg {
-  transform: translateX(1.1em) scale(1.1);
-  fill: #fff;
-}
-
-.button-submit:hover span {
-  opacity: 0;
-  transition: 0.5s linear;
-}
-
-.button-submit:active {
-  transform: scale(0.95);
-}
-
-/* ------------------- Button Close----------------------- */
-.button-close {
-  position: relative;
-  width: 2.8em;
-  height: 2.8em;
-  border: none;
-  background: red;
-  border-radius: 50%;
-  transition: background 0.5s;
-}
-
-.X {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2em;
-  height: 1.5px;
-  background-color: rgb(255, 255, 255);
-  transform: translateX(-50%) rotate(45deg);
-}
-
-.Y {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2em;
-  height: 1.5px;
-  background-color: #fff;
-  transform: translateX(-50%) rotate(-45deg);
-}
-
-.button-close:hover {
-  background-color: gray;
-}
-
-.button-close:active {
-  background-color: gray;
-}
+@import "@/assets/css/formCRUD.css";
 </style>

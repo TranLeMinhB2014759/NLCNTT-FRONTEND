@@ -146,24 +146,5 @@ export default {
 </script>
 
 <style>
-a {
-  text-decoration: none;
-}
-
-.badge {
-  --bs-badge-color: black !important;
-}
-
-.banner {
-  background-color: antiquewhite;
-  padding: 10px;
-  margin-bottom: 15px;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.swal2-confirm-red {
-  background-color: red !important;
-}
+@import "@/assets/css/interface2.css";
 </style>

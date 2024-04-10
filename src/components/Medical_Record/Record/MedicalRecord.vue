@@ -102,7 +102,7 @@
                             <td>
                                 <button type="button" class="ml-2 btn btn-info" data-bs-toggle="modal"
                                     :data-bs-target="'#modalService_' + index">
-                                    <i class="fa-solid fa-eye"></i>
+                                    <i class="fa-regular fa-clipboard fa-lg"></i>
                                 </button>
                                 <div class="modal fade" :id="'modalService_' + index">
                                     <div class="modal-dialog">
@@ -143,7 +143,7 @@
                             <td>
                                 <button type="button" class="ml-2 btn btn-info" data-bs-toggle="modal"
                                     :data-bs-target="'#modalPrescription_' + index">
-                                    <i class="fa-solid fa-eye"></i>
+                                    <i class="fa-solid fa-file-medical fa-lg"></i>
                                 </button>
                                 <div class="modal fade" :id="'modalPrescription_' + index">
                                     <div class="modal-dialog">

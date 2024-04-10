@@ -73,30 +73,6 @@
     color: black;
 }
 
-.tc {
-    margin-top: 35px;
-    background-color: #ffffff;
-}
-
-.container-sp {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 5px;
-}
-
-.imgsp {
-    width: 180px;
-    height: 180px;
-    border-radius: 5px;
-}
-
-.product-title {
-    font-weight: 600;
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-
-
 .col-sm-6>h2,
 .col-sm-6 .check,
 .col-sm-6 .ban,
@@ -120,21 +96,6 @@ a {
 a:hover {
     text-decoration: none;
     color: #57b846;
-}
-
-.col-sm-3:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-}
-
-.imgsp:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.tcs:hover {
-    background-color: #f0f0f0;
-    transition: background-color 0.3s ease;
 }
 
 /* ---------------------- Card ---------------------- */

@@ -52,30 +52,3 @@ export default {
     </li>
   </ul>
 </template>
-
-<style scoped>
-.list-group {
-  max-height: 386px;
-  overflow-y: scroll;
-  border-style: groove;
-}
-
-::-webkit-scrollbar {
-  width: 15px;
-  height: 15px;
-}
-
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px gray;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(192, 191, 191);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: gray;
-}
-</style>

@@ -1,0 +1,110 @@
+/* ----------------------- Main ----------------------- */
+.badge {
+    --bs-badge-color: black !important;
+}
+
+.banner {
+    background-color: antiquewhite;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.swal2-confirm-red {
+    background-color: red !important;
+}
+
+.bg-success{
+    background-color: rgb(65 255 167) !important;
+}
+
+/* -------------------------- Button ---------------------  */
+a {
+    text-decoration: none;
+}
+
+.Btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100px;
+    height: 40px;
+    border: none;
+    padding: 0px 20px;
+    background-color: rgb(168, 38, 255);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px rgb(140, 32, 212);
+    transition-duration: .3s;
+}
+
+.svg {
+    width: 13px;
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    fill: white;
+    transition-duration: .3s;
+}
+
+.Btn:hover {
+    color: transparent;
+}
+
+.Btn:hover svg {
+    right: 43%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    transition-duration: .3s;
+}
+
+.Btn:active {
+    transform: translate(3px, 3px);
+    transition-duration: .3s;
+    box-shadow: 2px 2px 0px rgb(140, 32, 212);
+}
+
+/* ----------------------- Card ----------------------- */
+.img-card {
+    display: flex;
+    justify-content: center;
+}
+
+.img-card>img {
+    max-width: 150px;
+    max-height: 150px;
+    min-width: 10px;
+    min-height: 10px;
+}
+
+/* ----------------------- List ----------------------- */
+.list-group {
+    max-height: 386px;
+    overflow-y: scroll;
+    border-style: groove;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px gray;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(192, 191, 191);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: gray;
+}

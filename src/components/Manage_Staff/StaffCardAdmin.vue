@@ -39,15 +39,3 @@ export default {
         </div>
     </div>
 </template>
-<style scoped>
-.img-card{
-    display: flex;
-    justify-content: center;
-}
-.img-card>img{
-    max-width: 150px;
-    max-height: 150px;
-    min-width: 10px;
-    min-height: 10px;
-}
-</style>

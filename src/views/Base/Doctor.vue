@@ -34,8 +34,7 @@
             <div class="col-sm-8"></div>
         </div>
         <div class="row" v-if="filteredDoctorsCount > 0">
-            <div class="list-doctor col-12 col-md-6 col-lg-3 text-center" v-for="(doctor, index) in filteredDoctors"
-                :key="index" @click="updateActiveIndex(index)">
+            <div class="list-doctor col-12 col-md-6 col-lg-3 text-center" v-for="(doctor, index) in filteredDoctors" :key="index">
                 <div class="doctors__item">
                     <img class="doctors__item--img" :src="doctor.imgURL" alt="Doctor Image" loading="lazy">
                     <div class="doctors__item--content d-flex flex-column justify-content-between">
@@ -128,9 +127,6 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        },
-        updateActiveIndex(index) {
-            this.activeIndex = index;
         },
         loadMores() {
             this.loadedCount += 4;
