@@ -6,31 +6,30 @@
                 <div class="loader"></div> 
             </div>
             <div class="container" v-else>
-                <div>
-                    <div class="radio-inputs">
-                        <label class="radio">
-                            <input type="radio" v-model="selectedOption" value="all">
-                            <span class="name">Tất cả</span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" v-model="selectedOption" value="wait">
-                            <span class="name">Chờ xác nhận</span><span class="indicator">{{ countUnconfirmed() }}</span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" v-model="selectedOption" value="confirmed">
-                            <span class="name">Đã xác nhận</span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" v-model="selectedOption" value="cancelled">
-                            <span class="name">Đã hủy</span>
-                        </label>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="container col-12 col-sm-4">
                         <InputSearch v-model="searchText" />
                     </div>
-                    <div class="col-sm-8"></div>
+                    <div class="col-sm-8 d-flex align-items-end">
+                        <div class="radio-inputs">
+                            <label class="radio">
+                                <input type="radio" v-model="selectedOption" value="all">
+                                <span class="name">Tất cả</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" v-model="selectedOption" value="wait">
+                                <span class="name">Chờ xác nhận</span><span class="indicator" v-if="countUnconfirmed() > 0">{{ countUnconfirmed() }}</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" v-model="selectedOption" value="confirmed">
+                                <span class="name">Đã xác nhận</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" v-model="selectedOption" value="cancelled">
+                                <span class="name">Đã hủy</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="container mt-3 table-responsive">
                     <table class="table table-bordered table-hover text-center" v-if="filteredAppointmentsCount > 0">
@@ -655,7 +654,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import "@/assets/css/interface2.css";
 .radio-inputs {
     position: relative;

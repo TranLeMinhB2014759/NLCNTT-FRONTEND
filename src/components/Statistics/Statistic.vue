@@ -27,10 +27,10 @@
                             <h1 class="mt-1 mb-3">{{ formatToThounsand(dataBills.length) }}</h1>
                         </div>
                         <div class="mb-0 text-center">
-                            <button class="btn btn-light" @click="goToBillList">
+                            <router-link :to="{ name: 'admin-bill' }" target="_blank" class="btn btn-light">
                                 <span class="text-center">Xem danh sách chi tiết <i
                                         class="fa-solid fa-circle-chevron-right"></i></span>
-                            </button>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -60,10 +60,10 @@
                             <h1 class="mt-1 mb-3">{{ formatToThounsand(dataPatients.length) }}</h1>
                         </div>
                         <div class="mb-0 text-center">
-                            <button class="btn btn-light" @click="goToPatientList">
+                            <router-link :to="{ name: 'admin-patient' }" target='_blank' class="btn btn-light">
                                 <span class="text-center">Xem danh sách chi tiết <i
                                         class="fa-solid fa-circle-chevron-right"></i></span>
-                            </button>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -249,14 +249,6 @@ export default {
     },
 
     methods: {
-        goToBillList() {
-            this.$router.push({ name: 'admin-bill' });
-        },
-
-        goToPatientList() {
-            this.$router.push({ name: 'admin-patient' });
-        },
-
         goToMedicineList() {
             window.scrollTo({
                 top: window.scrollY + 10000,

@@ -38,7 +38,7 @@
         <div class="container-product">
           <router-link :to="{ name: 'chi-tiet-san-pham', params: { tenThuoc: product.tenThuoc } }" class="text-dark">
             <div class="img-product d-flex justify-content-center">
-              <img :src="product.imgURL" alt="Hình ảnh" />
+              <img :src="product.imgURL" alt="Hình ảnh" loading="lazy"/>
             </div>
             <div class="detail-product">
               <div class="name-product">

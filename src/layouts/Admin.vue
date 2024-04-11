@@ -118,75 +118,90 @@ export default {
                             <i class="align-middle"></i> <span class="align-middle">Dashboard</span>
                         </router-link>
                     </li>
-
-                    <li class="sidebar-header">
-                        Cơ sở dữ liệu
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 2 }" @click="setActiveTab(2)">
-                        <router-link :to="{ name: 'admin-doctor' }" class="sidebar-link">
-                            <i class="fa-solid fa-user-doctor"></i> <span class="align-middle">Doctor
-                                Management</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
-                        <router-link :to="{ name: 'admin-disease' }" class="sidebar-link">
-                            <i class="fa-solid fa-square-virus"></i> <span class="align-middle">Disease
-                                Management</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
-                        <router-link :to="{ name: 'admin-service' }" class="sidebar-link">
-                            <i class="fa-solid fa-stethoscope"></i> <span class="align-middle">Service Management</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
-                        <router-link :to="{ name: 'admin-room' }" class="sidebar-link">
-                            <i class="fa-solid fa-house"></i> <span class="align-middle">Room Management</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-header">
-                        Quản lý
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)">
-                        <router-link :to="{ name: 'admin-staff' }" class="sidebar-link">
-                            <i class="fa-solid fa-hospital-user"></i> <span class="align-middle">Personnel
-                                Management</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 7 }" @click="setActiveTab(7)">
-                        <router-link :to="{ name: 'admin-medicine' }" class="sidebar-link">
-                            <i class="fa-solid fa-capsules fa-2xs"></i> <span class="align-middle">Medication
-                                Management</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-header">
-                        Hoạt động
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 8 }" @click="setActiveTab(8)">
-                        <router-link :to="{ name: 'admin-appointment' }" class="sidebar-link">
-                            <i class="fa-regular fa-calendar-days"></i> <span class="align-middle">Appointment</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 9 }" @click="setActiveTab(9)">
-                        <router-link :to="{ name: 'admin-patient' }" class="sidebar-link">
-                            <i class="fa-solid fa-clipboard-user"></i> <span class="align-middle">Medical
-                                Record</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 10 }" @click="setActiveTab(10)">
-                        <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
-                            <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
-                                management</span>
-                        </router-link>
-                    </li>
-                    <li class="sidebar-header">
-                        Thống kê
-                    </li>
-                    <li class="sidebar-item" :class="{ 'active': activeTab === 11 }" @click="setActiveTab(11)">
-                        <router-link :to="{ name: 'admin-statistic' }" class="sidebar-link">
-                            <i class="fa-solid fa-chart-column"></i> <span class="align-middle">Statistic</span>
-                        </router-link>
-                    </li>
+                    <span v-if="this.staff.role === 'admin'">
+                        <li class="sidebar-header">
+                            Cơ sở dữ liệu
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 2 }" @click="setActiveTab(2)">
+                            <router-link :to="{ name: 'admin-doctor' }" class="sidebar-link">
+                                <i class="fa-solid fa-user-doctor"></i> <span class="align-middle">Doctor
+                                    Management</span>
+                            </router-link>
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
+                            <router-link :to="{ name: 'admin-disease' }" class="sidebar-link">
+                                <i class="fa-solid fa-square-virus"></i> <span class="align-middle">Disease
+                                    Management</span>
+                            </router-link>
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
+                            <router-link :to="{ name: 'admin-service' }" class="sidebar-link">
+                                <i class="fa-solid fa-stethoscope"></i> <span class="align-middle">Service
+                                    Management</span>
+                            </router-link>
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
+                            <router-link :to="{ name: 'admin-room' }" class="sidebar-link">
+                                <i class="fa-solid fa-house"></i> <span class="align-middle">Room Management</span>
+                            </router-link>
+                        </li>
+                    </span>
+                    <span v-if="this.staff.role === 'admin' || this.staff.role === 'cashier'">
+                        <li class="sidebar-header">
+                            Quản lý
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)"
+                            v-if="this.staff.role === 'admin'">
+                            <router-link :to="{ name: 'admin-staff' }" class="sidebar-link">
+                                <i class="fa-solid fa-hospital-user"></i> <span class="align-middle">Personnel
+                                    Management</span>
+                            </router-link>
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 7 }" @click="setActiveTab(7)"
+                            v-if="this.staff.role === 'admin' || this.staff.role === 'cashier'">
+                            <router-link :to="{ name: 'admin-medicine' }" class="sidebar-link">
+                                <i class="fa-solid fa-capsules fa-2xs"></i> <span class="align-middle">Medication
+                                    Management</span>
+                            </router-link>
+                        </li>
+                    </span>
+                    <span>
+                        <li class="sidebar-header">
+                            Hoạt động
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 8 }" @click="setActiveTab(8)"
+                            v-if="this.staff.role === 'admin' || this.staff.role === 'receptionist'">
+                            <router-link :to="{ name: 'admin-appointment' }" class="sidebar-link">
+                                <i class="fa-regular fa-calendar-days"></i> <span
+                                    class="align-middle">Appointment</span>
+                            </router-link>
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 9 }" @click="setActiveTab(9)"
+                            v-if="this.staff.role === 'admin' || this.staff.role === 'doctor'">
+                            <router-link :to="{ name: 'admin-patient' }" class="sidebar-link">
+                                <i class="fa-solid fa-clipboard-user"></i> <span class="align-middle">Medical
+                                    Record</span>
+                            </router-link>
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 10 }" @click="setActiveTab(10)"
+                            v-if="this.staff.role === 'admin' || this.staff.role === 'cashier' || this.staff.role === 'doctor'">
+                            <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
+                                <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
+                                    management</span>
+                            </router-link>
+                        </li>
+                    </span>
+                    <span
+                        v-if="this.staff.role === 'admin' || this.staff.role === 'cashier' || this.staff.role === 'receptionist'">
+                        <li class="sidebar-header">
+                            Thống kê
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 11 }" @click="setActiveTab(11)">
+                            <router-link :to="{ name: 'admin-statistic' }" class="sidebar-link">
+                                <i class="fa-solid fa-chart-column"></i> <span class="align-middle">Statistic</span>
+                            </router-link>
+                        </li>
+                    </span>
                 </ul>
             </div>
         </nav>
@@ -210,7 +225,7 @@ export default {
                                 <img :src="staff.imgURL" class="avatar img-fluid rounded me-1" alt="Charles Hall" />
                                 <span class="text-dark">{{ staff.name ? staff.name : 'Guest' }}</span>
                             </a>
-                            
+
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"></i>
                                     Profile</a>

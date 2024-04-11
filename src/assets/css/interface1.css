@@ -84,27 +84,29 @@ a {
 }
 
 /* ----------------------- List ----------------------- */
-.list-group {
-    max-height: 386px;
-    overflow-y: scroll;
-    border-style: groove;
-}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .list-group {
+        max-height: 386px;
+        overflow-y: scroll;
+        border-style: groove;
+    }
 
-::-webkit-scrollbar {
-    width: 15px;
-    height: 15px;
-}
+    .list-group::-webkit-scrollbar {
+        width: 15px;
+        height: 15px;
+    }
 
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px gray;
-    border-radius: 5px;
-}
+    .list-group::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px gray;
+        border-radius: 5px;
+    }
 
-::-webkit-scrollbar-thumb {
-    background: rgb(192, 191, 191);
-    border-radius: 5px;
-}
+    .list-group::-webkit-scrollbar-thumb {
+        background: rgb(192, 191, 191);
+        border-radius: 5px;
+    }
 
-::-webkit-scrollbar-thumb:hover {
-    background: gray;
+    .list-group::-webkit-scrollbar-thumb:hover {
+        background: gray;
+    }
 }
