@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <Form @submit="submitStaff" :validation-schema="staffFormSchema">
+        <Form @submit="submitStaff" :validation-schema="staffFormSchema" enctype="multipart/form-data">
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
@@ -74,14 +74,14 @@
           </div>
 
           <div class="row">
-            <div class="col-12 col-md-3">
-              <img class="rounded-circle" v-if="staffLocal.imgURL" :src="staffLocal.imgURL" alt="Staff Image"
+            <div class="col-12 col-md-5 col-lg-4 d-flex justify-content-center">
+              <img class="rounded-circle" v-if="renderPhoto" :src="renderPhoto" alt="Staff Image"
                 width="200" height="200" />
             </div>
-            <div class="col-12 col-md-9">
+            <div class="col-12 col-md-7 col-lg-8">
               <div class="mb-3 mt-3">
                 <label for="imgURL">Ảnh:</label>
-                <Field name="imgURL" type="text" class="form-control" v-model="staffLocal.imgURL" required placeholder="https://example.jpg"/>
+                <Field name="imgURL" type="file" class="form-control" v-model="staffLocal.imgURL" required accept='image/png, image/jpeg, image/webp, image/jpg' @change="onFileChange"/>
                 <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -150,11 +150,13 @@ export default {
         .required("Hãy phân quyền cho tài khoản."),
 
       imgURL: yup
-        .string()
+        .mixed()
         .required("Vui lòng chọn một ảnh.")
-        .matches(/(\.jpg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, png hoặc webp."),
+        // .matches(/\.(jpg|jpeg|png|webp)$/i, "Định dạng ảnh phải là jpg, jpeg, png hoặc webp.")
+
     });
     return {
+      renderPhoto: "",
       staffLocal: {
         name: "",
         email: "",
@@ -162,13 +164,23 @@ export default {
         address: "",
         password: "",
         role: "",
-        imgURL: "",
+        imgURL: null,
       },
       staffFormSchema,
 
     };
   },
   methods: {
+    onFileChange(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      this.staffLocal.imgURL = file;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.renderPhoto = reader.result;
+      };
+    },
     submitStaff() {
       this.$emit("submit:staff", this.staffLocal);
     },
