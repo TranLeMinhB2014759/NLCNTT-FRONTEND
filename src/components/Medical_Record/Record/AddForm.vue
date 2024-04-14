@@ -282,12 +282,8 @@
       </div>
     </div>
   </div>
-  <div class="card" v-else>
-    <div class="card-body">
-      <div class="d-flex justify-content-center">
-        <span class="loader"></span>
-      </div>
-    </div>
+  <div class="d-load" v-else>
+    <div class="loader"></div>
   </div>
 
 </template>

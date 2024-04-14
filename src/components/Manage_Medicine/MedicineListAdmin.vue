@@ -1,5 +1,6 @@
 <script>
 import MedicineService from "@/services/medicine.service.js";
+import CloudService from "@/services/cloudinary.service";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import Swal from 'sweetalert2'
@@ -27,26 +28,34 @@ export default {
         return 30;
       } return 0;
     },
-    async deleteMedicine(id) {
-      Swal.fire({
+    separateLinkIntoPublicID(URL) {
+      const parts = URL.split("/");
+      const publicId = parts[parts.length - 1].split(".")[0];
+      return publicId;
+    },
+    async deleteMedicine(id, imgURL) {
+      const result = await Swal.fire({
         title: "Bạn chắc chắn muốn xóa thuốc này không?",
         showCancelButton: true,
         confirmButtonText: "Đồng ý",
         customClass: {
           confirmButton: "swal2-confirm-red"
         }
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            await MedicineService.delete(id);
-            this.$emit("delete:medicine", this.localMedicines);
-            this.refreshList();
-            toast.success("Delete Succesfully!");
-          } catch (error) {
-            toast.error("Đã có lỗi xảy ra khi xóa");
-          }
-        }
       });
+
+      if (result.isConfirmed) {
+        try {
+          const publicID = this.separateLinkIntoPublicID(imgURL);
+          await CloudService.delete(publicID);
+          await MedicineService.delete(id);
+          this.$emit("delete:medicine", this.localMedicines);
+          this.refreshList();
+          toast.success("Xóa thành công!");
+        } catch (error) {
+          console.log(error);
+          toast.error("Đã có lỗi xảy ra khi xóa");
+        }
+      }
     },
   }
 };
@@ -67,7 +76,7 @@ export default {
       <span v-else>
         {{ medicine.tenThuoc }}
       </span>
-      <button type="button" class="ml-2 btn btn-danger" @click="deleteMedicine(medicine._id)">
+      <button type="button" class="ml-2 btn btn-danger" @click="deleteMedicine(medicine._id, medicine.imgURL)">
         <i class="fa fa-trash"></i>
       </button>
     </li>

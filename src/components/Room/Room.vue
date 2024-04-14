@@ -124,7 +124,7 @@ export default {
           try {
             await RoomService.delete(id);
             this.refreshList();
-            toast.success("Delete Succesfully!");
+            toast.success("Xóa thành công!");
           } catch (error) {
             toast.error("Đã có lỗi xảy ra khi xóa");
           }

@@ -66,15 +66,16 @@
               </div>
             </div>
           </div>
+
           <div class="row">
-            <div class="col-12 col-md-3">
-              <img class="rounded-circle" v-if="doctorLocal.imgURL" :src="doctorLocal.imgURL" alt="Doctor Image"
+            <div class="col-12 col-md-5 col-lg-4 d-flex justify-content-center">
+              <img class="rounded-circle" v-if="renderPhoto || doctorLocal.imgURL" :src="renderPhoto || doctorLocal.imgURL" alt="Doctor Image"
                 width="200" height="200" />
             </div>
-            <div class="col-12 col-md-9">
+            <div class="col-12 col-md-7 col-lg-8">
               <div class="mb-3 mt-3">
                 <label for="imgURL">Ảnh:</label>
-                <Field name="imgURL" type="text" class="form-control" v-model="doctorLocal.imgURL" required placeholder="https://example.jpg"/>
+                <Field name="imgURL" type="file" class="form-control" v-model="doctorLocal.imgURL" required accept='image/png, image/jpeg, image/webp, image/jpg' @change="onFileChange"/>
                 <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -132,15 +133,26 @@ export default {
       imgURL: yup
         .string()
         .required("Vui lòng chọn một ảnh.")
-        .matches(/(\.jpg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, png hoặc webp."),
+        // .matches(/\.(jpg|jpeg|png|webp)$/i, "Định dạng ảnh phải là jpg, jpeg, png hoặc webp.")
     });
     const doctorCopy = JSON.parse(JSON.stringify(this.doctor));
     return {
+      renderPhoto: "",
       doctorLocal: doctorCopy,
       doctorFormSchema,
     };
   },
   methods: {
+    onFileChange(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      this.doctorLocal.imgURL = file;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.renderPhoto = reader.result;
+      };
+    },
     submitDoctor() {
       this.$emit("submit:doctor", this.doctorLocal);
     },

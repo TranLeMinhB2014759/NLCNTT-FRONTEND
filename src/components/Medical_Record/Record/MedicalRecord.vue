@@ -358,7 +358,7 @@ export default {
                         await MedicalrecordService.delete(id);
                         this.medicalrecords = [];
                         this.refreshList();
-                        toast.success("Delete Succesfully!");
+                        toast.success("Xóa thành công!");
                     } catch (error) {
                         toast.error("Đã có lỗi xảy ra khi xóa");
                     }

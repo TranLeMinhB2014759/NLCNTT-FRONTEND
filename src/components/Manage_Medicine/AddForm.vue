@@ -80,14 +80,14 @@
           </div>
 
           <div class="row">
-            <div class="col-md-3 col-12">
-              <img class="img-thumbnail" v-if="medicineLocal.imgURL" :src="medicineLocal.imgURL" alt="Medicine Image"
+            <div class="col-12 col-md-5 col-lg-4 d-flex justify-content-center">
+              <img class="rounded-circle" v-if="renderPhoto" :src="renderPhoto" alt="Medicine Image"
                 width="200" height="200" />
             </div>
-            <div class="col-md-9 col-12">
+            <div class="col-12 col-md-7 col-lg-8">
               <div class="mb-3 mt-3">
                 <label for="imgURL">Ảnh:</label>
-                <Field name="imgURL" type="text" class="form-control" v-model="medicineLocal.imgURL" required placeholder="https://example.jpg"/>
+                <Field name="imgURL" type="file" class="form-control" v-model="medicineLocal.imgURL" required accept='image/png, image/jpeg, image/webp, image/jpg' @change="onFileChange"/>
                 <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -155,9 +155,10 @@ export default {
       imgURL: yup
         .string()
         .required("Vui lòng chọn một ảnh.")
-        .matches(/(\.jpg|\.jpeg|\.png|\.webp)$/, "Định dạng ảnh phải là jpg, jpeg, png hoặc webp."),
+        // .matches(/\.(jpg|jpeg|png|webp)$/i, "Định dạng ảnh phải là jpg, jpeg, png hoặc webp.")
     });
     return {
+      renderPhoto: "",
       medicineLocal: {
         tenThuoc: "",
         Gia: "",
@@ -175,6 +176,16 @@ export default {
     };
   },
   methods: {
+    onFileChange(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      this.medicineLocal.imgURL = file;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.renderPhoto = reader.result;
+      };
+    },
     submitMedicine() {
       this.$emit("submit:medicine", this.medicineLocal);
     },

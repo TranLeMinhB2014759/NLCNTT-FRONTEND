@@ -25,22 +25,24 @@ export default {
                 case 'welcome':
                     this.activeTab = 1;
                     break;
-                case 'admin-doctor':
-                    this.activeTab = 2;
-                    break;
                 case 'admin-disease':
                 case 'add-disease':
                 case 'edit-disease':
-                    this.activeTab = 3;
+                    this.activeTab = 2;
                     break;
                 case 'admin-service':
                 case 'add-service':
                 case 'edit-service':
-                    this.activeTab = 4;
+                    this.activeTab = 3;
                     break;
                 case 'admin-room':
                 case 'add-room':
                 case 'edit-room':
+                    this.activeTab = 4;
+                    break;
+                case 'admin-doctor':
+                case 'add-doctor':
+                case 'edit-doctor':
                     this.activeTab = 5;
                     break;
                 case 'admin-staff':
@@ -123,24 +125,18 @@ export default {
                             Cơ sở dữ liệu
                         </li>
                         <li class="sidebar-item" :class="{ 'active': activeTab === 2 }" @click="setActiveTab(2)">
-                            <router-link :to="{ name: 'admin-doctor' }" class="sidebar-link">
-                                <i class="fa-solid fa-user-doctor"></i> <span class="align-middle">Doctor
-                                    Management</span>
-                            </router-link>
-                        </li>
-                        <li class="sidebar-item" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
                             <router-link :to="{ name: 'admin-disease' }" class="sidebar-link">
                                 <i class="fa-solid fa-square-virus"></i> <span class="align-middle">Disease
                                     Management</span>
                             </router-link>
                         </li>
-                        <li class="sidebar-item" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 3 }" @click="setActiveTab(3)">
                             <router-link :to="{ name: 'admin-service' }" class="sidebar-link">
                                 <i class="fa-solid fa-stethoscope"></i> <span class="align-middle">Service
                                     Management</span>
                             </router-link>
                         </li>
-                        <li class="sidebar-item" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)">
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 4 }" @click="setActiveTab(4)">
                             <router-link :to="{ name: 'admin-room' }" class="sidebar-link">
                                 <i class="fa-solid fa-house"></i> <span class="align-middle">Room Management</span>
                             </router-link>
@@ -149,6 +145,13 @@ export default {
                     <span v-if="this.staff.role === 'admin' || this.staff.role === 'cashier'">
                         <li class="sidebar-header">
                             Quản lý
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 5 }" @click="setActiveTab(5)"
+                            v-if="this.staff.role === 'admin'">
+                            <router-link :to="{ name: 'admin-doctor' }" class="sidebar-link">
+                                <i class="fa-solid fa-user-doctor"></i> <span class="align-middle">Doctor
+                                    Management</span>
+                            </router-link>
                         </li>
                         <li class="sidebar-item" :class="{ 'active': activeTab === 6 }" @click="setActiveTab(6)"
                             v-if="this.staff.role === 'admin'">
