@@ -31,6 +31,9 @@ class StaffService {
   async logout(data) {
     return (await this.api.post("/logout", data)).data;
   }
+  async changePassword(data){
+    return (await this.api.post("/changpwd", data)).data;
+  }
 }
 
 export default new StaffService();

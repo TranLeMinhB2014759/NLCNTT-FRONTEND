@@ -21,7 +21,8 @@
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="name">Tên tài khoản:</label>
-                <Field name="name" type="text" class="form-control" v-model="staffLocal.name" required placeholder="Nhập vào tên nhân viên"/>
+                <Field name="name" type="text" class="form-control" v-model="staffLocal.name" required
+                  placeholder="Nhập vào tên nhân viên" />
                 <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -43,14 +44,21 @@
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="email">Email:</label>
-                <Field name="email" type="email" class="form-control" v-model="staffLocal.email" required placeholder="example@gmail.com"/>
+                <Field name="email" type="email" class="form-control" v-model="staffLocal.email" required
+                  placeholder="example@gmail.com" />
                 <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="password">Mật khẩu:</label>
-                <Field name="password" type="password" class="form-control" v-model="staffLocal.password" required placeholder="Nhập vào mật khẩu"/>
+                <div class="input-group">
+                  <Field name="password" :type="passwordType" class="form-control" v-model="staffLocal.password"
+                    required placeholder="Nhập vào mật khẩu" />
+                  <button type="button" class="input-group-text" @click="togglePasswordVisibility">
+                    <i :class="passwordIcon"></i>
+                  </button>
+                </div>
                 <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -60,14 +68,16 @@
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="phoneNumber">Số điện thoại:</label>
-                <Field name="phoneNumber" type="text" class="form-control" v-model="staffLocal.phoneNumber" required placeholder="0123456789 (10 chữ số)"/>
+                <Field name="phoneNumber" type="text" class="form-control" v-model="staffLocal.phoneNumber" required
+                  placeholder="0123456789 (10 chữ số)" />
                 <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="address">Địa chỉ:</label>
-                <Field name="address" type="text" class="form-control" v-model="staffLocal.address" required placeholder="Khu II Đại học Cần Thơ"/>
+                <Field name="address" type="text" class="form-control" v-model="staffLocal.address" required
+                  placeholder="Khu II Đại học Cần Thơ" />
                 <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -75,18 +85,19 @@
 
           <div class="row">
             <div class="col-12 col-md-5 col-lg-4 d-flex justify-content-center">
-              <img class="rounded-circle" v-if="renderPhoto" :src="renderPhoto" alt="Staff Image"
-                width="200" height="200" />
+              <img class="rounded-circle" v-if="renderPhoto" :src="renderPhoto" alt="Staff Image" width="200"
+                height="200" />
             </div>
             <div class="col-12 col-md-7 col-lg-8">
               <div class="mb-3 mt-3">
                 <label for="imgURL">Ảnh:</label>
-                <Field name="imgURL" type="file" class="form-control" v-model="staffLocal.imgURL" required accept='image/png, image/jpeg, image/webp, image/jpg' @change="onFileChange"/>
+                <Field name="imgURL" type="file" class="form-control" v-model="staffLocal.imgURL" required
+                  accept='image/png, image/jpeg, image/webp, image/jpg' @change="onFileChange" />
                 <ErrorMessage name="imgURL" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
           </div>
-          
+
           <div class="mb-3 mt-3 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary button-submit">
               <div class="svg-wrapper-1">
@@ -143,8 +154,8 @@ export default {
         ),
       password: yup
         .string()
-        .required("Mật khẩu phải có giá trị."),
-
+        .required("Mật khẩu phải có giá trị.")
+        .min(5, "Mật khẩu phải ít nhất 5 ký tự."),
       role: yup
         .string()
         .required("Hãy phân quyền cho tài khoản."),
@@ -152,11 +163,13 @@ export default {
       imgURL: yup
         .mixed()
         .required("Vui lòng chọn một ảnh.")
-        // .matches(/\.(jpg|jpeg|png|webp)$/i, "Định dạng ảnh phải là jpg, jpeg, png hoặc webp.")
+      // .matches(/\.(jpg|jpeg|png|webp)$/i, "Định dạng ảnh phải là jpg, jpeg, png hoặc webp.")
 
     });
     return {
       renderPhoto: "",
+      passwordType: "password",
+      passwordIcon: "fa fa-eye",
       staffLocal: {
         name: "",
         email: "",
@@ -167,10 +180,13 @@ export default {
         imgURL: null,
       },
       staffFormSchema,
-
     };
   },
   methods: {
+    togglePasswordVisibility() {
+      this.passwordType = this.passwordType === "password" ? "text" : "password";
+      this.passwordIcon = this.passwordIcon === "fa fa-eye" ? "fa-solid fa-eye-slash" : "fa fa-eye";
+    },
     onFileChange(event) {
       const file = event.target.files[0];
       if (!file) return;

@@ -26,6 +26,7 @@ export default {
                 var staffDataToSave = {
                     name: response.staff.name,
                     role: response.staff.role,
+                    email: response.staff.email,
                     imgURL: response.staff.imgURL,
                     _id: response.staff._id
                 };

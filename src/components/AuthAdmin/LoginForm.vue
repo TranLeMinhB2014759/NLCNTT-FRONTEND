@@ -18,15 +18,20 @@
                   <Form @submit="submitLogin" :validation-schema="loginFormSchema">
                     <div class="mb-3">
                       <label class="form-label">Email</label>
-                      <Field class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email"
-                        v-model="loginLocal.email" autocomplete="on" />
-                      <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);"/>
+                      <Field class="form-control form-control-lg" type="email" name="email"
+                        placeholder="Enter your email" v-model="loginLocal.email" autocomplete="on" />
+                      <ErrorMessage name="email" class="error-feedback" style="color: rgb(238, 15, 15);" />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Password</label>
-                      <Field class="form-control form-control-lg" type="password" name="password"
-                        placeholder="Enter your password" v-model="loginLocal.password" autocomplete="on" />
-                      <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);"/>
+                      <div class="input-group">
+                        <Field class="form-control form-control-lg" :type="passwordType" name="password"
+                          placeholder="Enter your password" v-model="loginLocal.password" autocomplete="on" />
+                        <button type="button" class="input-group-text" @click="togglePasswordVisibility">
+                          <i :class="passwordIcon"></i>
+                        </button>
+                      </div>
+                      <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);" />
                     </div>
                     <!-- <div>
 											<div class="form-check align-items-center">
@@ -87,11 +92,17 @@ export default {
         password: "",
       },
       loginFormSchema,
+      passwordType: "password",
+      passwordIcon: "fa fa-eye"
     };
 
   },
 
   methods: {
+    togglePasswordVisibility() {
+      this.passwordType = this.passwordType === "password" ? "text" : "password";
+      this.passwordIcon = this.passwordIcon === "fa fa-eye" ? "fa-solid fa-eye-slash" : "fa fa-eye";
+    },
     submitLogin() {
       this.$emit("submit:login", this.loginLocal);
     },

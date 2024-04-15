@@ -197,7 +197,7 @@
                     <div v-if="this.dataMedicines.filter(medicine => isExpiringSoon(medicine.HSD) > 0).length > 0"
                         class="list-expiring">
                         <div class="p-1"
-                            v-for="(medicine, index) in this.dataMedicines.filter(medicine => isExpiringSoon(medicine.HSD) > 0)"
+                            v-for="(medicine, index) in this.dataMedicines.filter(medicine => isExpiringSoon(medicine.HSD) >= 0)"
                             :key="index">
                             <strong>{{ medicine.tenThuoc }}:</strong> {{ medicine.SoLuong }} {{ medicine.Donvi }}
                             <span v-if="isExpiringSoon(medicine.HSD) > 0">

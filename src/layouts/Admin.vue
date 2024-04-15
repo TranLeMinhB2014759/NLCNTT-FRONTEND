@@ -1,11 +1,19 @@
 <script>
+import form_change from "@/components/Change_Password/Form.vue";
+import StaffService from "@/services/staff.service";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import Swal from 'sweetalert2'
 export default {
+    components: {
+        form_change,
+    },
     data() {
         return {
             staff: {},
             isSidebarCollapsed: false,
             activeTab: 1,
+            message: "",
         };
     },
     methods: {
@@ -95,6 +103,36 @@ export default {
                     this.$router.push({ name: "login-admin" });
                 }
             });
+        },
+        async changePassword(data) {
+            Swal.fire({
+                title: "Bạn chắc chắn muốn đổi mật khẩu?",
+                showCancelButton: true,
+                confirmButtonText: "Đồng ý",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await StaffService.changePassword(data);
+                        this.message = "Đổi mật khẩu thành công";
+                        Swal.fire({
+                            icon: "success",
+                            title: this.message,
+                            showConfirmButton: true,
+                            timer: 2000
+                        });
+                    } catch (error) {
+                        this.handleError(error);
+                    }
+                }
+            });
+        },
+        handleError(error) {
+            console.log(error);
+            if (error.response && error.response.status === 401 && error.response.data.message === "Mật khẩu không trùng khớp") {
+                toast.error("Mật khẩu hiện tại không đúng");
+            } else {
+                toast.error("Đã có lỗi xảy ra khi thêm");
+            }
         },
     },
     created() {
@@ -230,8 +268,9 @@ export default {
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1"></i>
-                                    Profile</a>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#ModalChangePassword"><i class="align-middle me-1"></i>
+                                    Change Password</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" @click="logout">Log out &nbsp;<i
                                         class="fa-solid fa-arrow-right-from-bracket"></i></a>
@@ -246,6 +285,21 @@ export default {
                     <router-view></router-view>
                 </div>
             </main>
+            <div class="modal fade" id="ModalChangePassword">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Change Password</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <form_change @submit:staff="changePassword" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa-solid fa-arrow-up fa-2xl"></i></button>

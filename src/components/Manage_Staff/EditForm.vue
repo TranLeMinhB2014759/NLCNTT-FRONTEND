@@ -50,7 +50,13 @@
             <div class="col-12 col-md-6">
               <div class="mb-3 mt-3">
                 <label for="password">Mật khẩu:</label>
-                <Field name="password" type="password" class="form-control" v-model="staffLocal.password" required placeholder="Nhập vào mật khẩu"/>
+                <div class="input-group">
+                  <Field name="password" :type="passwordType" class="form-control" v-model="staffLocal.password"
+                    required placeholder="Nhập vào mật khẩu" />
+                  <button type="button" class="input-group-text" @click="togglePasswordVisibility">
+                    <i :class="passwordIcon"></i>
+                  </button>
+                </div>
                 <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);" />
               </div>
             </div>
@@ -143,7 +149,8 @@ export default {
         ),
       password: yup
         .string()
-        .required("Mật khẩu phải có giá trị."),
+        .required("Mật khẩu phải có giá trị.")
+        .min(5, "Mật khẩu phải ít nhất 5 ký tự."),
 
       role: yup
         .string()
@@ -157,11 +164,17 @@ export default {
     const staffCopy = JSON.parse(JSON.stringify(this.staff));
     return {
       renderPhoto: "",
+      passwordType: "password",
+      passwordIcon: "fa fa-eye",
       staffLocal: staffCopy,
       staffFormSchema,
     };
   },
   methods: {
+    togglePasswordVisibility() {
+      this.passwordType = this.passwordType === "password" ? "text" : "password";
+      this.passwordIcon = this.passwordIcon === "fa fa-eye" ? "fa-solid fa-eye-slash" : "fa fa-eye";
+    },
     onFileChange(event) {
       const file = event.target.files[0];
       if (!file) return;
