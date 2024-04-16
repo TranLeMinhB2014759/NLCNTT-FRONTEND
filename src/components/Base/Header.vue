@@ -40,18 +40,49 @@
 
     <nav class="navbar navbar-expand-sm nav">
         <div class="container">
-            <ul class="navbar-nav">
-                <li class="nav-item">
+            <ul class="nav">
+                <li class="nav-item" :class="{ 'active': isCurrentPage('trangchu') }">
                     <router-link :to="{ name: 'trangchu' }" class="nav-link" style="color: #ffffff;">
                         Trang Chủ
                     </router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" :class="{ 'active': isCurrentPage('san-pham') }">
                     <router-link :to="{ name: 'san-pham' }" class="nav-link" style="color: #ffffff;">
                         Thông tin sản phẩm
+                    </router-link>
+                </li>
+                <li class="nav-item" :class="{ 'active': isCurrentPage('bao-gia-dich-vu') }">
+                    <router-link :to="{ name: 'bao-gia-dich-vu' }" class="nav-link" style="color: #ffffff;">
+                        Báo giá dịch vụ
+                    </router-link>
+                </li>
+                <li class="nav-item" :class="{ 'active': isCurrentPage('doi-ngu-bac-si') }">
+                    <router-link :to="{ name: 'doi-ngu-bac-si' }" class="nav-link" style="color: #ffffff;">
+                        Đội ngũ bác sĩ
+                    </router-link>
+                </li>
+            </ul>
+            <ul class="nav">
+                <li class="nav-item" :class="{ 'active': isCurrentPage('tra-cuu-don-thuoc') }">
+                    <router-link :to="{ name: 'tra-cuu-don-thuoc' }" class="nav-link" style="color: #ffffff;">
+                        Tra cứu đơn thuốc
+                    </router-link>
+                </li>
+                <li class="nav-item":class="{ 'active': isCurrentPage('dat-lich-kham-benh') }">
+                    <router-link :to="{ name: 'dat-lich-kham-benh' }" class="nav-link" style="color: #ffffff;">
+                        Đặt lịch khám bệnh
                     </router-link>
                 </li>
             </ul>
         </div>
     </nav>
 </template>
+<script>
+export default {
+    methods: {
+        isCurrentPage(pageName) {
+            return this.$route.name === pageName;
+        }
+    }
+}
+</script>

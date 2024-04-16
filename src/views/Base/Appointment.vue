@@ -61,6 +61,29 @@
                                     </div>
                                 </div>
                             </div>
+                            <label>Giới tính: <span class="text-danger">(Yêu cầu)</span></label>
+                            <div class="m-3">
+                                <div class="row">
+                                    <div class="col-3 form-check">
+                                        <Field type="radio" class="form-check-input" id="radio1" name="gender" value="Nam" v-model="appointmentLocal.gender"/>
+                                        <label class="form-check-label" for="radio1">Nam</label>
+                                    </div>
+                                    <div class="col-3 form-check">
+                                        <Field type="radio" class="form-check-input" id="radio2" name="gender" value="Nữ" v-model="appointmentLocal.gender"/>
+                                        <label class="form-check-label" for="radio2">Nữ</label>
+                                    </div>
+                                    <div class="col-3 form-check">
+                                        <Field type="radio" class="form-check-input" id="radio3" name="gender" value="Khác" v-model="appointmentLocal.gender"/>
+                                        <label class="form-check-label" for="radio3">Khác</label>
+                                    </div>
+                                </div>
+                                <ErrorMessage name="gender" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                            </div>
+                            <div class="mb-3 mt-3">
+                                <label for="address">Địa chỉ: <span class="text-danger">(Yêu cầu)</span></label>
+                                <Field name="address" type="text" class="form-control" v-model="appointmentLocal.address" required />
+                                <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                            </div>
                             <h5>Thông tin cuộc hẹn</h5>
                             <div class="row">
                                 <div class="col-12 col-md-6">
@@ -302,6 +325,12 @@ export default {
                     /((09|03|07|08|05|01)+([0-9]{8})\b)/g,
                     "Số điện thoại không hợp lệ."
                 ),
+            gender: yup
+                .string()
+                .required("Vui lòng chọn giới tính."),
+            address: yup
+                .string()
+                .required("Vui lòng nhập địa chỉ."),
             service: yup
                 .string()
                 .required("Vui lòng chọn loại dịch vụ."),
@@ -332,6 +361,8 @@ export default {
                 MSTN: "",
                 name: "",
                 phoneNumber: "",
+                gender: "",
+                address: "",
                 service: "",
                 type: "",
                 doctor: "",
@@ -360,6 +391,11 @@ export default {
     methods: {
         disabledRaido(time) {
             const disabledMap = {};
+            const currentDay = new Date();
+            const appointmentDate = new Date(this.appointmentLocal.day);
+            if( appointmentDate < currentDay || appointmentDate.getDay() === 0) {
+                return true;
+            }
             this.appointmentDatas.forEach(app => {
                 if (app.confirm !== "cancel" && app.day === this.appointmentLocal.day && app.doctor === this.appointmentLocal.doctor) {
                     disabledMap[app.time] = true;

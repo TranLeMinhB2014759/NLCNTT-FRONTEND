@@ -59,14 +59,14 @@
                                 <td>
                                     {{ appointment.lastUpdated }}
                                 </td>
-                                <td v-if="appointment.confirm === 'no'">
+                                <td v-if="appointment.confirm === 'no' && getCurrentDate(appointment.day)">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="'#ModalAppointment_' + index" @click="openModal(appointment)">
                                         Confirm
                                     </button>
 
                                     <!-- The Modal -->
-                                    <div class="modal fade" :id="'ModalAppointment_' + index">
+                                    <div class="modal fade modal-lg" :id="'ModalAppointment_' + index">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
 
@@ -102,6 +102,35 @@
                                                                         v-model="appointmentLocal.phoneNumber" required
                                                                         placeholder="0123456789 (10 chữ số)" />
                                                                     <ErrorMessage name="phoneNumber"
+                                                                        class="error-feedback"
+                                                                        style="color: rgb(238, 15, 15);" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label for="gender">Giới tính: <span
+                                                                            class="text-danger">(Yêu cầu)</span></label>
+                                                                    <Field as="select" name="gender" class="form-control"
+                                                                        v-model="appointmentLocal.gender" required>
+                                                                        <option value="Nam">Nam</option>
+                                                                        <option value="Nữ">Nữ</option>
+                                                                        <option value="Khác">Khác</option>
+                                                                    </Field>
+                                                                    <ErrorMessage name="gender" class="error-feedback"
+                                                                        style="color: rgb(238, 15, 15);" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label for="address">Địa chỉ: <span
+                                                                            class="text-danger">(Yêu cầu)</span></label>
+                                                                    <Field name="address" type="text"
+                                                                        class="form-control"
+                                                                        v-model="appointmentLocal.address" required
+                                                                        placeholder="0123456789 (10 chữ số)" />
+                                                                    <ErrorMessage name="address"
                                                                         class="error-feedback"
                                                                         style="color: rgb(238, 15, 15);" />
                                                                 </div>
@@ -192,13 +221,14 @@
 
                                                 <!-- Modal footer -->
                                                 <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-bs-dismiss="modal">Close
+                                                    </button>
                                                     <button v-if="appointment.confirm === 'no'" class="btn btn-primary"
                                                         type="button" data-bs-dismiss="modal"
                                                         @click="handleConfirm(appointment._id)">
                                                         Confirm
                                                     </button>
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-bs-dismiss="modal">Close</button>
                                                 </div>
 
                                             </div>
@@ -218,7 +248,7 @@
                                     </button>
 
                                     <!-- The Modal -->
-                                    <div class="modal fade" :id="'ModalAppointment_' + index">
+                                    <div class="modal fade modal-lg" :id="'ModalAppointment_' + index">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
 
@@ -246,6 +276,23 @@
                                                                     <label>Số điện thoại:</label>
                                                                     <input class="form-control"
                                                                         v-model="appointmentLocal.phoneNumber"
+                                                                        disabled />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Giới tính:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.gender" disabled />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label>Địa chỉ:</label>
+                                                                    <input class="form-control"
+                                                                        v-model="appointmentLocal.address"
                                                                         disabled />
                                                                 </div>
                                                             </div>
@@ -313,8 +360,9 @@
 
                                                 <!-- Modal footer -->
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary"
-                                                        data-bs-dismiss="modal">OK</button>
+                                                    <button type="button" class="btn btn-primary w-100"
+                                                        data-bs-dismiss="modal">OK
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -379,6 +427,12 @@ export default {
                     /((09|03|07|08|05|01)+([0-9]{8})\b)/g,
                     "Số điện thoại không hợp lệ."
                 ),
+            gender: yup
+                .string()
+                .required("Vui lòng chọn giới tính."),
+            address: yup
+                .string()
+                .required("Vui lòng nhập địa chỉ."),
             service: yup
                 .string()
                 .required("Vui lòng chọn loại dịch vụ."),
@@ -476,6 +530,18 @@ export default {
         },
     },
     methods: {
+        getCurrentDate(day) {
+            const currentDay = new Date();
+            currentDay.setHours(0, 0, 0, 0);
+
+            const appointmentDate = new Date(day);
+            appointmentDate.setHours(0, 0, 0, 0);
+
+            if (appointmentDate >= currentDay) {
+                return true;
+            }
+            return false;
+        },
         countUnconfirmed(){
             const unConfirmed = this.appointments.filter(appointment => appointment.confirm === 'no');
             return unConfirmed.length;

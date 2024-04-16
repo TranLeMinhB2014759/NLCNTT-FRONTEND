@@ -132,11 +132,16 @@
     position: relative;
 }
 
-.nav-item::after {
+.nav-item.active{
+    border-radius: 8px;
+    background-color: #41a4ff !important;
+}
+
+.nav-item:not(.active)::after {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: -7px;
     width: 100%;
     height: 2px;
     background-color: white;
@@ -145,7 +150,7 @@
     transition: transform 0.3s;
 }
 
-.nav-item:hover::after {
+.nav-item:not(.active):hover::after {
     transform: scaleX(1);
 }
 
