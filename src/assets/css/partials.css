@@ -135,6 +135,7 @@
 .nav-item.active{
     border-radius: 8px;
     background-color: #41a4ff !important;
+    transition: background-color 0.5s;
 }
 
 .nav-item:not(.active)::after {

@@ -36,7 +36,7 @@
     <div class="row" v-if="filteredProductsCount > 0">
       <div class="mt-3 col-12 col-sm-6 col-md-4 col-lg-3" v-for="(product, index) in filteredProducts" :key="index">
         <div class="container-product">
-          <router-link :to="{ name: 'chi-tiet-san-pham', params: { tenThuoc: product.tenThuoc } }" class="text-dark">
+          <router-link :to="{ name: 'chi-tiet-san-pham', params: { tenThuoc: product.tenThuoc.toLowerCase().replace(/\s+/g, '-') } }" class="text-dark">
             <div class="img-product d-flex justify-content-center">
               <img :src="product.imgURL" alt="Hình ảnh" loading="lazy"/>
             </div>

@@ -77,7 +77,8 @@ export default {
     },
     async retrieveProduct() {
       try {
-        this.product = await ProductService.findByTenThuoc(this.tenThuoc);
+        const tenThuocFormatted = this.tenThuoc.replace(/-/g, ' ')
+        this.product = await ProductService.findByTenThuoc(tenThuocFormatted);
         if (this.product.length === 0) {
           this.$router.push({ name: 'notfound' });
         }
