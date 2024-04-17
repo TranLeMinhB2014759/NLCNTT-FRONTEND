@@ -161,7 +161,7 @@
                         <tbody v-for="(record, index) in medicalrecord[0].prescription" :key="index">
                             <tr>
                                 <td>{{ index + 1 }}</td>
-                                <td class="text-start"><router-link :to="{ name: 'chi-tiet-san-pham', params: { tenThuoc: record.tenThuoc } }" target="_blank">{{ record.tenThuoc }}</router-link></td>
+                                <td class="text-start"><router-link :to="{ name: 'chi-tiet-san-pham', params: { tenThuoc: record.tenThuoc.toLowerCase().replace(/\s+/g, '-') } }" target="_blank">{{ record.tenThuoc }}</router-link></td>
                                 <td>{{ record.Donvi }}</td>
                                 <td>{{ record.SoLuongBan }}</td>
                             </tr>
