@@ -66,20 +66,23 @@ export default {
                 case 'admin-appointment':
                     this.activeTab = 8;
                     break;
+                case 'admin-receiving':
+                    this.activeTab = 9;
+                    break;
                 case 'admin-patient':
                 case 'add-patient':
                 case 'edit-patient':
                 case 'medicalrecord':
                 case 'add-medicalrecord':
                 case 'edit-medicalrecord':
-                    this.activeTab = 9;
+                    this.activeTab = 10;
                     break;
                 case 'admin-bill':
                 case 'add-bill':
-                    this.activeTab = 10;
+                    this.activeTab = 11;
                     break;
                 case 'admin-statistic':
-                    this.activeTab = 11;
+                    this.activeTab = 12;
                     break
                 default:
                     this.activeTab = 1;
@@ -219,12 +222,18 @@ export default {
                         </li>
                         <li class="sidebar-item" :class="{ 'active': activeTab === 9 }" @click="setActiveTab(9)"
                             v-if="this.staff.role === 'admin' || this.staff.role === 'doctor'">
+                            <router-link :to="{ name: 'admin-receiving' }" class="sidebar-link">
+                                <i class="fa-solid fa-desktop"></i> <span class="align-middle">Receiving Patients</span>
+                            </router-link>
+                        </li>
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 10 }" @click="setActiveTab(10)"
+                            v-if="this.staff.role === 'admin' || this.staff.role === 'doctor'">
                             <router-link :to="{ name: 'admin-patient' }" class="sidebar-link">
                                 <i class="fa-solid fa-clipboard-user"></i> <span class="align-middle">Medical
                                     Record</span>
                             </router-link>
                         </li>
-                        <li class="sidebar-item" :class="{ 'active': activeTab === 10 }" @click="setActiveTab(10)"
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 11 }" @click="setActiveTab(11)"
                             v-if="this.staff.role === 'admin' || this.staff.role === 'cashier' || this.staff.role === 'doctor'">
                             <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
                                 <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
@@ -237,7 +246,7 @@ export default {
                         <li class="sidebar-header">
                             Thống kê
                         </li>
-                        <li class="sidebar-item" :class="{ 'active': activeTab === 11 }" @click="setActiveTab(11)">
+                        <li class="sidebar-item" :class="{ 'active': activeTab === 12 }" @click="setActiveTab(12)">
                             <router-link :to="{ name: 'admin-statistic' }" class="sidebar-link">
                                 <i class="fa-solid fa-chart-column"></i> <span class="align-middle">Statistic</span>
                             </router-link>

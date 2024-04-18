@@ -290,6 +290,16 @@ const routes = [
           roles: ['admin', 'receptionist']
         },
       },
+      // ----------------------------- Receiving Patients -----------------------------
+      {
+        path: "receiving",
+        name: "admin-receiving",
+        component: () => import("@/components/Receiving_Patients/Receiving_Patients.vue"),
+        beforeEnter: authMiddleware,
+        meta: {
+          roles: ['admin', 'doctor']
+        },
+      },
       // ----------------------------- Medical Record -----------------------------
       {
         path: "patient",

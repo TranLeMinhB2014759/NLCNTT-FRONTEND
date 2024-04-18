@@ -125,16 +125,20 @@ export default {
         .string()
         .required("Địa chỉ không được để trống."),
     });
-    
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name') || '';
+    const phoneNumber = urlParams.get('phoneNumber') || '';
+    const gender = urlParams.get('gender') || '';
+    const address = urlParams.get('address') || '';
     return {
       patients: [],
       patientLocal: {
         MSBN: "",
-        name: "",
+        name: name,
         year: "",
-        gender: "",
-        phoneNumber: "",
-        address: "",
+        gender: gender,
+        phoneNumber: phoneNumber,
+        address: address,
       },
       patientFormSchema,
 

@@ -48,90 +48,133 @@
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 mt-3">
                                         <label for="name">Họ và tên: <span class="text-danger">(Yêu cầu)</span></label>
-                                        <Field name="name" type="text" class="form-control" v-model="appointmentLocal.name" required placeholder="Trần Văn A" />
-                                        <ErrorMessage name="name" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                                        <span v-if="loadingInput" class="form-control-loading"></span>
+                                        <span v-else>
+                                            <Field name="name" type="text" class="form-control"
+                                                v-model="appointmentLocal.name" required placeholder="Trần Văn A"
+                                                :disabled="disabled" />
+                                            <ErrorMessage name="name" class="error-feedback"
+                                                style="color: rgb(238, 15, 15);" />
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 mt-3">
-                                        <label for="phoneNumber">Số điện thoại: <span class="text-danger">(Yêu cầu)</span></label>
-                                        <Field name="phoneNumber" type="text" class="form-control" v-model="appointmentLocal.phoneNumber" required
-                                            placeholder="0123456789 (10 chữ số)" />
-                                        <ErrorMessage name="phoneNumber" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                                        <label for="phoneNumber">Số điện thoại: <span class="text-danger">(Yêu
+                                                cầu)</span></label>
+                                        <Field name="phoneNumber" type="text" class="form-control"
+                                            v-model="appointmentLocal.phoneNumber" required
+                                            placeholder="0123456789 (10 chữ số)" @input="handlePhoneNumberInput" />
+                                        <ErrorMessage name="phoneNumber" class="error-feedback"
+                                            style="color: rgb(238, 15, 15);" />
                                     </div>
                                 </div>
                             </div>
-                            <label>Giới tính: <span class="text-danger">(Yêu cầu)</span></label>
-                            <div class="m-3">
-                                <div class="row">
-                                    <div class="col-3 form-check">
-                                        <Field type="radio" class="form-check-input" id="radio1" name="gender" value="Nam" v-model="appointmentLocal.gender"/>
-                                        <label class="form-check-label" for="radio1">Nam</label>
-                                    </div>
-                                    <div class="col-3 form-check">
-                                        <Field type="radio" class="form-check-input" id="radio2" name="gender" value="Nữ" v-model="appointmentLocal.gender"/>
-                                        <label class="form-check-label" for="radio2">Nữ</label>
-                                    </div>
-                                    <div class="col-3 form-check">
-                                        <Field type="radio" class="form-check-input" id="radio3" name="gender" value="Khác" v-model="appointmentLocal.gender"/>
-                                        <label class="form-check-label" for="radio3">Khác</label>
-                                    </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <label>Giới tính: <span class="text-danger">(Yêu cầu)</span></label>
+                                    <span v-if="loadingInput" class="form-control-loading"></span>
+                                    <span v-else>
+                                        <div class="form-check">
+                                            <Field type="radio" class="form-check-input" id="radio1" name="gender"
+                                                value="Nam" v-model="appointmentLocal.gender" :disabled="disabled" />
+                                            <label class="form-check-label" for="radio1">Nam</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <Field type="radio" class="form-check-input" id="radio2" name="gender"
+                                                value="Nữ" v-model="appointmentLocal.gender" :disabled="disabled" />
+                                            <label class="form-check-label" for="radio2">Nữ</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <Field type="radio" class="form-check-input" id="radio3" name="gender"
+                                                value="Khác" v-model="appointmentLocal.gender" :disabled="disabled" />
+                                            <label class="form-check-label" for="radio3">Khác</label>
+                                        </div>
+                                        <ErrorMessage name="gender" class="error-feedback"
+                                            style="color: rgb(238, 15, 15);" />
+                                    </span>
                                 </div>
-                                <ErrorMessage name="gender" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                                <div class="col-12 col-md-6">
+                                    <label for="year">Năm sinh:</label>
+                                    <span v-if="loadingInput" class="form-control-loading"></span>
+                                    <span v-else>
+                                        <Field name="year" type="number" class="form-control"
+                                            v-model="appointmentLocal.year" required
+                                            placeholder="Không quá năm hiện tại" :disabled="disabled" />
+                                        <ErrorMessage name="year" class="error-feedback"
+                                            style="color: rgb(238, 15, 15);" />
+                                    </span>
+                                </div>
                             </div>
                             <div class="mb-3 mt-3">
                                 <label for="address">Địa chỉ: <span class="text-danger">(Yêu cầu)</span></label>
-                                <Field name="address" type="text" class="form-control" v-model="appointmentLocal.address" required />
-                                <ErrorMessage name="address" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                                <span v-if="loadingInput" class="form-control-loading"></span>
+                                <span v-else>
+                                    <Field name="address" type="text" class="form-control"
+                                        v-model="appointmentLocal.address" required :disabled="disabled" />
+                                    <ErrorMessage name="address" class="error-feedback"
+                                        style="color: rgb(238, 15, 15);" />
+                                </span>
                             </div>
                             <h5>Thông tin cuộc hẹn</h5>
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 mt-3">
-                                        <label for="service">Chọn dịch vụ: <span class="text-danger">(Yêu cầu)</span></label>
-                                        <Field as="select" name="service" class="form-control" v-model="appointmentLocal.service" required @change="updateDoctors">
-                                            <option v-for="service in filteredServices" :key="service" :value="service"> {{ service }} </option>
+                                        <label for="service">Chọn dịch vụ: <span class="text-danger">(Yêu
+                                                cầu)</span></label>
+                                        <Field as="select" name="service" class="form-control"
+                                            v-model="appointmentLocal.service" required @change="updateDoctors">
+                                            <option v-for="service in filteredServices" :key="service" :value="service">
+                                                {{ service }} </option>
                                         </Field>
-                                        <ErrorMessage name="service" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                                        <ErrorMessage name="service" class="error-feedback"
+                                            style="color: rgb(238, 15, 15);" />
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 mt-3">
-                                        <label for="type">Chọn loại khám: <span class="text-danger">(Yêu cầu)</span></label>
+                                        <label for="type">Chọn loại khám: <span class="text-danger">(Yêu
+                                                cầu)</span></label>
                                         <Field as="select" name="type" class="form-control"
                                             v-model="appointmentLocal.type" required>
                                             <option value="Khám bệnh">Khám bệnh - 50.000₫</option>
                                             <option value="Khám đặc biệt">Khám đặc biệt - 100.000₫</option>
                                         </Field>
-                                        <ErrorMessage name="type" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                                        <ErrorMessage name="type" class="error-feedback"
+                                            style="color: rgb(238, 15, 15);" />
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 mt-3">
-                                        <label for="doctor">Chọn bác sĩ: <span class="text-danger">(Yêu cầu)</span></label>
+                                        <label for="doctor">Chọn bác sĩ: <span class="text-danger">(Yêu
+                                                cầu)</span></label>
                                         <Field as="select" name="doctor" class="form-control"
                                             v-model="appointmentLocal.doctor" required @change="updateMaPhong">
-                                            <option v-for="doctor in doctorsByService" :key="doctor" :value="doctor"> {{ doctor }} </option>
+                                            <option v-for="doctor in doctorsByService" :key="doctor" :value="doctor"> {{
+                                                doctor }} </option>
                                         </Field>
-                                        <ErrorMessage name="doctor" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                                        <ErrorMessage name="doctor" class="error-feedback"
+                                            style="color: rgb(238, 15, 15);" />
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 mt-3">
                                         <label for="room">Phòng:</label>
-                                        <Field name="room" class="form-control" v-model="appointmentLocal.room" required placeholder="Hãy chọn bác sĩ" disabled />
-                                        <Field name="room" v-model="appointmentLocal.room" required hidden />
-                                        <ErrorMessage name="room" class="error-feedback" style="color: rgb(238, 15, 15);" />
+                                        <Field name="room" class="form-control" v-model="appointmentLocal.room" required
+                                            placeholder="Hãy chọn bác sĩ" disabled />
+                                        <ErrorMessage name="room" class="error-feedback"
+                                            style="color: rgb(238, 15, 15);" />
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mb-3 mt-3">
                                 <label for="day">Chọn ngày: <span class="text-danger">(Yêu cầu)</span></label>
-                                <Field name="day" type="date" class="form-control" v-model="appointmentLocal.day" required placeholder="Hãy chọn ngày khám" />
+                                <Field name="day" type="date" class="form-control" v-model="appointmentLocal.day"
+                                    required placeholder="Hãy chọn ngày khám" />
                                 <ErrorMessage name="day" class="error-feedback" style="color: rgb(238, 15, 15);" />
                             </div>
 
@@ -143,25 +186,33 @@
                                 <div class="d-flex justify-content-evenly">
                                     <div>
                                         <div class="radio-wrapper-16">
-                                            <input type="radio" class="radio-input" id="8:00" name="time" value="8:00" v-model="appointmentLocal.time" :disabled="disabledRaido('8:00')" required>
+                                            <Field type="radio" class="radio-input" id="8:00" name="time" value="8:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('8:00')"
+                                                required />
                                             <label class="radio-tile" for="8:00">
                                                 <span class="radio-label">8:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="8:30" name="time" value="8:30" v-model="appointmentLocal.time" :disabled="disabledRaido('8:30')" required>
+                                            <Field type="radio" class="radio-input" id="8:30" name="time" value="8:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('8:30')"
+                                                required />
                                             <label class="radio-tile" for="8:30">
                                                 <span class="radio-label">8:30</span>
                                             </label>
-                                        </div> 
+                                        </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="9:00" name="time" value="9:00" v-model="appointmentLocal.time" :disabled="disabledRaido('9:00')" required>
+                                            <Field type="radio" class="radio-input" id="9:00" name="time" value="9:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('9:00')"
+                                                required />
                                             <label class="radio-tile" for="9:00">
                                                 <span class="radio-label">9:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="9:30" name="time" value="9:30" v-model="appointmentLocal.time" :disabled="disabledRaido('9:30')" required>
+                                            <Field type="radio" class="radio-input" id="9:30" name="time" value="9:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('9:30')"
+                                                required />
                                             <label class="radio-tile" for="9:30">
                                                 <span class="radio-label">9:30</span>
                                             </label>
@@ -169,25 +220,33 @@
                                     </div>
                                     <div>
                                         <div class="radio-wrapper-16">
-                                            <input type="radio" class="radio-input" id="10:00" name="time" value="10:00" v-model="appointmentLocal.time" :disabled="disabledRaido('10:00')" required>
+                                            <Field type="radio" class="radio-input" id="10:00" name="time" value="10:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('10:00')"
+                                                required />
                                             <label class="radio-tile" for="10:00">
                                                 <span class="radio-label">10:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="10:30" name="time" value="10:30" v-model="appointmentLocal.time" :disabled="disabledRaido('10:30')" required>
+                                            <Field type="radio" class="radio-input" id="10:30" name="time" value="10:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('10:30')"
+                                                required />
                                             <label class="radio-tile" for="10:30">
                                                 <span class="radio-label">10:30</span>
                                             </label>
-                                        </div> 
+                                        </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="11:00" name="time" value="11:00" v-model="appointmentLocal.time" :disabled="disabledRaido('11:00')" required>
+                                            <Field type="radio" class="radio-input" id="11:00" name="time" value="11:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('11:00')"
+                                                required />
                                             <label class="radio-tile" for="11:00">
                                                 <span class="radio-label">11:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="11:30" name="time" value="11:30" v-model="appointmentLocal.time" :disabled="disabledRaido('11:30')" required>
+                                            <Field type="radio" class="radio-input" id="11:30" name="time" value="11:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('11:30')"
+                                                required />
                                             <label class="radio-tile" for="11:30">
                                                 <span class="radio-label">11:30</span>
                                             </label>
@@ -195,25 +254,33 @@
                                     </div>
                                     <div>
                                         <div class="radio-wrapper-16">
-                                            <input type="radio" class="radio-input" id="12:00" name="time" value="12:00" v-model="appointmentLocal.time" :disabled="disabledRaido('12:00')" required>
+                                            <Field type="radio" class="radio-input" id="12:00" name="time" value="12:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('12:00')"
+                                                required />
                                             <label class="radio-tile" for="12:00">
                                                 <span class="radio-label">12:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="12:30" name="time" value="12:30" v-model="appointmentLocal.time" :disabled="disabledRaido('12:30')" required>
+                                            <Field type="radio" class="radio-input" id="12:30" name="time" value="12:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('12:30')"
+                                                required />
                                             <label class="radio-tile" for="12:30">
                                                 <span class="radio-label">12:30</span>
                                             </label>
-                                        </div> 
+                                        </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="13:00" name="time" value="13:00" v-model="appointmentLocal.time" :disabled="disabledRaido('13:00')" required>
+                                            <Field type="radio" class="radio-input" id="13:00" name="time" value="13:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('13:00')"
+                                                required />
                                             <label class="radio-tile" for="13:00">
                                                 <span class="radio-label">13:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="13:30" name="time" value="13:30" v-model="appointmentLocal.time" :disabled="disabledRaido('13:30')" required>
+                                            <Field type="radio" class="radio-input" id="13:30" name="time" value="13:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('13:30')"
+                                                required />
                                             <label class="radio-tile" for="13:30">
                                                 <span class="radio-label">13:30</span>
                                             </label>
@@ -221,25 +288,33 @@
                                     </div>
                                     <div>
                                         <div class="radio-wrapper-16">
-                                            <input type="radio" class="radio-input" id="14:00" name="time" value="14:00" v-model="appointmentLocal.time" :disabled="disabledRaido('14:00')" required>
+                                            <Field type="radio" class="radio-input" id="14:00" name="time" value="14:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('14:00')"
+                                                required />
                                             <label class="radio-tile" for="14:00">
                                                 <span class="radio-label">14:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="14:30" name="time" value="14:30" v-model="appointmentLocal.time" :disabled="disabledRaido('14:30')" required>
+                                            <Field type="radio" class="radio-input" id="14:30" name="time" value="14:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('14:30')"
+                                                required />
                                             <label class="radio-tile" for="14:30">
                                                 <span class="radio-label">14:30</span>
                                             </label>
-                                        </div> 
+                                        </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="15:00" name="time" value="15:00" v-model="appointmentLocal.time" :disabled="disabledRaido('15:00')" required>
+                                            <Field type="radio" class="radio-input" id="15:00" name="time" value="15:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('15:00')"
+                                                required />
                                             <label class="radio-tile" for="15:00">
                                                 <span class="radio-label">15:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="15:30" name="time" value="15:30" v-model="appointmentLocal.time" :disabled="disabledRaido('15:30')" required>
+                                            <Field type="radio" class="radio-input" id="15:30" name="time" value="15:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('15:30')"
+                                                required />
                                             <label class="radio-tile" for="15:30">
                                                 <span class="radio-label">15:30</span>
                                             </label>
@@ -247,19 +322,25 @@
                                     </div>
                                     <div>
                                         <div class="radio-wrapper-16">
-                                            <input type="radio" class="radio-input" id="16:00" name="time" value="16:00" v-model="appointmentLocal.time" :disabled="disabledRaido('16:00')" required>
+                                            <Field type="radio" class="radio-input" id="16:00" name="time" value="16:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('16:00')"
+                                                required />
                                             <label class="radio-tile" for="16:00">
                                                 <span class="radio-label">16:00</span>
                                             </label>
                                         </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="16:30" name="time" value="16:30" v-model="appointmentLocal.time" :disabled="disabledRaido('16:30')" required>
+                                            <Field type="radio" class="radio-input" id="16:30" name="time" value="16:30"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('16:30')"
+                                                required />
                                             <label class="radio-tile" for="16:30">
                                                 <span class="radio-label">16:30</span>
                                             </label>
-                                        </div> 
+                                        </div>
                                         <div class="radio-wrapper-16 mt-2">
-                                            <input type="radio" class="radio-input" id="17:00" name="time" value="17:00" v-model="appointmentLocal.time" :disabled="disabledRaido('17:00')" required>
+                                            <Field type="radio" class="radio-input" id="17:00" name="time" value="17:00"
+                                                v-model="appointmentLocal.time" :disabled="disabledRaido('17:00')"
+                                                required />
                                             <label class="radio-tile" for="17:00">
                                                 <span class="radio-label">17:00</span>
                                             </label>
@@ -272,12 +353,14 @@
                             <div class="mt-3 mt-3">
                                 <div class="row">
                                     <div class="col-12 col-md-5">
-                                        <input type="text" class="form-control" v-model.trim="captchaInput" placeholder="Nhập mã bảo vệ" name="captcha">
+                                        <input type="text" class="form-control" v-model.trim="captchaInput"
+                                            placeholder="Nhập mã bảo vệ" name="captcha">
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="d-flex">
                                             <img :src="captchaImage" alt="Captcha">
-                                            <button type="button" class="btn btn-light" @click="refreshCaptcha"><i class="fa-solid fa-rotate"></i></button>
+                                            <button type="button" class="btn btn-light" @click="refreshCaptcha"><i
+                                                    class="fa-solid fa-rotate"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -297,10 +380,12 @@
 </template>
 
 <script>
+import PatientService from "@/services/patient.service";
 import AppointmentService from "@/services/appointment.service";
 import RoomService from "@/services/room.service";
 import { ErrorMessage, Field, Form } from "vee-validate";
 import * as yup from "yup";
+import { debounce } from 'lodash';
 import Swal from 'sweetalert2'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -328,6 +413,12 @@ export default {
             gender: yup
                 .string()
                 .required("Vui lòng chọn giới tính."),
+            year: yup
+                .string()
+                .required("Hãy nhập vào năm sinh")
+                .test("valid-year", "Năm sinh không hợp lệ", (value) => {
+                    return value > 1800 && value < new Date().getFullYear();
+                }),
             address: yup
                 .string()
                 .required("Vui lòng nhập địa chỉ."),
@@ -348,9 +439,14 @@ export default {
                     const currentDate = new Date();
                     return selectedDate > currentDate;
                 }),
+            time: yup
+                .string()
+                .required("Vui lòng chọn giờ")
         });
         return {
+            loadingInput: false,
             loading: false,
+            disabled: false,
             captchaInput: '',
             captchaCode: '',
             captchaImage: '',
@@ -389,11 +485,40 @@ export default {
 
     },
     methods: {
+        handlePhoneNumberInput: debounce(async function () {
+            if (this.appointmentLocal.phoneNumber.length === 10) {
+                const phoneNumber = this.appointmentLocal.phoneNumber;
+                const patientData = await this.getPatientByPhoneNumber(phoneNumber);
+                if (patientData && patientData.length > 0) {
+                    this.disabled = true;
+                    const patient = patientData[0];
+                    this.appointmentLocal = {
+                        ...this.appointmentLocal,
+                        name: patient.name ?? this.appointmentLocal.name,
+                        gender: patient.gender ?? this.appointmentLocal.gender,
+                        year: patient.year ?? this.appointmentLocal.year,
+                        address: patient.address ?? this.appointmentLocal.address
+                    };
+                } else {
+                    this.disabled = false;
+                }
+            }
+        }, 4000),
+        async getPatientByPhoneNumber(phoneNumber) {
+            try {
+                this.loadingInput = true;
+                return await PatientService.getPatientByPhoneNumber(phoneNumber);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.loadingInput = false;
+            }
+        },
         disabledRaido(time) {
             const disabledMap = {};
             const currentDay = new Date();
             const appointmentDate = new Date(this.appointmentLocal.day);
-            if( appointmentDate < currentDay || appointmentDate.getDay() === 0) {
+            if (appointmentDate < currentDay || appointmentDate.getDay() === 0) {
                 return true;
             }
             this.appointmentDatas.forEach(app => {
@@ -481,7 +606,7 @@ export default {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        if(data.time != '') {
+                        if (data.time != '') {
                             await AppointmentService.create(data);
                             Swal.fire({
                                 icon: "success",
@@ -509,7 +634,7 @@ export default {
         } catch (error) {
             console.log(error);
         } finally {
-            this.loading = false
+            this.loading = false;
         };
 
         // const urlParams = new URLSearchParams(window.location.search);
@@ -567,34 +692,7 @@ a {
     width: 100%;
 }
 
-.prescription {
-    margin: 20px 0;
-    padding: 50px 100px;
-    border: 1px solid;
-    border-radius: 8px;
-    min-height: 100vh;
-}
-
-.prescription-empty {
-    margin: 20px 0;
-    padding: 50px 80px;
-    border: 1px solid;
-    border-radius: 8px;
-}
-
-.soldout {
-    max-width: 100px;
-    max-height: 100px;
-}
-
 @media screen and (max-width: 575px) {
-    .prescription {
-        margin: 20px 0;
-        padding: 50px 60px;
-        border: 1px solid;
-        border-radius: 8px;
-        min-height: 100vh;
-    }
 
     strong,
     p,
@@ -604,6 +702,34 @@ a {
 
     h4 {
         font-size: medium;
+    }
+}
+
+/* ----------------- SKELETEN LOADING -------------------- */
+.form-control-loading {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    height: 38px;
+    background:
+        linear-gradient(90deg, #0001 33%, #0005 50%, #0001 66%) #f2f2f2;
+    background-size: 300% 100%;
+    animation: l1 1.5s infinite linear;
+}
+
+@keyframes l1 {
+    0% {
+        background-position: right
     }
 }
 
@@ -686,122 +812,121 @@ a {
 
 /* ------------------------ RADIO ------------------------  */
 .radio-wrapper-16 *,
-  .radio-wrapper-16 *:after,
-  .radio-wrapper-16 *:before {
-  box-sizing: border-box;
+.radio-wrapper-16 *:after,
+.radio-wrapper-16 *:before {
+    box-sizing: border-box;
 }
 
 .radio-wrapper-16 .radio-input {
-  clip: rect(0 0 0 0);
-  -webkit-clip-path: inset(100%);
-  clip-path: inset(100%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(100%);
+    clip-path: inset(100%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 }
 
-.radio-wrapper-16 .radio-input:checked + .radio-tile {
-  border-color: #2260ff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  color: #2260ff;
+.radio-wrapper-16 .radio-input:checked+.radio-tile {
+    border-color: #2260ff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: #2260ff;
 }
 
-.radio-wrapper-16 .radio-input:checked + .radio-tile:before {
-  transform: scale(1);
-  opacity: 1;
-  background-color: #2260ff;
-  border-color: #2260ff;
-  color: #fff;
-  content: "✓";
+.radio-wrapper-16 .radio-input:checked+.radio-tile:before {
+    transform: scale(1);
+    opacity: 1;
+    background-color: #2260ff;
+    border-color: #2260ff;
+    color: #fff;
+    content: "✓";
 }
 
-.radio-wrapper-16 .radio-input:checked + .radio-tile
-  .radio-wrapper-16 .radio-input:checked + .radio-tile .radio-label {
-  color: #2260ff;
+.radio-wrapper-16 .radio-input:checked+.radio-tile .radio-wrapper-16 .radio-input:checked+.radio-tile .radio-label {
+    color: #2260ff;
 }
 
-.radio-wrapper-16 .radio-input:focus + .radio-tile {
-  border-color: #2260ff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+.radio-wrapper-16 .radio-input:focus+.radio-tile {
+    border-color: #2260ff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
 }
 
-.radio-wrapper-16 .radio-input:focus + .radio-tile:before {
-  transform: scale(1);
-  opacity: 1;
+.radio-wrapper-16 .radio-input:focus+.radio-tile:before {
+    transform: scale(1);
+    opacity: 1;
 }
 
 .radio-wrapper-16 .radio-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  min-height: 4rem;
-  border-radius: 0.5rem;
-  border: 2px solid #b5bfd9;
-  background-color: #fff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  transition: 0.15s ease;
-  cursor: pointer;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    min-height: 4rem;
+    border-radius: 0.5rem;
+    border: 2px solid #b5bfd9;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.15s ease;
+    cursor: pointer;
+    position: relative;
 }
 
 .radio-wrapper-16 .radio-tile:before {
-  content: "";
-  font-size: 12px;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 2px solid #b5bfd9;
-  border-radius: 50%;
-  top: 0.25rem;
-  left: 0.25rem;
-  opacity: 0;
-  transform: scale(0);
-  transition: 0.25s ease;
+    content: "";
+    font-size: 12px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #b5bfd9;
+    border-radius: 50%;
+    top: 0.25rem;
+    left: 0.25rem;
+    opacity: 0;
+    transform: scale(0);
+    transition: 0.25s ease;
 }
 
 .radio-wrapper-16 .radio-tile:hover {
-  border-color: #2260ff;
+    border-color: #2260ff;
 }
 
 .radio-wrapper-16 .radio-tile:hover:before {
-  transform: scale(1);
-  opacity: 1;
+    transform: scale(1);
+    opacity: 1;
 }
 
 .radio-wrapper-16 .radio-label {
-  color: #707070;
-  transition: 0.375s ease;
-  text-align: center;
+    color: #707070;
+    transition: 0.375s ease;
+    text-align: center;
 }
 
-.radio-wrapper-16 .radio-input:disabled + .radio-tile {
-  cursor: not-allowed;
-  background-color: #f0f0f0;
-  border-color: #b5bfd9;
-  color: #a0a0a0;
+.radio-wrapper-16 .radio-input:disabled+.radio-tile {
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+    border-color: #b5bfd9;
+    color: #a0a0a0;
 }
 
-.radio-wrapper-16 .radio-input:disabled + .radio-tile .radio-label {
-  color: #a0a0a0;
+.radio-wrapper-16 .radio-input:disabled+.radio-tile .radio-label {
+    color: #a0a0a0;
 }
 
-.radio-wrapper-16 .radio-input:disabled + .radio-tile:hover {
-  border-color: #b5bfd9;
-  background-color: #f0f0f0;
+.radio-wrapper-16 .radio-input:disabled+.radio-tile:hover {
+    border-color: #b5bfd9;
+    background-color: #f0f0f0;
 }
 
-.radio-wrapper-16 .radio-input:disabled + .radio-tile:hover:before {
-  opacity: 0;
+.radio-wrapper-16 .radio-input:disabled+.radio-tile:hover:before {
+    opacity: 0;
 }
 
-@media screen and (max-width: 450px) { 
+@media screen and (max-width: 450px) {
     .radio-wrapper-16 .radio-tile {
         width: 3.2rem !important;
         min-height: 3.2rem !important;

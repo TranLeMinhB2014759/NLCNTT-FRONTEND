@@ -36,7 +36,7 @@
                         <thead class="table-success">
                             <tr>
                                 <!-- <th>STT</th> -->
-                                <th>Tên khách hàng</th>
+                                <th>Tên bệnh nhân</th>
                                 <th>Số điện thoại</th>
                                 <th>Thời gian</th>
                                 <th>Người thực hiện</th>
@@ -124,18 +124,30 @@
                                                             </div>
                                                             <div class="col-12 col-md-6">
                                                                 <div class="mb-3 mt-3">
-                                                                    <label for="address">Địa chỉ: <span
-                                                                            class="text-danger">(Yêu cầu)</span></label>
-                                                                    <Field name="address" type="text"
+                                                                    <label for="year">Tuổi: <span
+                                                                        class="text-danger">(Yêu cầu)</span></label>
+                                                                    <Field name="year" type="text"
                                                                         class="form-control"
-                                                                        v-model="appointmentLocal.address" required
+                                                                        v-model="appointmentLocal.year" required
                                                                         placeholder="0123456789 (10 chữ số)" />
-                                                                    <ErrorMessage name="address"
+                                                                    <ErrorMessage name="year"
                                                                         class="error-feedback"
                                                                         style="color: rgb(238, 15, 15);" />
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="mb-3 mt-3">
+                                                            <label for="address">Địa chỉ: <span
+                                                                class="text-danger">(Yêu cầu)</span></label>
+                                                            <Field name="address" type="text"
+                                                                class="form-control"
+                                                                v-model="appointmentLocal.address" required
+                                                                placeholder="0123456789 (10 chữ số)" />
+                                                            <ErrorMessage name="address"
+                                                                class="error-feedback"
+                                                                style="color: rgb(238, 15, 15);" />
+                                                        </div>
+                                                        
                                                         <h5>Thông tin cuộc hẹn</h5>
                                                         <div class="row">
                                                             <div class="col-12 col-md-6">
@@ -194,8 +206,6 @@
                                                                     <input class="form-control"
                                                                         :value="appointmentLocal.room"
                                                                         placeholder="Hãy chọn bác sĩ" disabled />
-                                                                    <Field name="room" v-model="appointmentLocal.room"
-                                                                        required hidden />
                                                                     <ErrorMessage name="room" class="error-feedback"
                                                                         style="color: rgb(238, 15, 15);" />
                                                                 </div>
@@ -290,13 +300,20 @@
                                                             </div>
                                                             <div class="col-12 col-md-6">
                                                                 <div class="mb-3 mt-3">
-                                                                    <label>Địa chỉ:</label>
+                                                                    <label>Năm sinh:</label>
                                                                     <input class="form-control"
-                                                                        v-model="appointmentLocal.address"
+                                                                        v-model="appointmentLocal.year"
                                                                         disabled />
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="mb-3 mt-3">
+                                                            <label>Địa chỉ:</label>
+                                                            <input class="form-control"
+                                                                v-model="appointmentLocal.address"
+                                                                disabled />
+                                                        </div>
+                                                        
                                                         <h5>Thông tin cuộc hẹn</h5>
                                                         <div class="row">
                                                             <div class="col-6">
@@ -430,6 +447,12 @@ export default {
             gender: yup
                 .string()
                 .required("Vui lòng chọn giới tính."),
+            year: yup
+                .string()
+                .required("Hãy nhập vào năm sinh")
+                .test("valid-year", "Năm sinh không hợp lệ", (value) => {
+                return value > 1800 && value < new Date().getFullYear();
+                }),
             address: yup
                 .string()
                 .required("Vui lòng nhập địa chỉ."),

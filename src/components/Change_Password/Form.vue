@@ -9,7 +9,7 @@
                         <div class="input-group">
                             <Field name="current_password" :type="currentPasswordFieldType" class="form-control"
                                 v-model="staffLocal.current_password" required
-                                placeholder="Nhập vào mật khẩu hiện tại" />
+                                placeholder="Nhập vào mật khẩu hiện tại"  autocomplete="off"/>
                             <button type="button" class="input-group-text" @click="toggleCurrentPasswordVisibility">
                                 <i :class="currentPasswordEyeIcon"></i>
                             </button>
@@ -21,7 +21,7 @@
                         <label for="new_password">Mật khẩu mới:</label>
                         <div class="input-group">
                             <Field name="new_password" :type="newPasswordFieldType" class="form-control"
-                                v-model="staffLocal.new_password" required placeholder="Nhập vào mật khẩu mới" />
+                                v-model="staffLocal.new_password" required placeholder="Nhập vào mật khẩu mới" autocomplete="off"/>
                             <button type="button" class="input-group-text" @click="toggleNewPasswordVisibility">
                                 <i :class="newPasswordEyeIcon"></i>
                             </button>
@@ -34,7 +34,7 @@
                         <div class="input-group">
                             <Field name="confirm_password" :type="confirmPasswordFieldType" class="form-control"
                                 v-model="staffLocal.confirm_password" required
-                                placeholder="Xác nhận lại mật khẩu mới" />
+                                placeholder="Xác nhận lại mật khẩu mới"  autocomplete="off"/>
                             <button type="button" class="input-group-text" @click="toggleConfirmPasswordVisibility">
                                 <i :class="confirmPasswordEyeIcon"></i>
                             </button>

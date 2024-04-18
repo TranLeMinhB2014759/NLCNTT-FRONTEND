@@ -23,6 +23,12 @@ class PatientService {
   async delete(id, data) {
     return (await this.api.delete(`/${id}`, data)).data;
   }
+  async getListPhone(){
+    return (await this.api.get(`/phone/listphone`)).data;
+  }
+  async getPatientByPhoneNumber(phoneNumber){
+    return (await this.api.post(`/patient/${phoneNumber}`)).data;
+  }
 }
 
 export default new PatientService();
