@@ -31,6 +31,10 @@ class AppointmentService {
   async cancel(id, confirmer) {
     return (await this.api.put(`/cancel/${id}`, { confirmer })).data;
   }
+
+  async received(id) {
+    return (await this.api.put(`/received/${id}`)).data;
+  }
 }
 
 export default new AppointmentService();

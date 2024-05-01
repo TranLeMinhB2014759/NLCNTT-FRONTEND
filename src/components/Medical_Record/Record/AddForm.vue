@@ -5,7 +5,7 @@
         <div class="row">
           <!-- Phần tiêu đề -->
           <div class="col-10">
-            <h1 class="d-flex justify-content-center">Thêm toa thuốc</h1>
+            <h1 class="d-flex justify-content-center">Tạo Hồ Sơ Phiên Khám Bệnh</h1>
           </div>
           <div class="col-2">
             <!-- Nút đóng -->
@@ -163,12 +163,12 @@
                   <tbody>
                     <tr v-for="(service, index) in selectedServices" :key="index">
                       <td> {{ index + 1 }} </td>
+                      <td> {{ service.code }} </td>
                       <div class="d-flex justify-content-around align-items-center">
                           <button type="button" class="btn btn-outline-secondary" @click="decreaseQuantity(service)"><i class="fa-solid fa-minus"></i></button>
                           <input type="number" v-model="service.SoLuongBan" placeholder="SL" min="1" max="999" required autocomplete="off" style="width: 60px;"/>
                           <button type="button" class="btn btn-outline-secondary" @click="increaseQuantity(service)"><i class="fa-solid fa-plus"></i></button>
                       </div>
-                      <td> {{ service.code }} </td>
                       <td> {{ service.tenDichVu }} </td>
                       <td>
                         <button type="button" class="btn btn-danger form-control" @click="removeServices(index)"><i class="fa-solid fa-minus"></i></button>

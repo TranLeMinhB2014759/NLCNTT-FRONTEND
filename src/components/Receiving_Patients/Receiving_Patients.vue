@@ -241,25 +241,30 @@ export default {
 
                 this.appointments = appointmentData.filter(app => {
                     if (role === "admin") {
-                        return app.confirm === "yes";
+                        return app.confirm === "yes" && app.receive === "no";
                     } else {
-                        return app.doctor === doctorName && app.confirm === "yes";
+                        return app.doctor === doctorName && app.confirm === "yes" & app.receive === "no";
                     }
                 });
             } catch (error) {
                 console.log(error);
             }
         },
-        goToPatient(appointment) {
+        async goToPatient(appointment) {
             const patient = this.listPhoneNumber.filter(patient => patient.phoneNumber === appointment.phoneNumber)
             if (patient.length > 0) {
                 Swal.fire({
                     title: "Bệnh nhân quay lại tái khám. Xem hồ sơ?",
                     showCancelButton: true,
                     confirmButtonText: "Đồng ý",
-                }).then((result) => {
+                }).then(async (result) => {
                     if (result.isConfirmed) {
-                        this.$router.push({ name: 'medicalrecord', params: { id: patient[0]._id } });
+                        try {
+                            await this.received(appointment._id);
+                            this.$router.push({ name: 'medicalrecord', params: { id: patient[0]._id } });
+                        } catch (error) {
+                            console.error("Lỗi khi gọi hàm received:", error);
+                        } 
                     }
                 })
             } else {
@@ -267,13 +272,23 @@ export default {
                     title: "Đây là bệnh nhân mới. Đi đến tạo hồ sơ?",
                     showCancelButton: true,
                     confirmButtonText: "Đồng ý",
-                }).then((result) => {
+                }).then(async (result) => {
                     if (result.isConfirmed) {
-                        this.$router.push({ name: 'add-patient', query: { name: appointment.name, phoneNumber: appointment.phoneNumber, gender: appointment.gender, address: appointment.address } });
+                        try {
+                            await this.received(appointment._id);
+                            this.$router.push({ name: 'add-patient', query: { name: appointment.name, phoneNumber: appointment.phoneNumber, gender: appointment.gender, address: appointment.address } });
+                        } catch (error) {
+                            console.error("Lỗi khi gọi hàm received:", error);
+                        } 
                     }
                 })
             }
         },
+
+        async received(id) {
+            await AppointmentService.received(id);
+        },
+
         async getPatients() {
             try {
                 this.listPhoneNumber = await PatientService.getListPhone();

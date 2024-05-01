@@ -467,6 +467,7 @@ export default {
                 time: "",
                 confirmer: "",
                 confirm: "no",
+                receive: "no",
                 lastUpdated: this.getLastUpdated(),
             },
             appointmentFormSchema,

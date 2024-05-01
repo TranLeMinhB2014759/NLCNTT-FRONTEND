@@ -356,7 +356,7 @@ const routes = [
         component: () => import("@/components/Manage_Bill/Bill.vue"),
         beforeEnter: authMiddleware,
         meta: {
-          roles: ['admin', 'cashier', 'doctor']
+          roles: ['admin', 'cashier']
         },
       },
       {
@@ -365,7 +365,7 @@ const routes = [
         component: () => import("@/components/Manage_Bill/add_bill.vue"),
         beforeEnter: authMiddleware,
         meta: {
-          roles: ['admin', 'cashier', 'doctor']
+          roles: ['admin', 'cashier']
         },
       },
       // ----------------------------- Statistic -----------------------------

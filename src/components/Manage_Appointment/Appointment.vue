@@ -487,6 +487,7 @@ export default {
                 time: "",
                 confirmer: "",
                 confirm: "",
+                receive: "",
                 lastUpdated: "",
             },
             appointmentFormSchema,

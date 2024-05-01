@@ -234,10 +234,10 @@ export default {
                             </router-link>
                         </li>
                         <li class="sidebar-item" :class="{ 'active': activeTab === 11 }" @click="setActiveTab(11)"
-                            v-if="this.staff.role === 'admin' || this.staff.role === 'cashier' || this.staff.role === 'doctor'">
+                            v-if="this.staff.role === 'admin' || this.staff.role === 'cashier'">
                             <router-link :to="{ name: 'admin-bill' }" class="sidebar-link">
                                 <i class="fa-regular fa-money-bill-1"></i> <span class="align-middle">Bill
-                                    management</span>
+                                    Management</span>
                             </router-link>
                         </li>
                     </span>
