@@ -1,9 +1,14 @@
 <template>
   <main class="d-flex w-100">
+    <div class="video-background">
+      <video autoplay muted loop>
+        <source src="@/assets/video/background_login.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="container d-flex flex-column">
       <div class="row vh-100">
         <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
-          <div class="d-table-cell align-middle">
+          <div class="d-table-cell align-middle main">
 
             <div class="text-center mt-4">
               <h1 class="h2">Welcome back!</h1>
@@ -34,15 +39,13 @@
                       <ErrorMessage name="password" class="error-feedback" style="color: rgb(238, 15, 15);" />
                     </div>
                     <!-- <div>
-											<div class="form-check align-items-center">
-												<input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
-												<label class="form-check-label text-small" for="customControlInline">Remember me</label>
-											</div>
-										</div> -->
+                                              <div class="form-check align-items-center">
+                                                  <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
+                                                  <label class="form-check-label text-small" for="customControlInline">Remember me</label>
+                                              </div>
+                                          </div> -->
                     <div class="d-grid gap-2 mt-3">
-
                       <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-
                     </div>
                   </Form>
                 </div>
@@ -110,3 +113,44 @@ export default {
 
 };
 </script>
+<style scoped>
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden !important;
+}
+
+.video-background {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+}
+
+.video-background video {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.main {
+  position: relative;
+  left: 70% !important;
+  z-index: 1;
+}
+
+@media (max-width: 1280px) {
+  .main {
+    position: static;
+  }
+
+  .video-background {
+    display: none;
+  }
+}
+</style>
